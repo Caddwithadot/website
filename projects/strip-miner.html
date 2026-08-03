@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Strip Miner — Taylor Cadwallader</title>
-  <meta name="description" content="Taylor Cadwallader — Strip Miner" />
+  <title>Strip Miner | Taylor Cadwallader</title>
+  <meta name="description" content="Strip Miner: voxel mining prototype in Unity where I designed the progression economy and wrote the full GDD covering upgrades, quotas, and layer structure." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../style.css" />
 </head>
 <body>
+  <a class="skip" href="#main">Skip to content</a>
   <header>
     <div class="wrap nav">
       <a class="brand" href="../index.html">Taylor <span>Cadwallader</span></a>
@@ -22,30 +23,85 @@
       </nav>
     </div>
   </header>
-  <div class="wrap">
+  <div class="wrap" id="main">
     <div class="detail-hero">
       <a class="back" href="../index.html#work">&larr; All work</a>
       <h1>Strip Miner</h1>
       <div class="detail-sub">Voxel Mining Prototype &middot; Unity</div>
-      <div class="detail-meta"><span class="badge hot">Summer 2025</span><span class="badge">Systems &amp; Gameplay Designer</span><span class="badge">Team of 3</span></div>
+      <div class="detail-meta"><span class="badge hot">Summer 2025</span><span class="badge">Systems &amp; Gameplay Designer</span><span class="badge">Team of 3</span><span class="badge soon">Prototype</span></div>
     </div>
 
     <div class="detail-banner"><span class="label">Strip Miner</span></div>
 
     <div class="detail-body">
       <h2>Overview</h2>
-      <p>Strip Miner was a summer Unity project with a small team of three, built around the simple, sticky fantasy of strip mining. The player starts with a weak tool and gradually upgrades it by mining and depositing voxels for credits, digging faster and pushing deeper over time. The programmer built the voxel foundation while I focused on gameplay prototyping and system design.</p>
-      <p>I wrote the full game design document — upgrade systems, quota progression, helper items, and a roguelike layer structure — and tuned pacing so early progression felt meaningful and later play delivered a real power-fantasy escalation.</p>
-      <h2>What I did</h2>
-      <ul class="contrib">
-        <li>Worked on a small three-person summer project built around the fantasy of strip mining in a voxel-based world.</li>
-        <li>Focused on gameplay prototyping and system design while the programmer built the voxel foundation.</li>
-        <li>Implemented and tested the early mining loop, deposit flow, and upgrade structure.</li>
-        <li>Wrote the full game design document covering upgrade systems, quota progression, helper items, and a roguelike layer structure.</li>
-        <li>Designed the core loop around mining ore, depositing it for credits, upgrading tools, and pushing deeper into underground layers.</li>
-        <li>Focused on pacing and motivation, including slow early progression and later power fantasy escalation.</li>
-        <li>Designed systems such as quota requirements, helper tools, and depth-based unlocks to reinforce forward momentum.</li>
-      </ul>
+      <p>Strip Miner was a summer Unity project with a team of three: myself, the designer I usually work with, and a programmer we had recently started working with. A Game About Digging a Hole had just come out, and we got talking about how much appeal a simple incremental digging game can have. That conversation turned into this.</p>
+      <p>The concept focused entirely on the act of strip mining, the way you would in Minecraft or Terraria. The player starts with a weak mining tool and gradually upgrades it by collecting and depositing mined voxels for credits, mining faster and more efficiently over time. The game was fully voxel-based, and the programmer spent most of his time building that foundation while I handled gameplay prototyping and system design.</p>
+
+      <div class="specs">
+        <div class="spec"><div class="k">Role</div><div class="v">Systems &amp; Gameplay Designer</div></div>
+        <div class="spec"><div class="k">Engine</div><div class="v">Unity</div></div>
+        <div class="spec"><div class="k">Team size</div><div class="v">3</div></div>
+        <div class="spec"><div class="k">Duration</div><div class="v">One summer</div></div>
+        <div class="spec"><div class="k">Year</div><div class="v">2025</div></div>
+        <div class="spec"><div class="k">Status</div><div class="v">Unfinished prototype</div></div>
+        <div class="spec wide"><div class="k">Goal</div><div class="v">Design a progression curve that starts frustratingly slow on purpose and ends with the player tearing through rock, without losing them in between.</div></div>
+      </div>
+
+      <figure class="shot">
+        <div class="ph">MEDIA SLOT: Strip Miner voxel mining</div>
+        <figcaption>Replace with a gameplay still or clip.</figcaption>
+      </figure>
+
+      <h2>The core loop</h2>
+      <ol class="steps">
+        <li>Mine ore out of the voxel terrain with your current tool.</li>
+        <li>Deposit what you collected for credits.</li>
+        <li>Spend credits upgrading the tool for speed and efficiency.</li>
+        <li>Push deeper into the next underground layer.</li>
+      </ol>
+      <p>Each layer was designed as a self-contained slice of underground space, with progression driven entirely by the player's efficiency and upgrade choices rather than by unlocking a door or clearing a boss.</p>
+
+      <h2>Designing the progression</h2>
+      <p>My main role was gameplay prototyping and system design, while the other designer focused more heavily on UI. I implemented and tested early versions of the mining loop, deposit flow, and upgrade structure to check whether the progression actually felt worth continuing, which is the only question that matters in an incremental game.</p>
+      <p>I also wrote the full game design document, defining the upgrade systems, quota progression, helper items like explosives and ore-finding tools, and the overall roguelike layer structure.</p>
+
+      <div class="systems">
+        <div class="sys">
+          <span class="tag">Economy</span>
+          <h3>Upgrade and credit flow</h3>
+          <p>Mining feeds deposits, deposits pay for upgrades, and upgrades make you mine faster. The whole game is that loop speeding up, so tuning those numbers was most of the actual design work.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Pressure</span>
+          <h3>Quota requirements</h3>
+          <p>Targets the player has to hit, which gives the open-ended digging some structure and a reason to get efficient instead of just wandering around.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Tools</span>
+          <h3>Helper items</h3>
+          <p>Explosives and ore-finding tools as alternatives to just mining faster, so upgrading becomes a choice between different approaches instead of one straight line.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Structure</span>
+          <h3>Depth-based layers</h3>
+          <p>A roguelike layer structure where each depth unlocks new material and new pressure, keeping forward momentum tied to the fantasy of going deeper.</p>
+        </div>
+      </div>
+
+      <h2>Pacing and motivation</h2>
+      <p>The biggest design focus was pacing. Early progression is slow on purpose so that upgrades feel meaningful, but the goal was to eventually reach a point where the player tears through rock instantly and feels extremely powerful compared to where they started. Quota requirements, helper tools, and depth-based unlocks all existed to keep that sense of forward momentum going so the slow start didn't feel like a dead end.</p>
+
+      <figure class="shot">
+        <div class="ph">MEDIA SLOT: upgrade screen / progression curve</div>
+        <figcaption>Where the power fantasy gets bought.</figcaption>
+      </figure>
+
+      <h2>What I took from it</h2>
+      <p>The project never got past the prototyping phase and was never finished. Even so, it gave me a lot more experience designing long-term progression, because when a game is this simple mechanically there is nowhere for a weak economy to hide.</p>
+      <p class="takeaway">When the mechanic is basically one button, the progression curve is the whole game.</p>
+
+      <!-- LINK SLOT: add a build or GDD link here if you want to share them -->
       <div class="pager"><a href="line-9.html"><span class="lbl">&larr; Previous</span>Line 9</a><a class="nxt" href="depth-strider.html"><span class="lbl">Next &rarr;</span>Depth Strider</a></div>
     </div>
   </div>
@@ -63,5 +119,6 @@
       <small>&copy; 2026 Taylor Cadwallader &middot; Built &amp; hosted on GitHub Pages</small>
     </div>
   </footer>
+  <script src="../particles.js" defer></script>
 </body>
 </html>

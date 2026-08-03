@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KnightLight — Taylor Cadwallader</title>
-  <meta name="description" content="KnightLight — 2D puzzle-platformer built in a custom C++ engine. Design Lead: dual-form Knight/Light mechanic, puzzle systems, readability, and playtesting." />
+  <title>KnightLight | Taylor Cadwallader</title>
+  <meta name="description" content="KnightLight: 2D puzzle-platformer built in a custom C++ engine. Design Lead: dual-form Knight/Light mechanic, puzzle systems, readability, and playtesting." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../style.css" />
 </head>
 <body>
+  <a class="skip" href="#main">Skip to content</a>
   <header>
     <div class="wrap nav">
       <a class="brand" href="../index.html">Taylor <span>Cadwallader</span></a>
@@ -22,7 +23,7 @@
       </nav>
     </div>
   </header>
-  <div class="wrap">
+  <div class="wrap" id="main">
     <div class="detail-hero">
       <a class="back" href="../index.html#work">&larr; All work</a>
       <h1>KnightLight</h1>
@@ -48,13 +49,13 @@
       </div>
 
       <figure class="shot">
-        <div class="ph">MEDIA SLOT &mdash; KnightLight hero shot / launch trailer</div>
+        <div class="ph">MEDIA SLOT: KnightLight hero shot / launch trailer</div>
         <figcaption>Replace with a gameplay still or trailer clip.</figcaption>
       </figure>
 
       <h2>Scoping down to one strong mechanic</h2>
       <p>The original concept was much larger. It had combat, enemies, collectible upgrades, and a metroidvania structure. As development went on and it became clear how much work the custom engine still needed, I helped push the decision to scale the project back and focus entirely on puzzle gameplay built around light.</p>
-      <p>That cut is what produced the mechanic the rest of the game rests on. Instead of one character, the player is two interconnected parts: the Light, and the suit of armor it can inhabit. Looking back, learning when to cut scope and strengthen a smaller, more cohesive core was the single most important lesson of the project.</p>
+      <p>That cut is what gave us the mechanic the rest of the game is built on. Instead of one character, the player is two connected parts: the Light, and the suit of armor it can climb into. Looking back, learning when to cut scope and focus on a smaller, more cohesive core was the most important lesson I took from the project.</p>
 
       <h2>Core mechanic: Light and Knight</h2>
       <p>The player primarily controls the Light, a small mobile entity that can slip through tight spaces and interact with puzzle elements. When the Light finds an abandoned suit of armor it can inhabit it and become the Knight, which changes what the player is able to do with the environment. The Knight is slower, but it is immune to hazards that would destroy the Light on contact, so progress depends on separating and recombining the two forms at the right moments.</p>
@@ -88,7 +89,7 @@
       </ol>
 
       <figure class="shot">
-        <div class="ph">MEDIA SLOT &mdash; Knight / Light separation and recall in motion</div>
+        <div class="ph">MEDIA SLOT: Knight / Light separation and recall in motion</div>
         <figcaption>Ideal spot for a short looping clip of the swap.</figcaption>
       </figure>
 
@@ -119,7 +120,7 @@
         <div class="sys">
           <span class="tag">Collectibles</span>
           <h3>Signiflyers</h3>
-          <p>Small firefly-like collectibles scattered through the world. They reward exploration, but they also do quiet guidance work, giving players a distant point of interest to move toward in the dark without an objective marker breaking the atmosphere.</p>
+          <p>Small firefly-like collectibles placed throughout the world. They give players something to find, but they also work as quiet guidance, giving you a distant point to move toward in the dark without an objective marker ruining the atmosphere.</p>
         </div>
         <div class="sys">
           <span class="tag">Meta</span>
@@ -130,15 +131,15 @@
 
       <h2>Guidance and readability in the dark</h2>
       <p>The entire game takes place underground in near-total darkness, which made readability the design problem I spent the most time on. Players needed to identify hazards, interactables, and progression paths without the atmosphere being flattened by UI.</p>
-      <p>The clearest example is the spike hazards. Rather than making them permanently visible, I gave them a proximity-based red glow that intensifies gradually as the player approaches, so the hazard warns you before it kills you but never reveals the whole room from a distance. It is a small addition that measurably improved fairness while keeping the tension intact, and we reused the same proximity glow for dialogue interactions so players could tell what was interactive. I also added a subtle floating dust effect around the player to keep the cave from feeling static.</p>
+      <p>The clearest example is the spike hazards. Instead of making them always visible, I gave them a red glow that slowly gets brighter as the player gets closer, so the hazard warns you before it kills you without giving away the whole room from far away. It was a small addition, but it made the game feel a lot more fair while keeping the tension, and we ended up reusing the same glow for dialogue so players could tell what they could interact with. I also added a light floating dust effect around the player to keep the cave from feeling static.</p>
 
       <div class="shot-row">
         <figure class="shot">
-          <div class="ph">MEDIA SLOT &mdash; spike proximity glow</div>
+          <div class="ph">MEDIA SLOT: spike proximity glow</div>
           <figcaption>Hazard readability without breaking the dark.</figcaption>
         </figure>
         <figure class="shot">
-          <div class="ph">MEDIA SLOT &mdash; Signiflyers guiding through a dark room</div>
+          <div class="ph">MEDIA SLOT: Signiflyers guiding through a dark room</div>
           <figcaption>Collectibles doing double duty as guidance.</figcaption>
         </figure>
       </div>
@@ -149,10 +150,10 @@
 
       <h2>Playtesting</h2>
       <p>I ran playtests regularly across both semesters, recruiting participants, organizing sessions, and authoring 12 reports documenting player behavior, confusion points, usability issues, and technical problems. The feedback drove continuous refinement of the player controller, mechanic behavior, and how clearly systems communicated themselves.</p>
-      <p>The armor recall system is the best example of that loop working. Testing showed players consistently misunderstood how recall functioned, so rather than explaining it in text I iterated on its visual and audio feedback until the mechanic taught itself.</p>
+      <p>The armor recall system is the best example of that working. Testing showed that players kept misunderstanding how recall functioned, so instead of explaining it with text I iterated on the visual and audio feedback until the mechanic explained itself.</p>
 
       <figure class="shot">
-        <div class="ph">MEDIA SLOT &mdash; playtest report pages / first-semester Unity prototypes</div>
+        <div class="ph">MEDIA SLOT: playtest report pages / first-semester Unity prototypes</div>
         <figcaption>12 reports across two semesters.</figcaption>
       </figure>
 
@@ -165,11 +166,11 @@
       </ul>
 
       <h2>What I took from it</h2>
-      <p>This was my first time serving as Design Lead on a multidisciplinary team, and my first time designing gameplay systems inside an engine being built at the same time. It taught me how to manage scope, iterate on mechanics from real player feedback, and design systems that were both good and actually achievable within the technical reality of the project.</p>
-      <p class="takeaway">Focusing everything around a single mechanic is what let a seven-person team ship something cohesive. The metroidvania version of this game would have been worse and unfinished.</p>
+      <p>This was my first time being Design Lead on a team like this, and my first time designing gameplay inside an engine that was being written at the same time. It taught me how to manage scope, iterate on mechanics based on real player feedback, and design systems that were good but also actually possible within what the project could support.</p>
+      <p class="takeaway">Focusing everything around one mechanic is what let seven people finish something that felt whole. I don't think we would have finished the metroidvania version.</p>
 
       <div class="detail-links"><a class="btn btn-primary" href="https://store.steampowered.com/app/3086850/KnightLight" target="_blank" rel="noopener">Play it on Steam &#8599;</a></div>
-      <div class="pager"><a href="agp.html"><span class="lbl">&larr; Previous</span>AGP &mdash; Alien Game Project</a><a class="nxt" href="sgp.html"><span class="lbl">Next &rarr;</span>SGP &mdash; Streamer Game Project</a></div>
+      <div class="pager"><a href="agp.html"><span class="lbl">&larr; Previous</span>AGP: Alien Game Project</a><a class="nxt" href="sgp.html"><span class="lbl">Next &rarr;</span>SGP: Streamer Game Project</a></div>
     </div>
   </div>
   <footer id="contact">
@@ -186,5 +187,6 @@
       <small>&copy; 2026 Taylor Cadwallader &middot; Built &amp; hosted on GitHub Pages</small>
     </div>
   </footer>
+  <script src="../particles.js" defer></script>
 </body>
 </html>

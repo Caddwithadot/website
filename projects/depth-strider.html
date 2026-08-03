@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Depth Strider — Taylor Cadwallader</title>
-  <meta name="description" content="Taylor Cadwallader — Depth Strider" />
+  <title>Depth Strider | Taylor Cadwallader</title>
+  <meta name="description" content="Depth Strider: five-week solo Unity prototype built entirely around the feeling of walking the ocean floor in a heavy diving suit." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../style.css" />
 </head>
 <body>
+  <a class="skip" href="#main">Skip to content</a>
   <header>
     <div class="wrap nav">
       <a class="brand" href="../index.html">Taylor <span>Cadwallader</span></a>
@@ -22,7 +23,7 @@
       </nav>
     </div>
   </header>
-  <div class="wrap">
+  <div class="wrap" id="main">
     <div class="detail-hero">
       <a class="back" href="../index.html#work">&larr; All work</a>
       <h1>Depth Strider</h1>
@@ -34,20 +35,80 @@
 
     <div class="detail-body">
       <h2>Overview</h2>
-      <p>Depth Strider was my second DES365 Game Feel prototype, built solo over five weeks. The whole goal was a feeling: making the player feel like a deep-sea diver walking the ocean floor. It leans entirely on controller feel and environmental immersion rather than traditional mechanics or objectives.</p>
-      <p>I built a custom Cinemachine-driven controller with slow, heavy, resistant movement and delayed head rotation so the camera lags behind input, selling the weight of a bulky diving suit. A blinking distant ship guides the player forward, and post-processing, fog, floating particles, breathing bubbles, and early-prioritized audio complete the atmosphere.</p>
-      <h2>What I did</h2>
-      <ul class="contrib">
-        <li>Completed a five-week DES365 prototype focused on deep-sea diver movement feel and immersion.</li>
-        <li>Built a custom Unity player controller with Cinemachine for smooth look rotation, camera bob, and subtle screen shake.</li>
-        <li>Tuned movement to feel slow, heavy, and resistant, with gradual acceleration to simulate underwater movement.</li>
-        <li>Implemented delayed head rotation so the camera lagged slightly behind player input, reinforcing the feel of a bulky diving suit.</li>
-        <li>Added angle limits to the camera and helmet to keep the player view grounded and restricted.</li>
-        <li>Built an underwater ravine environment that naturally guided the player forward without explicit navigation systems.</li>
-        <li>Used a distant ship with blinking light as a persistent visual goal that grew larger as the player approached.</li>
-        <li>Added post-processing, fog, a custom skybox, floating particles, and breathing bubble effects to reinforce the underwater atmosphere.</li>
-        <li>Prioritized audio and ambience early, including underwater ambience and breathing sounds.</li>
-      </ul>
+      <p>Depth Strider was my second and final project for DigiPen's DES365 Game Feel course, built solo over five weeks immediately after Forgeborne. There are no objectives and no traditional mechanics. The entire goal was a feeling: making the player believe they are a deep-sea diver walking along the ocean floor in a suit that weighs more than they do.</p>
+      <p>That made it a pretty focused design problem. With nothing to win and nothing to fight, every decision came down to one question, which was whether it made the player feel more like they were actually down there.</p>
+
+      <div class="specs">
+        <div class="spec"><div class="k">Role</div><div class="v">Solo Developer &amp; Game Feel Designer</div></div>
+        <div class="spec"><div class="k">Engine</div><div class="v">Unity &middot; Cinemachine</div></div>
+        <div class="spec"><div class="k">Team size</div><div class="v">Solo</div></div>
+        <div class="spec"><div class="k">Duration</div><div class="v">5 weeks</div></div>
+        <div class="spec"><div class="k">Year</div><div class="v">2025</div></div>
+        <div class="spec"><div class="k">Course</div><div class="v">DES365 Game Feel</div></div>
+        <div class="spec wide"><div class="k">Goal</div><div class="v">Communicate weight, resistance, and physical presence entirely through controller feel, environment, and audio, with no mechanics or objectives to lean on.</div></div>
+      </div>
+
+      <figure class="shot">
+        <div class="ph">MEDIA SLOT: Depth Strider hero shot / walking clip</div>
+        <figcaption>Replace with a gameplay still or looping clip.</figcaption>
+      </figure>
+
+      <h2>Building the weight into the controller</h2>
+      <p>I built a custom player controller in Unity using Cinemachine for more cinematic camera behavior, including smooth look rotation, camera bob, and subtle screen shake. Movement is deliberately slow and heavy, with gradual acceleration standing in for underwater resistance, so the player never gets the instant response a first-person game normally trains them to expect.</p>
+      <p>The detail that did the most work was delayed head rotation. The camera lags slightly behind your input, which sells the idea that you are turning a heavy helmet instead of just a camera. Combined with the diving helmet model attached to the player, this created moments where you can see the inside frame of the helmet as you look up or down, and that little glimpse of the suit does more than any UI would. I also added angle limits to both the camera and the helmet so the view stays restricted, which reinforces the same feeling of being inside something bulky.</p>
+
+      <div class="systems">
+        <div class="sys">
+          <span class="tag">Movement</span>
+          <h3>Resistance and acceleration</h3>
+          <p>Slow, heavy movement with gradual ramp-up rather than instant response, tuned until walking felt like pushing against water instead of sliding across a floor.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Camera</span>
+          <h3>Delayed head rotation</h3>
+          <p>The camera trails player input by a small margin, turning every look input into the feeling of rotating a heavy helmet. The single highest-impact tuning decision in the project.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Embodiment</span>
+          <h3>Helmet framing and angle limits</h3>
+          <p>A helmet model attached to the player, plus hard limits on camera and helmet angles, so looking around reveals the interior frame and the player's view stays physically constrained.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Presence</span>
+          <h3>Breathing bubbles</h3>
+          <p>A breathing bubble effect attached to the player's head. It ties the breathing audio to something you can actually see, and it keeps the character present in a first-person view where there is no body to look down at.</p>
+        </div>
+      </div>
+
+      <figure class="shot">
+        <div class="ph">MEDIA SLOT: helmet interior visible on look-up</div>
+        <figcaption>The suit framing the player's view.</figcaption>
+      </figure>
+
+      <h2>An environment that navigates for you</h2>
+      <p>Once the controller felt right, I built an environment to support it. The level takes the form of an underwater ravine that guides the player forward naturally, without waypoints, markers, or any explicit navigation system. The walls do the directing.</p>
+      <p>For a goal, I used the player's distant ship marked by a rhythmic blinking light, visible at all times and gradually growing larger as the player approaches. It gives the walk a destination and a sense of progress without ever telling the player where to go, which matters when the whole experience runs on atmosphere rather than instruction.</p>
+
+      <div class="shot-row">
+        <figure class="shot">
+          <div class="ph">MEDIA SLOT: the ravine guiding forward</div>
+          <figcaption>Level geometry as navigation.</figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="ph">MEDIA SLOT: distant ship with blinking light</div>
+          <figcaption>A goal that never needs a marker.</figcaption>
+        </figure>
+      </div>
+
+      <h2>Atmosphere and audio</h2>
+      <p>I implemented post-processing, fog, and a custom skybox to build the underwater atmosphere, with floating particles giving the water volume and movement rather than leaving it as empty space.</p>
+      <p>The biggest change from Forgeborne was putting audio and ambience in early instead of saving them for polish. The underwater ambience and breathing sounds went in near the start, and having them there while I tuned the movement actually changed how I tuned it. On Forgeborne the audio never made it out of the backlog, and you can tell the difference between the two projects.</p>
+
+      <h2>What I took from it</h2>
+      <p>This project was practice in getting camera behavior, movement tuning, environment, and audio all pushing toward the same thing. Once you take away objectives and mechanics, the only thing left is whether the player believes where they are.</p>
+      <p class="takeaway">Feel is not something you add at the end. It's the thing everything else has to be scheduled around.</p>
+
+      <!-- LINK SLOT: add a build or video link here when available -->
       <div class="pager"><a href="strip-miner.html"><span class="lbl">&larr; Previous</span>Strip Miner</a><a class="nxt" href="nitelite.html"><span class="lbl">Next &rarr;</span>NiteLite</a></div>
     </div>
   </div>
@@ -65,5 +126,6 @@
       <small>&copy; 2026 Taylor Cadwallader &middot; Built &amp; hosted on GitHub Pages</small>
     </div>
   </footer>
+  <script src="../particles.js" defer></script>
 </body>
 </html>

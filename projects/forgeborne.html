@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Forgeborne — Taylor Cadwallader</title>
-  <meta name="description" content="Forgeborne — five-week solo Unity prototype exploring game feel through runtime mesh splitting, where nine attacks are driven by one procedural shrapnel system." />
+  <title>Forgeborne | Taylor Cadwallader</title>
+  <meta name="description" content="Forgeborne: five-week solo Unity prototype exploring game feel through runtime mesh splitting, where nine attacks are driven by one procedural shrapnel system." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../style.css" />
 </head>
 <body>
+  <a class="skip" href="#main">Skip to content</a>
   <header>
     <div class="wrap nav">
       <a class="brand" href="../index.html">Taylor <span>Cadwallader</span></a>
@@ -22,7 +23,7 @@
       </nav>
     </div>
   </header>
-  <div class="wrap">
+  <div class="wrap" id="main">
     <div class="detail-hero">
       <a class="back" href="../index.html#work">&larr; All work</a>
       <h1>Forgeborne</h1>
@@ -48,12 +49,12 @@
       </div>
 
       <figure class="shot">
-        <div class="ph">MEDIA SLOT &mdash; Forgeborne hero shot / gameplay reel</div>
+        <div class="ph">MEDIA SLOT: Forgeborne hero shot / gameplay reel</div>
         <figcaption>Replace with a gameplay still or montage clip.</figcaption>
       </figure>
 
       <h2>The procedural mesh system</h2>
-      <p>To make one mechanic carry nine attacks, I built a runtime mesh-splitting system that takes any assigned model and breaks it into individual triangles to simulate metal shrapnel. Each triangle becomes its own GameObject, which is obviously not performance-friendly, but it was acceptable for a prototype and it made every weapon in the game physically the same material.</p>
+      <p>To make one mechanic carry nine attacks, I built a runtime mesh-splitting system that takes any model I assign it and breaks it into individual triangles to simulate metal shrapnel. Each triangle becomes its own GameObject, which is obviously not great for performance, but it was fine for a prototype and it meant every weapon in the game is made of the same stuff.</p>
       <p>One system handles the mesh decomposition, and a second manages teleporting and reassembling the shrapnel behind the player. On top of that I built a reform animation pipeline where the pieces fly in, spin, and lock into place to reconstruct the original weapon model, then disperse again during attacks. That let me treat weapons as modular formations of scrap rather than static meshes.</p>
 
       <ol class="steps">
@@ -65,7 +66,7 @@
       </ol>
 
       <figure class="shot">
-        <div class="ph">MEDIA SLOT &mdash; mesh split and reform process</div>
+        <div class="ph">MEDIA SLOT: mesh split and reform process</div>
         <figcaption>The system every weapon is built on.</figcaption>
       </figure>
 
@@ -91,22 +92,22 @@
         <div class="sys">
           <span class="tag">Best executions</span>
           <h3>Where it lands hardest</h3>
-          <p>The hammer slam, the sniper trickshot, and the anvil drop are the three attacks that best capture the intended fantasy. The hammer's delayed, explosive impact in particular is the clearest proof the system was worth building.</p>
+          <p>The hammer slam, the sniper trickshot, and the anvil drop are the three attacks that best capture what I was going for. The hammer especially, with its delayed and explosive impact, is the clearest sign the system was worth building.</p>
         </div>
       </div>
 
       <div class="shot-row">
         <figure class="shot">
-          <div class="ph">MEDIA SLOT &mdash; hammer slam</div>
+          <div class="ph">MEDIA SLOT: hammer slam</div>
           <figcaption>Delayed, explosive impact.</figcaption>
         </figure>
         <figure class="shot">
-          <div class="ph">MEDIA SLOT &mdash; sniper trickshot</div>
+          <div class="ph">MEDIA SLOT: sniper trickshot</div>
           <figcaption>Pistol reconfiguring into a sniper.</figcaption>
         </figure>
       </div>
       <figure class="shot">
-        <div class="ph">MEDIA SLOT &mdash; anvil drop</div>
+        <div class="ph">MEDIA SLOT: anvil drop</div>
         <figcaption>Forged in midair, dropped on target.</figcaption>
       </figure>
 
@@ -115,16 +116,16 @@
       <p>Moving to a procedural mesh-splitting solution was the biggest technical shift in the project and ultimately what made the concept viable at all. It also meant learning runtime mesh manipulation from scratch, mid-project, with the deadline already running.</p>
 
       <figure class="shot">
-        <div class="ph">MEDIA SLOT &mdash; week-one stretched-cube prototype</div>
+        <div class="ph">MEDIA SLOT: week-one stretched-cube prototype</div>
         <figcaption>Validating magnetic assembly before the procedural rebuild.</figcaption>
       </figure>
 
       <h2>What fell short</h2>
-      <p>Most of my iteration time went into stabilizing and refining the electromagnetism system itself, which meant UI polish, audio, camera shake, and visual materials all stayed underdeveloped. Playtesting was limited too, and a lot of the feedback I did get centered on placeholder elements rather than combat feel, which cost me iteration opportunities late in development. Depth Strider, the prototype I built immediately after this one, is where I corrected that by prioritizing audio and ambience from the first week.</p>
+      <p>Most of my time went into stabilizing and refining the electromagnetism system itself, so UI polish, audio, camera shake, and visual materials all stayed underdeveloped. Playtesting was limited too, and a lot of the feedback I did get was about placeholder art rather than how the combat felt, which cost me chances to iterate late in development. Depth Strider, the prototype I built right after this one, is where I fixed that by putting audio and ambience in during the first week instead of the last.</p>
 
       <h2>What I took from it</h2>
-      <p>Despite the rough edges, this project reinforced a pattern I keep coming back to. I prefer building a flexible system first and then designing multiple mechanics that express that system in different ways, and I've used the same approach on nearly every project since, from the inspection stations in Line 9 to the object framework in Trash.</p>
-      <p class="takeaway">Even when the polish falls short, the systemic foundation is the part I care about most, and it's the part that keeps paying off in later work.</p>
+      <p>Even with the rough edges, this project reinforced a pattern in my work. I prefer building a flexible system first and then designing several mechanics that express that system in different ways, and I've used the same approach on almost every project since, from the inspection stations in Line 9 to the object framework in Trash.</p>
+      <p class="takeaway">Even when the polish falls short, the systemic foundation is what I care about most, and it's the part I keep building on later.</p>
 
       <div class="pager"><a href="bloops.html"><span class="lbl">&larr; Previous</span>BLOOPS</a><a class="nxt" href="knight-light-3d.html"><span class="lbl">Next &rarr;</span>Knight Light (3D)</a></div>
     </div>
@@ -143,5 +144,6 @@
       <small>&copy; 2026 Taylor Cadwallader &middot; Built &amp; hosted on GitHub Pages</small>
     </div>
   </footer>
+  <script src="../particles.js" defer></script>
 </body>
 </html>
