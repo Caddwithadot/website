@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SGP &amp;mdash; Streamer Game Project — Taylor Cadwallader</title>
+  <meta name="description" content="Taylor Cadwallader — SGP &amp;mdash; Streamer Game Project" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="../index.html">Taylor <span>Cadwallader</span></a>
+      <nav class="nav-links">
+        <a href="../index.html#work">Games</a>
+        <a href="../index.html#tools">Tools</a>
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+  <div class="wrap">
+    <div class="detail-hero">
+      <a class="back" href="../index.html#work">&larr; All work</a>
+      <h1>SGP &mdash; Streamer Game Project</h1>
+      <div class="detail-sub">Twitch-Integrated Interactive Prototype &middot; Unity</div>
+      <div class="detail-meta"><span class="badge hot">Summer 2023</span><span class="badge">Systems Designer &amp; Programmer</span><span class="badge">Team of 2</span></div>
+    </div>
+
+    <div class="detail-banner"><span class="label">SGP</span></div>
+
+    <div class="detail-body">
+      <h2>Overview</h2>
+      <p>SGP, short for Streamer Game Prototype, was a summer exploration of how Twitch chat could directly drive an in-engine Unity experience. Each chatter spawned an avatar with a floating nametag the moment they sent a message; sending another message reset their lifetime timer and triggered a small hop — turning passive viewers into visible participants in a simulated audience space.</p>
+      <p>As it grew, I prototyped networking so chatters could control avatars in first person, integrated a public Google Sheet as a username-keyed data store for inventories and cosmetics, built a “!color” customization command, and made an emote parser that spawned particle effects using the emote image as the sprite.</p>
+      <h2>What I did</h2>
+      <ul class="contrib">
+        <li>Built a prototype exploring how Twitch chat could directly drive an in-engine Unity experience.</li>
+        <li>Designed and implemented a system that spawned avatars in-scene based on live chat activity, with floating nametags tied to usernames.</li>
+        <li>Added lifetime timers to avatars, resetting them and triggering a hop animation whenever the same chatter sent another message.</li>
+        <li>Prototyped networking so chatters could connect directly to the game and control their own avatars in first person.</li>
+        <li>Integrated a public Google Sheet as a persistent data store keyed by username to support inventories, currency, and cosmetic unlocks.</li>
+        <li>Implemented a command-driven customization system where users could change avatar color using a “!color” command with validated and saved values.</li>
+        <li>Built a dynamic emote parsing system that detected chat emotes and spawned particle effects using the emote image as the sprite.</li>
+        <li>Worked on modular live-data pipelines and readable feedback loops connecting community interaction to gameplay space.</li>
+      </ul>
+      <div class="pager"><a href="knightlight-2d.html"><span class="lbl">&larr; Previous</span>KnightLight</a><a class="nxt" href="project-nasu.html"><span class="lbl">Next &rarr;</span>Project Nasu</a></div>
+    </div>
+  </div>
+  <footer id="contact">
+    <div class="wrap">
+      <div class="foot-grid">
+        <div class="foot-name">Taylor <span>Cadwallader</span></div>
+        <div class="foot-links">
+          <a href="mailto:tcadwallader.design@gmail.com">Email</a>
+          <a href="https://www.linkedin.com/in/taylor-cadwallader" target="_blank" rel="noopener">LinkedIn &#8599;</a>
+          <a href="https://discord.com/users/641844475068547072" target="_blank" rel="noopener">Discord &#8599;</a>
+          <a href="../resume.pdf" target="_blank" rel="noopener">R&eacute;sum&eacute; &#8599;</a>
+        </div>
+      </div>
+      <small>&copy; 2026 Taylor Cadwallader &middot; Built &amp; hosted on GitHub Pages</small>
+    </div>
+  </footer>
+</body>
+</html>

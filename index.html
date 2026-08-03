@@ -3,404 +3,256 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>Taylor Cadwallader — Technical Game Designer</title>
   <meta name="description" content="Taylor Cadwallader — Technical Game Designer. I design mechanics and build the systems behind them: clarity, responsiveness, and scalability." />
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-
-  <style>
-    /* ============================================================
-       DESIGN TOKENS — change these to re-skin the whole site
-       ============================================================ */
-    :root {
-      --bg:      #12131a;   /* deep ink background */
-      --bg-2:    #171923;   /* slightly raised */
-      --surface: #1b1e28;   /* cards */
-      --ink:     #edeef2;   /* main text */
-      --muted:   #9a9fb0;   /* secondary text */
-      --line:    #2a2e3b;   /* hairline borders */
-      --light:   #f5b642;   /* AMBER — "the Light". Accent for GAMES */
-      --steel:   #6fb3d9;   /* COOL blue. Accent for TOOLS */
-
-      --maxw: 960px;
-      --radius: 16px;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-
-    body {
-      background:
-        radial-gradient(1100px 600px at 70% -10%, rgba(245,182,66,0.08), transparent 60%),
-        var(--bg);
-      color: var(--ink);
-      font-family: "Inter", system-ui, sans-serif;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
-    a { color: var(--light); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    .mono { font-family: "JetBrains Mono", monospace; }
-
-    /* ---------- Top bar ---------- */
-    header {
-      position: sticky; top: 0; z-index: 20;
-      background: color-mix(in srgb, var(--bg) 82%, transparent);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--line);
-    }
-    .nav { display: flex; align-items: center; justify-content: space-between; height: 66px; }
-    .brand {
-      font-family: "Space Grotesk", sans-serif;
-      font-weight: 700; font-size: 1.1rem; letter-spacing: -0.01em; color: var(--ink);
-    }
-    .brand span { color: var(--light); }
-    .nav-links { display: flex; gap: 24px; }
-    .nav-links a {
-      color: var(--muted); font-size: 0.9rem; font-weight: 500;
-      font-family: "JetBrains Mono", monospace;
-    }
-    .nav-links a:hover { color: var(--ink); text-decoration: none; }
-
-    /* ---------- Hero ---------- */
-    .hero { padding: 96px 0 56px; position: relative; }
-    .hero::before {
-      content: ""; position: absolute; top: 10px; left: -60px;
-      width: 340px; height: 340px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(245,182,66,0.20), transparent 68%);
-      filter: blur(20px); z-index: -1; pointer-events: none;
-    }
-    .eyebrow {
-      display: inline-flex; align-items: center; gap: 9px;
-      font-family: "JetBrains Mono", monospace;
-      font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase;
-      color: var(--light); margin-bottom: 20px;
-    }
-    .eyebrow .dot {
-      width: 8px; height: 8px; border-radius: 50%; background: var(--light);
-      box-shadow: 0 0 12px 2px rgba(245,182,66,0.7);
-      animation: pulse 2.6s ease-in-out infinite;
-    }
-    @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.35;} }
-
-    .hero h1 {
-      font-family: "Space Grotesk", sans-serif;
-      font-weight: 700; font-size: clamp(2.6rem, 8vw, 4.6rem);
-      line-height: 1.02; letter-spacing: -0.03em;
-    }
-    .hero h1 .glow { color: var(--light); text-shadow: 0 0 34px rgba(245,182,66,0.45); }
-    .hero .lede {
-      margin-top: 24px; font-size: clamp(1.05rem, 2.2vw, 1.22rem);
-      color: var(--muted); max-width: 62ch;
-    }
-    .cta-row { margin-top: 34px; display: flex; gap: 12px; flex-wrap: wrap; }
-    .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 12px 22px; border-radius: 999px; font-weight: 600; font-size: 0.95rem;
-      transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
-    }
-    .btn-primary { background: var(--light); color: #1a1405; }
-    .btn-primary:hover { text-decoration: none; transform: translateY(-2px); box-shadow: 0 10px 26px -8px rgba(245,182,66,0.5); }
-    .btn-ghost { border: 1px solid var(--line); color: var(--ink); }
-    .btn-ghost:hover { text-decoration: none; border-color: var(--light); }
-
-    /* ---------- Credentials strip ---------- */
-    .creds {
-      display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 40px;
-      padding-top: 26px; border-top: 1px solid var(--line);
-    }
-    .cred { font-family: "JetBrains Mono", monospace; font-size: 0.82rem; color: var(--muted); }
-    .cred b { color: var(--ink); font-weight: 500; }
-
-    /* ---------- Section headers ---------- */
-    section { padding: 60px 0; }
-    .section-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 28px; }
-    .section-head h2 {
-      font-family: "Space Grotesk", sans-serif; font-weight: 600;
-      font-size: 1.75rem; letter-spacing: -0.01em;
-    }
-    .section-head .idx { font-family: "JetBrains Mono", monospace; font-size: 0.82rem; color: var(--muted); }
-
-    /* ---------- Project cards ---------- */
-    .card {
-      background: var(--surface); border: 1px solid var(--line);
-      border-radius: var(--radius); overflow: hidden;
-      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-    }
-    .card:hover { transform: translateY(-4px); }
-
-    /* the visual panel — swap the background to add a real screenshot */
-    .thumb {
-      height: 190px; position: relative;
-      background:
-        linear-gradient(135deg, rgba(245,182,66,0.14), transparent 55%),
-        repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0 12px, transparent 12px 24px),
-        var(--bg-2);
-      display: flex; align-items: flex-end; padding: 16px;
-      /* EDIT: to add a screenshot, put the image in your repo (e.g. images/knightlight.png) and use:
-         background: url('images/knightlight.png') center/cover; */
-    }
-    .thumb .label {
-      font-family: "Space Grotesk", sans-serif; font-weight: 700;
-      font-size: 1.4rem; color: rgba(255,255,255,0.14); letter-spacing: -0.01em;
-    }
-    .card-body { padding: 22px; }
-    .card-body h3 { font-family: "Space Grotesk", sans-serif; font-size: 1.25rem; margin-bottom: 10px; }
-    .card-body h3 a { color: var(--ink); }
-    .card-body h3 a:hover { color: var(--light); text-decoration: none; }
-    .card-body p { color: var(--muted); font-size: 0.96rem; }
-
-    .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
-    .badge {
-      font-family: "JetBrains Mono", monospace; font-size: 0.74rem; font-weight: 500;
-      padding: 4px 11px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted);
-    }
-    .badge.hot { color: var(--light); border-color: rgba(245,182,66,0.45); }
-    .badge.soon { color: var(--muted); border-style: dashed; }
-    .steam {
-      display: inline-flex; align-items: center; gap: 7px; margin-top: 16px;
-      font-family: "JetBrains Mono", monospace; font-size: 0.85rem; font-weight: 500;
-    }
-
-    /* Games use amber glow; tools use steel glow */
-    #work .card:hover { border-color: rgba(245,182,66,0.55); box-shadow: 0 16px 40px -16px rgba(245,182,66,0.3); }
-    #tools .card:hover { border-color: rgba(111,179,217,0.55); box-shadow: 0 16px 40px -16px rgba(111,179,217,0.28); }
-    #tools .thumb { background:
-        linear-gradient(135deg, rgba(111,179,217,0.14), transparent 55%),
-        repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0 12px, transparent 12px 24px),
-        var(--bg-2); }
-    #tools .card-body h3 a:hover { color: var(--steel); }
-    #tools .badge.hot { color: var(--steel); border-color: rgba(111,179,217,0.45); }
-
-    /* Featured card = full width, horizontal on wide screens */
-    .featured { display: grid; grid-template-columns: 1.1fr 1fr; }
-    .featured .thumb { height: 100%; min-height: 260px; }
-
-    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-
-    /* ---------- About ---------- */
-    .about p { color: var(--muted); font-size: 1.06rem; max-width: 68ch; }
-    .about p + p { margin-top: 15px; }
-
-    /* ---------- Footer ---------- */
-    footer { border-top: 1px solid var(--line); padding: 46px 0 64px; margin-top: 20px; }
-    .foot-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 24px; align-items: end; }
-    .foot-name { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 1.4rem; }
-    .foot-name span { color: var(--light); }
-    .foot-links { display: flex; gap: 20px; flex-wrap: wrap; }
-    .foot-links a { color: var(--ink); font-weight: 500; font-family: "JetBrains Mono", monospace; font-size: 0.9rem; }
-    footer small { color: var(--muted); display: block; margin-top: 22px; font-family: "JetBrains Mono", monospace; font-size: 0.8rem; }
-
-    /* ---------- Load animation ---------- */
-    .rise { opacity: 0; transform: translateY(16px); animation: rise 0.6s ease forwards; }
-    .rise:nth-child(2){animation-delay:.06s;} .rise:nth-child(3){animation-delay:.12s;}
-    .rise:nth-child(4){animation-delay:.18s;} .rise:nth-child(5){animation-delay:.24s;}
-    @keyframes rise { to { opacity: 1; transform: none; } }
-
-    a:focus-visible, .btn:focus-visible { outline: 2px solid var(--light); outline-offset: 3px; border-radius: 8px; }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, .rise { animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important; }
-      html { scroll-behavior: auto; }
-    }
-    @media (max-width: 720px) {
-      .nav-links { gap: 16px; }
-      .featured { grid-template-columns: 1fr; }
-      .grid { grid-template-columns: 1fr; }
-      .hero { padding: 64px 0 40px; }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-  <!-- ============ TOP BAR ============ -->
   <header>
     <div class="wrap nav">
-      <span class="brand">Taylor <span>Cadwallader</span></span>
+      <a class="brand" href="index.html">Taylor <span>Cadwallader</span></a>
       <nav class="nav-links">
-        <a href="#work">Games</a>
-        <a href="#tools">Tools</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
+        <a href="index.html#work">Games</a>
+        <a href="index.html#tools">Tools</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact">Contact</a>
       </nav>
     </div>
   </header>
 
-  <!-- ============ HERO ============ -->
   <div class="wrap">
     <div class="hero">
       <span class="eyebrow rise"><span class="dot"></span>Technical Game Designer</span>
       <h1 class="rise">Taylor <span class="glow">Cadwallader</span></h1>
       <p class="lede rise">
-        I design mechanics and build the systems behind them — focusing on clarity,
-        responsiveness, and scalability. I turn prototypes into polished, satisfying
-        gameplay, iterating relentlessly on feel until the concept clicks.
+        I design mechanics and build the systems behind them &mdash; focusing on clarity,
+        responsiveness, and scalability. I sit around 70% designer, 30% programmer: I like to
+        build a flexible system first, then express many mechanics through it, iterating on feel
+        until the concept clicks.
       </p>
       <div class="cta-row rise">
-        <a class="btn btn-primary" href="#work">View my work</a>
-        <!-- Résumé PDF is currently hosted on your old Wix files. Later you can drop the PDF into your repo and point this link at it instead. -->
-        <a class="btn btn-ghost" href="https://b93d3333-2e11-4930-88bc-18f8573c522e.filesusr.com/ugd/03368a_14a1748e47a94c4e957176a4ef0acadd.pdf" target="_blank" rel="noopener">Résumé ↗</a>
+        <a class="btn btn-primary" href="#featured">View my work</a>
+        <a class="btn btn-ghost" href="resume.pdf" target="_blank" rel="noopener">R&eacute;sum&eacute; &#8599;</a>
       </div>
-
       <div class="creds rise">
-        <span class="cred">BA · <b>DigiPen Institute of Technology</b></span>
-        <span class="cred">Shipped on <b>Steam</b> · 110+ reviews</span>
-        <span class="cred">Custom <b>C++</b> engine · <b>Unity</b> · <b>C#</b></span>
+        <span class="cred">BA Game Design &middot; <b>DigiPen</b> (2026) &middot; Dean's List</span>
+        <span class="cred">Shipped on <b>Steam</b> &middot; 110+ positive reviews</span>
+        <span class="cred">~6 yrs &middot; <b>Unity</b> &middot; <b>Unreal</b> &middot; custom <b>C++</b></span>
       </div>
     </div>
   </div>
 
-  <!-- ============ GAMES ============ -->
+  <div class="wrap">
+    <section id="featured">
+      <div class="section-head"><span class="idx mono">&#9733;</span><h2>Featured Work</h2></div>
+      <div class="featured-grid">
+        <article class="fcard">
+          <div class="thumb"><span class="label">Trash</span></div>
+          <div class="fcard-body">
+            <h3><a href="projects/trash.html">Trash</a></h3>
+            <div class="fsub">3D Top-Down Extraction Game &middot; Unity &middot; Academic</div>
+            <p>Trash is my final academic project at DigiPen, currently still in development. It's a 3D top-down extraction game where the player uses a vacuum gun to suck up trash and materials, then fires them into collectors to complete quotas. Materials can be stored in the ship and spent on upgrades that unlock new mechanics and improve run efficiency.</p>
+            <div class="meta"><span class="badge">In Development</span><span class="badge">Unity</span><span class="badge">Systems</span></div>
+            <div class="fcard-link"><a href="projects/trash.html">Read more &rarr;</a></div>
+          </div>
+        </article>
+        <article class="fcard tool">
+          <div class="thumb"><span class="label">I.R.A.</span></div>
+          <div class="fcard-body">
+            <h3><a href="projects/input-replay-analyzer.html">Input Replay Analyzer</a></h3>
+            <div class="fsub">Input Analysis &amp; Replay Tool &middot; C# WinForms &middot; Academic</div>
+            <p>The Input Replay Analyzer is a standalone WinForms tool I built over four weeks to load, visualize, and replay recorded player-input logs from playtest sessions. I wanted to work outside of Unity and make something genuinely useful for QA testers, user researchers, and designers who need a clearer way to inspect player behavior and reproduce bugs reliably.</p>
+            <div class="meta"><span class="badge">Tool</span><span class="badge">C#</span><span class="badge">WinForms</span></div>
+            <div class="fcard-link"><a href="projects/input-replay-analyzer.html">Read more &rarr;</a></div>
+          </div>
+        </article>
+        <article class="fcard">
+          <div class="thumb"><span class="label">Depth Strider</span></div>
+          <div class="fcard-body">
+            <h3><a href="projects/depth-strider.html">Depth Strider</a></h3>
+            <div class="fsub">First-Person Kinesthetic Experience &middot; Unity &middot; Academic</div>
+            <p>Depth Strider was my second DES365 Game Feel prototype, built solo over five weeks. The whole goal was a feeling: making the player feel like a deep-sea diver walking the ocean floor. It leans entirely on controller feel and environmental immersion rather than traditional mechanics or objectives.</p>
+            <div class="meta"><span class="badge">Game Feel</span><span class="badge">Unity</span><span class="badge">Solo</span></div>
+            <div class="fcard-link"><a href="projects/depth-strider.html">Read more &rarr;</a></div>
+          </div>
+        </article>
+        <article class="fcard">
+          <div class="thumb"><span class="label">Forgeborne</span></div>
+          <div class="fcard-body">
+            <h3><a href="projects/forgeborne.html">Forgeborne</a></h3>
+            <div class="fsub">First-Person Action Prototype &middot; Unity &middot; Academic</div>
+            <p>Forgeborne was a five-week solo prototype for DigiPen's DES365 Game Feel course — a first-person action experience built around a single unifying mechanic: electromagnetism. The player uses metal-manipulating tech to forge and test adaptive weapons in a junkyard arena. The brief wanted three weapons with three attacks each; my goal was to tie all nine together through one systemic interaction rather than nine isolated kits.</p>
+            <div class="meta"><span class="badge">Game Feel</span><span class="badge">Unity</span><span class="badge">Solo</span></div>
+            <div class="fcard-link"><a href="projects/forgeborne.html">Read more &rarr;</a></div>
+          </div>
+        </article>
+        <article class="fcard">
+          <div class="thumb"><span class="label">KnightLight</span></div>
+          <div class="fcard-body">
+            <h3><a href="projects/knightlight-2d.html">KnightLight</a></h3>
+            <div class="fsub">2D Puzzle-Platformer &middot; Custom C++ Engine &middot; Academic</div>
+            <p>KnightLight was a two-semester, multidisciplinary project where programmers built a custom C++ engine while designers created the gameplay inside it. I served as Design Lead, owning player controller design, core mechanic design and implementation, prototyping, and playtesting. With no engine yet in semester one, I prototyped relentlessly in Unity — sometimes weekly — to keep playtests running while the engine came together.</p>
+            <div class="meta"><span class="badge">Shipped on Steam</span><span class="badge">Custom Engine</span><span class="badge">Design Lead</span></div>
+            <div class="fcard-link"><a href="projects/knightlight-2d.html">Read more &rarr;</a></div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
+
   <div class="wrap">
     <section id="work">
-      <div class="section-head">
-        <span class="idx mono">01</span>
-        <h2>Games</h2>
+      <div class="section-head"><span class="idx mono">01</span><h2>All Games</h2></div>
+      <div class="worklist">
+      <div class="row">
+        <div class="row-title"><a href="projects/antimasking.html">AntiMasking</a></div>
+        <div class="row-role">Game Designer (Support)</div>
+        <div class="row-date">Feb 2026</div>
+        <a class="row-arrow" href="projects/antimasking.html" aria-label="Open AntiMasking">&rarr;</a>
       </div>
-
-      <!-- Featured: KnightLight (shipped) -->
-      <article class="card featured" style="margin-bottom:20px;">
-        <!-- EDIT: add a screenshot -> background: url('images/knightlight.png') center/cover; -->
-        <div class="thumb"><span class="label">KnightLight</span></div>
-        <div class="card-body">
-          <h3><a href="https://store.steampowered.com/app/3086850/KnightLight" target="_blank" rel="noopener">KnightLight</a></h3>
-          <p>
-            A 2D puzzle-platformer built in a custom C++ engine where you control both a
-            living suit of armor and the Light that powers it. Separate and recall the two
-            forms to solve light-based environmental puzzles in a dark, underground world.
-          </p>
-          <div class="meta">
-            <span class="badge hot">Custom Engine</span>
-            <span class="badge">C++</span>
-            <span class="badge hot">110+ Reviews</span>
-          </div>
-          <a class="steam" href="https://store.steampowered.com/app/3086850/KnightLight" target="_blank" rel="noopener">▸ View on Steam</a>
-        </div>
-      </article>
-
-      <div class="grid">
-        <article class="card">
-          <div class="thumb"><span class="label">Forgeborne</span></div>
-          <div class="card-body">
-            <h3>Forgeborne</h3>
-            <p>
-              First-person action prototype where weapons dynamically assemble from
-              fragmented metal, enabling melee and ranged combat from a shared systemic
-              foundation.
-            </p>
-            <div class="meta">
-              <span class="badge">Prototype</span>
-              <span class="badge">Systems Design</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="thumb"><span class="label">Trash</span></div>
-          <div class="card-body">
-            <h3>Trash</h3>
-            <p>
-              A 3D top-down extraction game built around a modular vacuum weapon system.
-              Collect, manage, and weaponize debris under time-based quotas, upgrading your
-              gear to unlock new mechanics.
-            </p>
-            <div class="meta">
-              <span class="badge">3D</span>
-              <span class="badge soon">Coming Soon</span>
-            </div>
-          </div>
-        </article>
+      <div class="row">
+        <div class="row-title"><a href="projects/trash.html">Trash</a></div>
+        <div class="row-role">Gameplay Designer &amp; Programmer</div>
+        <div class="row-date">Jan 2026 &ndash; Present</div>
+        <a class="row-arrow" href="projects/trash.html" aria-label="Open Trash">&rarr;</a>
+      </div>
+      <div class="row">
+        <div class="row-title"><a href="projects/line-9.html">Line 9</a></div>
+        <div class="row-role">Systems Designer &amp; Gameplay Programmer</div>
+        <div class="row-date">Aug 2025</div>
+        <a class="row-arrow" href="projects/line-9.html" aria-label="Open Line 9">&rarr;</a>
+      </div>
+      <div class="row">
+        <div class="row-title"><a href="projects/strip-miner.html">Strip Miner</a></div>
+        <div class="row-role">Systems &amp; Gameplay Designer</div>
+        <div class="row-date">Summer 2025</div>
+        <a class="row-arrow" href="projects/strip-miner.html" aria-label="Open Strip Miner">&rarr;</a>
+      </div>
+      <div class="row">
+        <div class="row-title"><a href="projects/depth-strider.html">Depth Strider</a></div>
+        <div class="row-role">Solo Developer &amp; Game Feel Designer</div>
+        <div class="row-date">Mar &ndash; Apr 2025</div>
+        <a class="row-arrow" href="projects/depth-strider.html" aria-label="Open Depth Strider">&rarr;</a>
+      </div>
+      <div class="row">
+        <div class="row-title"><a href="projects/nitelite.html">NiteLite</a></div>
+        <div class="row-role">QA Tester &amp; Technical Designer</div>
+        <div class="row-date">Jan &ndash; Apr 2025</div>
+        <a class="row-arrow" href="projects/nitelite.html" aria-label="Open NiteLite">&rarr;</a>
+      </div>
+      <div class="row">
+        <div class="row-title"><a href="projects/bloops.html">BLOOPS</a></div>
+        <div class="row-role">Gameplay Designer &amp; Programmer</div>
+        <div class="row-date">Jan 2025</div>
+        <a class="row-arrow" href="projects/bloops.html" aria-label="Open BLOOPS">&rarr;</a>
+      </div>
+      <div class="row">
+        <div class="row-title"><a href="projects/forgeborne.html">Forgeborne</a></div>
+        <div class="row-role">Solo Developer &amp; Systems Designer</div>
+        <div class="row-date">Jan &ndash; Feb 2025</div>
+        <a class="row-arrow" href="projects/forgeborne.html" aria-label="Open Forgeborne">&rarr;</a>
+      </div>
+      <div class="row">
+        <div class="row-title"><a href="projects/knight-light-3d.html">Knight Light (3D)</a></div>
+        <div class="row-role">UX &amp; Combat Designer</div>
+        <div class="row-date">Sep &ndash; Dec 2024</div>
+        <a class="row-arrow" href="projects/knight-light-3d.html" aria-label="Open Knight Light (3D)">&rarr;</a>
+      </div>
+      <div class="row">
+        <div class="row-title"><a href="projects/agp.html">AGP &mdash; Alien Game Project</a></div>
+        <div class="row-role">Systems Designer &amp; Gameplay Programmer</div>
+        <div class="row-date">Summer 2024</div>
+        <a class="row-arrow" href="projects/agp.html" aria-label="Open AGP &mdash; Alien Game Project">&rarr;</a>
+      </div>
+      <div class="row">
+        <div class="row-title"><a href="projects/knightlight-2d.html">KnightLight</a></div>
+        <div class="row-role">Design Lead</div>
+        <div class="row-date">Sep 2023 &ndash; May 2024</div>
+        <a class="row-arrow" href="projects/knightlight-2d.html" aria-label="Open KnightLight">&rarr;</a>
+      </div>
+      <div class="row">
+        <div class="row-title"><a href="projects/sgp.html">SGP &mdash; Streamer Game Project</a></div>
+        <div class="row-role">Systems Designer &amp; Programmer</div>
+        <div class="row-date">Summer 2023</div>
+        <a class="row-arrow" href="projects/sgp.html" aria-label="Open SGP &mdash; Streamer Game Project">&rarr;</a>
+      </div>
+      <div class="row">
+        <div class="row-title"><a href="projects/project-nasu.html">Project Nasu</a></div>
+        <div class="row-role">Systems Designer &amp; Programmer</div>
+        <div class="row-date">Jan &ndash; Apr 2023</div>
+        <a class="row-arrow" href="projects/project-nasu.html" aria-label="Open Project Nasu">&rarr;</a>
+      </div>
       </div>
     </section>
   </div>
 
-  <!-- ============ TOOLS ============ -->
   <div class="wrap">
     <section id="tools">
-      <div class="section-head">
-        <span class="idx mono">02</span>
-        <h2>Tools</h2>
+      <div class="section-head"><span class="idx mono">02</span><h2>Tools</h2></div>
+      <div class="worklist">
+      <div class="row tool">
+        <div class="row-title"><a href="projects/input-replay-analyzer.html">Input Replay Analyzer</a></div>
+        <div class="row-role">Tools Programmer &amp; Software Developer</div>
+        <div class="row-date">Nov &ndash; Dec 2025</div>
+        <a class="row-arrow" href="projects/input-replay-analyzer.html" aria-label="Open Input Replay Analyzer">&rarr;</a>
       </div>
-
-      <div class="grid">
-        <article class="card">
-          <div class="thumb"><span class="label">I.R.A.</span></div>
-          <div class="card-body">
-            <h3>Input Replay Analyzer</h3>
-            <p>
-              Standalone C# tool for recording, visualizing, and replaying player input —
-              enabling precise playtesting and bug reproduction with timeline inspection,
-              filters, and JSON control profiles.
-            </p>
-            <div class="meta">
-              <span class="badge hot">Tool</span>
-              <span class="badge">C#</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="thumb"><span class="label">Sprite Layerer</span></div>
-          <div class="card-body">
-            <h3>3D Sprite Layerer</h3>
-            <p>
-              A custom Unity editor tool that automates the creation of layered sprite
-              prefabs in 3D space, replacing a manual setup process with fast, configurable
-              generation.
-            </p>
-            <div class="meta">
-              <span class="badge hot">Tool</span>
-              <span class="badge">Unity</span>
-              <span class="badge soon">Coming Soon</span>
-            </div>
-          </div>
-        </article>
+      <div class="row tool">
+        <div class="row-title"><a href="projects/3d-sprite-layerer.html">3D Sprite Layerer</a></div>
+        <div class="row-role">Tools Programmer &amp; Technical Designer</div>
+        <div class="row-date">Sep &ndash; Oct 2025</div>
+        <a class="row-arrow" href="projects/3d-sprite-layerer.html" aria-label="Open 3D Sprite Layerer">&rarr;</a>
+      </div>
       </div>
     </section>
   </div>
 
-  <!-- ============ ABOUT ============ -->
   <div class="wrap">
     <section id="about" class="about">
-      <div class="section-head">
-        <span class="idx mono">03</span>
-        <h2>About</h2>
+      <div class="section-head"><span class="idx mono">03</span><h2>About</h2></div>
+      <p>
+        I'm Taylor, a Technical Game Designer finishing my BA at DigiPen Institute of Technology,
+        with roughly six years of hands-on game design and development experience. My skill set
+        sits at the intersection of design and implementation &mdash; I care most about designing
+        mechanics, building tools, and implementing features directly in-engine, taking ideas from
+        concept all the way through iteration.
+      </p>
+      <p>
+        I'm a logical, systems-oriented problem solver with a strong focus on polish and player
+        clarity. I'm comfortable making design tradeoffs around scope and technical constraints,
+        and willing to simplify, refactor, or cut features when it improves the experience. I've
+        served as Design Lead on multiple team projects, run SCRUM as a de facto lead, and
+        collaborated closely with programmers, artists, and audio designers. I'm strongest in
+        Unity, with additional experience in Unreal and custom C++ engines, programming primarily
+        in C#.
+      </p>
+      <div class="edu">
+        <div class="edu-item">
+          <div class="deg">BA, Game Design</div>
+          <div class="school">DigiPen Institute of Technology &middot; 2026 &middot; Dean's Honor List</div>
+        </div>
+        <div class="edu-item">
+          <div class="deg">Video Game Designer</div>
+          <div class="school">Sno-Isle TECH Skills Center &middot; 1,200 hours</div>
+        </div>
       </div>
-      <p>
-        I'm Taylor, a Technical Game Designer finishing up my BA at DigiPen Institute of
-        Technology. I design mechanics and build the systems behind them, focusing on
-        clarity, responsiveness, and scalability.
-      </p>
-      <p>
-        I love collaborating with teammates, shaping ideas through feedback and turning
-        prototypes into polished, satisfying gameplay. I iterate relentlessly on feel and
-        clarity, adapting and solving whatever problems stand between concept and completion.
-      </p>
     </section>
   </div>
 
-  <!-- ============ FOOTER / CONTACT ============ -->
   <footer id="contact">
     <div class="wrap">
       <div class="foot-grid">
-        <div>
-          <div class="foot-name">Taylor <span>Cadwallader</span></div>
-          <!-- EDIT: add your email here if you'd like a direct contact:
-               <a href="mailto:you@example.com">Email</a> -->
-        </div>
+        <div class="foot-name">Taylor <span>Cadwallader</span></div>
         <div class="foot-links">
-          <a href="https://www.linkedin.com/in/taylor-cadwallader" target="_blank" rel="noopener">LinkedIn ↗</a>
-          <a href="https://discord.com/users/641844475068547072" target="_blank" rel="noopener">Discord ↗</a>
-          <a href="https://b93d3333-2e11-4930-88bc-18f8573c522e.filesusr.com/ugd/03368a_14a1748e47a94c4e957176a4ef0acadd.pdf" target="_blank" rel="noopener">Résumé ↗</a>
+          <a href="mailto:tcadwallader.design@gmail.com">Email</a>
+          <a href="https://www.linkedin.com/in/taylor-cadwallader" target="_blank" rel="noopener">LinkedIn &#8599;</a>
+          <a href="https://discord.com/users/641844475068547072" target="_blank" rel="noopener">Discord &#8599;</a>
+          <a href="resume.pdf" target="_blank" rel="noopener">R&eacute;sum&eacute; &#8599;</a>
         </div>
       </div>
-      <small>© 2026 Taylor Cadwallader · Built &amp; hosted on GitHub Pages</small>
+      <small>&copy; 2026 Taylor Cadwallader &middot; Built &amp; hosted on GitHub Pages</small>
     </div>
   </footer>
 </body>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forgeborne — Taylor Cadwallader</title>
+  <meta name="description" content="Taylor Cadwallader — Forgeborne" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="../index.html">Taylor <span>Cadwallader</span></a>
+      <nav class="nav-links">
+        <a href="../index.html#work">Games</a>
+        <a href="../index.html#tools">Tools</a>
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+  <div class="wrap">
+    <div class="detail-hero">
+      <a class="back" href="../index.html#work">&larr; All work</a>
+      <h1>Forgeborne</h1>
+      <div class="detail-sub">First-Person Action Prototype &middot; Unity &middot; Academic</div>
+      <div class="detail-meta"><span class="badge hot">Jan &ndash; Feb 2025</span><span class="badge">Solo Developer &amp; Systems Designer</span><span class="badge">Solo</span></div>
+    </div>
+
+    <div class="detail-banner"><span class="label">Forgeborne</span></div>
+
+    <div class="detail-body">
+      <h2>Overview</h2>
+      <p>Forgeborne was a five-week solo prototype for DigiPen's DES365 Game Feel course — a first-person action experience built around a single unifying mechanic: electromagnetism. The player uses metal-manipulating tech to forge and test adaptive weapons in a junkyard arena. The brief wanted three weapons with three attacks each; my goal was to tie all nine together through one systemic interaction rather than nine isolated kits.</p>
+      <p>To do that I built a runtime mesh-splitting system that breaks any assigned model into individual triangles to simulate shrapnel, plus a reform pipeline that flies, spins, and locks the pieces back into weapons. Every archetype reuses that same shrapnel system — the clearest example of a pattern I keep coming back to: build a flexible system first, then express many mechanics through it.</p>
+      <h2>What I did</h2>
+      <ul class="contrib">
+        <li>Completed a five-week solo prototype for DES365 Game Feel in Unity.</li>
+        <li>Built a first-person action experience centered on electromagnetism and adaptive weapon forging.</li>
+        <li>Created a runtime mesh-splitting system that broke assigned models into individual triangles to simulate metal shrapnel.</li>
+        <li>Built a reform animation pipeline that teleported, spun, and reassembled shrapnel into weapons, then dispersed it again during attacks.</li>
+        <li>Designed three weapon archetypes, each with three attack types, all tied into the same modular shrapnel system.</li>
+        <li>Pivoted away from a handcrafted primitive-shape approach when it became clear it would not scale within the five-week timeline.</li>
+        <li>Focused iteration on stabilizing and refining the electromagnetism system.</li>
+        <li>Learned that my strongest work tends to come from building flexible systems first and expressing them through multiple mechanics.</li>
+      </ul>
+      <div class="pager"><a href="bloops.html"><span class="lbl">&larr; Previous</span>BLOOPS</a><a class="nxt" href="knight-light-3d.html"><span class="lbl">Next &rarr;</span>Knight Light (3D)</a></div>
+    </div>
+  </div>
+  <footer id="contact">
+    <div class="wrap">
+      <div class="foot-grid">
+        <div class="foot-name">Taylor <span>Cadwallader</span></div>
+        <div class="foot-links">
+          <a href="mailto:tcadwallader.design@gmail.com">Email</a>
+          <a href="https://www.linkedin.com/in/taylor-cadwallader" target="_blank" rel="noopener">LinkedIn &#8599;</a>
+          <a href="https://discord.com/users/641844475068547072" target="_blank" rel="noopener">Discord &#8599;</a>
+          <a href="../resume.pdf" target="_blank" rel="noopener">R&eacute;sum&eacute; &#8599;</a>
+        </div>
+      </div>
+      <small>&copy; 2026 Taylor Cadwallader &middot; Built &amp; hosted on GitHub Pages</small>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Input Replay Analyzer — Taylor Cadwallader</title>
+  <meta name="description" content="Taylor Cadwallader — Input Replay Analyzer" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="../index.html">Taylor <span>Cadwallader</span></a>
+      <nav class="nav-links">
+        <a href="../index.html#work">Games</a>
+        <a href="../index.html#tools">Tools</a>
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+  <div class="wrap">
+    <div class="detail-hero">
+      <a class="back" href="../index.html#work">&larr; All work</a>
+      <h1>Input Replay Analyzer</h1>
+      <div class="detail-sub">Input Analysis &amp; Replay Tool &middot; C# WinForms &middot; Academic</div>
+      <div class="detail-meta"><span class="badge hot">Nov &ndash; Dec 2025</span><span class="badge">Tools Programmer &amp; Software Developer</span><span class="badge">Solo</span></div>
+    </div>
+
+    <div class="detail-banner tool"><span class="label">I.R.A.</span></div>
+
+    <div class="detail-body tool">
+      <h2>Overview</h2>
+      <p>The Input Replay Analyzer is a standalone WinForms tool I built over four weeks to load, visualize, and replay recorded player-input logs from playtest sessions. I wanted to work outside of Unity and make something genuinely useful for QA testers, user researchers, and designers who need a clearer way to inspect player behavior and reproduce bugs reliably.</p>
+      <p>The core feature is full input replay: load a recorded log and replay the entire session locally using the original timestamps, reproducing player behavior exactly as it happened. A JSON profile system lets it adapt to different games and control schemes.</p>
+      <h2>What I did</h2>
+      <ul class="contrib">
+        <li>Built a standalone WinForms tool over four weeks to analyze recorded player input logs from playtest sessions.</li>
+        <li>Designed it for QA testers, user researchers, and designers who needed a clearer way to inspect player behavior and reproduce bugs.</li>
+        <li>Added timeline-based log visualization with filtering and trimming by input type or time range.</li>
+        <li>Supported exporting cleaned logs so specific moments could be isolated and shared.</li>
+        <li>Implemented full input replay functionality using original timestamps to reproduce sessions locally.</li>
+        <li>Built a profile system where users could define custom input maps and save them as JSON for different games and control schemes.</li>
+        <li>Added an executable focus check so recording only happened while the target app was active, preventing unrelated input capture and helping with privacy and data accuracy.</li>
+        <li>Strengthened my skills in tool development, input handling, data serialization, and standalone debugging utilities outside a game engine.</li>
+      </ul>
+      <div class="pager"><a href="trash.html"><span class="lbl">&larr; Previous</span>Trash</a><a class="nxt" href="3d-sprite-layerer.html"><span class="lbl">Next &rarr;</span>3D Sprite Layerer</a></div>
+    </div>
+  </div>
+  <footer id="contact">
+    <div class="wrap">
+      <div class="foot-grid">
+        <div class="foot-name">Taylor <span>Cadwallader</span></div>
+        <div class="foot-links">
+          <a href="mailto:tcadwallader.design@gmail.com">Email</a>
+          <a href="https://www.linkedin.com/in/taylor-cadwallader" target="_blank" rel="noopener">LinkedIn &#8599;</a>
+          <a href="https://discord.com/users/641844475068547072" target="_blank" rel="noopener">Discord &#8599;</a>
+          <a href="../resume.pdf" target="_blank" rel="noopener">R&eacute;sum&eacute; &#8599;</a>
+        </div>
+      </div>
+      <small>&copy; 2026 Taylor Cadwallader &middot; Built &amp; hosted on GitHub Pages</small>
+    </div>
+  </footer>
+</body>
+</html>

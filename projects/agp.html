@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AGP &amp;mdash; Alien Game Project — Taylor Cadwallader</title>
+  <meta name="description" content="Taylor Cadwallader — AGP &amp;mdash; Alien Game Project" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="../index.html">Taylor <span>Cadwallader</span></a>
+      <nav class="nav-links">
+        <a href="../index.html#work">Games</a>
+        <a href="../index.html#tools">Tools</a>
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+  <div class="wrap">
+    <div class="detail-hero">
+      <a class="back" href="../index.html#work">&larr; All work</a>
+      <h1>AGP &mdash; Alien Game Project</h1>
+      <div class="detail-sub">Multiplayer Extraction Prototype &middot; Unity</div>
+      <div class="detail-meta"><span class="badge hot">Summer 2024</span><span class="badge">Systems Designer &amp; Gameplay Programmer</span><span class="badge">Team of 2</span></div>
+    </div>
+
+    <div class="detail-banner"><span class="label">AGP</span></div>
+
+    <div class="detail-body">
+      <h2>Overview</h2>
+      <p>AGP, short for Alien Game Project, was a summer attempt at a Lethal Company-style co-op prototype with one other designer. We shelved it midway, but it pushed me further technically than anything before it — my first real crack at multiplayer gameplay rather than just networked movement, learning synchronization, shared state, and server authority the hard way.</p>
+      <p>I implemented a physics-based networked controller with an interaction/inventory system, adopted ScriptableObjects for item data, and built a node-based procedural dungeon generator that stitched room prefabs together with seed-based rules, synchronized drop-pod deployment, and ship extraction for all players.</p>
+      <h2>What I did</h2>
+      <ul class="contrib">
+        <li>Helped build a Lethal Company-style co-op prototype over the summer with one other designer.</li>
+        <li>Gained first serious experience with multiplayer gameplay architecture, including synchronization, shared game states, and server authority decisions.</li>
+        <li>Implemented a physics-based player controller and a networked interaction/inventory system for picking up and dropping items.</li>
+        <li>Learned Scriptable Object workflows and used them to define item data.</li>
+        <li>Built a node-based procedural dungeon generator that connected room prefabs through doorways and randomly selected and rotated rooms during expansion.</li>
+        <li>Designed rules for drop-off zones, including guaranteed spacing and a seed-based active insertion point.</li>
+        <li>Implemented drop-pod deployment and ship extraction sequences synchronized for all players.</li>
+        <li>Helped explore a larger refuge-and-escape concept centered on deploying, looting, and extracting before the ship fled again.</li>
+      </ul>
+      <div class="pager"><a href="knight-light-3d.html"><span class="lbl">&larr; Previous</span>Knight Light (3D)</a><a class="nxt" href="knightlight-2d.html"><span class="lbl">Next &rarr;</span>KnightLight</a></div>
+    </div>
+  </div>
+  <footer id="contact">
+    <div class="wrap">
+      <div class="foot-grid">
+        <div class="foot-name">Taylor <span>Cadwallader</span></div>
+        <div class="foot-links">
+          <a href="mailto:tcadwallader.design@gmail.com">Email</a>
+          <a href="https://www.linkedin.com/in/taylor-cadwallader" target="_blank" rel="noopener">LinkedIn &#8599;</a>
+          <a href="https://discord.com/users/641844475068547072" target="_blank" rel="noopener">Discord &#8599;</a>
+          <a href="../resume.pdf" target="_blank" rel="noopener">R&eacute;sum&eacute; &#8599;</a>
+        </div>
+      </div>
+      <small>&copy; 2026 Taylor Cadwallader &middot; Built &amp; hosted on GitHub Pages</small>
+    </div>
+  </footer>
+</body>
+</html>
