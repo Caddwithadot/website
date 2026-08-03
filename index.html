@@ -4,39 +4,38 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- EDIT: your page title (shows in the browser tab) -->
-  <title>Taylor C - Website</title>
-
-  <!-- EDIT: a one-line description for search engines / link previews -->
-  <meta name="description" content="Portfolio of Your Name — what you do, in one line." />
+  <title>Taylor Cadwallader — Technical Game Designer</title>
+  <meta name="description" content="Taylor Cadwallader — Technical Game Designer. I design mechanics and build the systems behind them: clarity, responsiveness, and scalability." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <style>
     /* ============================================================
        DESIGN TOKENS — change these to re-skin the whole site
        ============================================================ */
     :root {
-      --bg:      #f5f6f3;   /* page background (cool paper) */
-      --surface: #dddddd;   /* cards */
-      --ink:     #16181d;   /* main text */
-      --muted:   #676d75;   /* secondary text */
-      --line:    #e3e5e0;   /* hairline borders */
-      --accent:  #2e5eaa;   /* primary accent (links, highlights) */
-      --gold:    #c99a34;   /* small warm highlight */
+      --bg:      #12131a;   /* deep ink background */
+      --bg-2:    #171923;   /* slightly raised */
+      --surface: #1b1e28;   /* cards */
+      --ink:     #edeef2;   /* main text */
+      --muted:   #9a9fb0;   /* secondary text */
+      --line:    #2a2e3b;   /* hairline borders */
+      --light:   #f5b642;   /* AMBER — "the Light". Accent for GAMES */
+      --steel:   #6fb3d9;   /* COOL blue. Accent for TOOLS */
 
-      --maxw: 820px;
-      --radius: 14px;
+      --maxw: 960px;
+      --radius: 16px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--bg);
+      background:
+        radial-gradient(1100px 600px at 70% -10%, rgba(245,182,66,0.08), transparent 60%),
+        var(--bg);
       color: var(--ink);
       font-family: "Inter", system-ui, sans-serif;
       line-height: 1.6;
@@ -44,118 +43,177 @@
     }
 
     .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
-
-    a { color: var(--accent); text-decoration: none; }
+    a { color: var(--light); text-decoration: none; }
     a:hover { text-decoration: underline; }
+
+    .mono { font-family: "JetBrains Mono", monospace; }
 
     /* ---------- Top bar ---------- */
     header {
-      position: sticky; top: 0; z-index: 10;
-      background: color-mix(in srgb, var(--bg) 88%, transparent);
-      backdrop-filter: blur(8px);
+      position: sticky; top: 0; z-index: 20;
+      background: color-mix(in srgb, var(--bg) 82%, transparent);
+      backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--line);
     }
-    .nav {
-      display: flex; align-items: center; justify-content: space-between;
-      height: 64px;
-    }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 66px; }
     .brand {
-      font-family: "Fraunces", serif;
-      font-weight: 900; font-size: 1.15rem; letter-spacing: -0.01em;
-      color: var(--ink);
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700; font-size: 1.1rem; letter-spacing: -0.01em; color: var(--ink);
     }
-    .nav-links { display: flex; gap: 22px; }
-    .nav-links a { color: var(--muted); font-size: 0.95rem; font-weight: 500; }
+    .brand span { color: var(--light); }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a {
+      color: var(--muted); font-size: 0.9rem; font-weight: 500;
+      font-family: "JetBrains Mono", monospace;
+    }
     .nav-links a:hover { color: var(--ink); text-decoration: none; }
 
     /* ---------- Hero ---------- */
-    .hero { padding: 88px 0 64px; }
+    .hero { padding: 96px 0 56px; position: relative; }
+    .hero::before {
+      content: ""; position: absolute; top: 10px; left: -60px;
+      width: 340px; height: 340px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(245,182,66,0.20), transparent 68%);
+      filter: blur(20px); z-index: -1; pointer-events: none;
+    }
     .eyebrow {
-      display: inline-block; font-size: 0.82rem; font-weight: 600;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 18px;
+      display: inline-flex; align-items: center; gap: 9px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--light); margin-bottom: 20px;
     }
+    .eyebrow .dot {
+      width: 8px; height: 8px; border-radius: 50%; background: var(--light);
+      box-shadow: 0 0 12px 2px rgba(245,182,66,0.7);
+      animation: pulse 2.6s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.35;} }
+
     .hero h1 {
-      font-family: "Fraunces", serif;
-      font-weight: 900; font-size: clamp(2.6rem, 8vw, 4.4rem);
-      line-height: 1.02; letter-spacing: -0.02em; color: var(--ink);
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700; font-size: clamp(2.6rem, 8vw, 4.6rem);
+      line-height: 1.02; letter-spacing: -0.03em;
     }
-    .hero h1 .accent { color: var(--accent); }
+    .hero h1 .glow { color: var(--light); text-shadow: 0 0 34px rgba(245,182,66,0.45); }
     .hero .lede {
-      margin-top: 22px; font-size: clamp(1.05rem, 2.4vw, 1.25rem);
-      color: var(--muted); max-width: 56ch;
+      margin-top: 24px; font-size: clamp(1.05rem, 2.2vw, 1.22rem);
+      color: var(--muted); max-width: 62ch;
     }
-    .cta-row { margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap; }
+    .cta-row { margin-top: 34px; display: flex; gap: 12px; flex-wrap: wrap; }
     .btn {
-      display: inline-block; padding: 11px 20px; border-radius: 999px;
-      font-weight: 600; font-size: 0.95rem;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 22px; border-radius: 999px; font-weight: 600; font-size: 0.95rem;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
     }
-    .btn-primary { background: var(--accent); color: #fff; }
-    .btn-primary:hover { text-decoration: none; opacity: 0.92; }
+    .btn-primary { background: var(--light); color: #1a1405; }
+    .btn-primary:hover { text-decoration: none; transform: translateY(-2px); box-shadow: 0 10px 26px -8px rgba(245,182,66,0.5); }
     .btn-ghost { border: 1px solid var(--line); color: var(--ink); }
-    .btn-ghost:hover { text-decoration: none; border-color: var(--ink); }
+    .btn-ghost:hover { text-decoration: none; border-color: var(--light); }
 
-    /* ---------- Sections ---------- */
-    section { padding: 56px 0; }
-    .section-head {
-      font-family: "Fraunces", serif; font-weight: 600;
-      font-size: 1.5rem; letter-spacing: -0.01em; margin-bottom: 24px;
-      display: flex; align-items: baseline; gap: 12px;
+    /* ---------- Credentials strip ---------- */
+    .creds {
+      display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 40px;
+      padding-top: 26px; border-top: 1px solid var(--line);
     }
-    .section-head::before {
-      content: ""; width: 8px; height: 8px; border-radius: 50%;
-      background: var(--gold); display: inline-block;
-    }
-    .about p { color: var(--muted); font-size: 1.05rem; max-width: 62ch; }
-    .about p + p { margin-top: 14px; }
+    .cred { font-family: "JetBrains Mono", monospace; font-size: 0.82rem; color: var(--muted); }
+    .cred b { color: var(--ink); font-weight: 500; }
 
-    /* ---------- Work grid ---------- */
-    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    /* ---------- Section headers ---------- */
+    section { padding: 60px 0; }
+    .section-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 28px; }
+    .section-head h2 {
+      font-family: "Space Grotesk", sans-serif; font-weight: 600;
+      font-size: 1.75rem; letter-spacing: -0.01em;
+    }
+    .section-head .idx { font-family: "JetBrains Mono", monospace; font-size: 0.82rem; color: var(--muted); }
+
+    /* ---------- Project cards ---------- */
     .card {
       background: var(--surface); border: 1px solid var(--line);
-      border-radius: var(--radius); padding: 22px;
-      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+      border-radius: var(--radius); overflow: hidden;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
-    .card:hover {
-      transform: translateY(-3px);
-      border-color: var(--accent);
-      box-shadow: 0 10px 30px -12px rgba(46,94,170,0.25);
+    .card:hover { transform: translateY(-4px); }
+
+    /* the visual panel — swap the background to add a real screenshot */
+    .thumb {
+      height: 190px; position: relative;
+      background:
+        linear-gradient(135deg, rgba(245,182,66,0.14), transparent 55%),
+        repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0 12px, transparent 12px 24px),
+        var(--bg-2);
+      display: flex; align-items: flex-end; padding: 16px;
+      /* EDIT: to add a screenshot, put the image in your repo (e.g. images/knightlight.png) and use:
+         background: url('images/knightlight.png') center/cover; */
     }
-    .card h3 { font-size: 1.15rem; margin-bottom: 6px; }
-    .card h3 a { color: var(--ink); }
-    .card p { color: var(--muted); font-size: 0.95rem; }
-    .tags { margin-top: 14px; display: flex; gap: 8px; flex-wrap: wrap; }
-    .tag {
-      font-size: 0.75rem; font-weight: 500; color: var(--muted);
-      border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px;
+    .thumb .label {
+      font-family: "Space Grotesk", sans-serif; font-weight: 700;
+      font-size: 1.4rem; color: rgba(255,255,255,0.14); letter-spacing: -0.01em;
     }
+    .card-body { padding: 22px; }
+    .card-body h3 { font-family: "Space Grotesk", sans-serif; font-size: 1.25rem; margin-bottom: 10px; }
+    .card-body h3 a { color: var(--ink); }
+    .card-body h3 a:hover { color: var(--light); text-decoration: none; }
+    .card-body p { color: var(--muted); font-size: 0.96rem; }
+
+    .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .badge {
+      font-family: "JetBrains Mono", monospace; font-size: 0.74rem; font-weight: 500;
+      padding: 4px 11px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted);
+    }
+    .badge.hot { color: var(--light); border-color: rgba(245,182,66,0.45); }
+    .badge.soon { color: var(--muted); border-style: dashed; }
+    .steam {
+      display: inline-flex; align-items: center; gap: 7px; margin-top: 16px;
+      font-family: "JetBrains Mono", monospace; font-size: 0.85rem; font-weight: 500;
+    }
+
+    /* Games use amber glow; tools use steel glow */
+    #work .card:hover { border-color: rgba(245,182,66,0.55); box-shadow: 0 16px 40px -16px rgba(245,182,66,0.3); }
+    #tools .card:hover { border-color: rgba(111,179,217,0.55); box-shadow: 0 16px 40px -16px rgba(111,179,217,0.28); }
+    #tools .thumb { background:
+        linear-gradient(135deg, rgba(111,179,217,0.14), transparent 55%),
+        repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0 12px, transparent 12px 24px),
+        var(--bg-2); }
+    #tools .card-body h3 a:hover { color: var(--steel); }
+    #tools .badge.hot { color: var(--steel); border-color: rgba(111,179,217,0.45); }
+
+    /* Featured card = full width, horizontal on wide screens */
+    .featured { display: grid; grid-template-columns: 1.1fr 1fr; }
+    .featured .thumb { height: 100%; min-height: 260px; }
+
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+    /* ---------- About ---------- */
+    .about p { color: var(--muted); font-size: 1.06rem; max-width: 68ch; }
+    .about p + p { margin-top: 15px; }
 
     /* ---------- Footer ---------- */
-    footer { border-top: 1px solid var(--line); padding: 40px 0 60px; }
-    .foot-links { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 14px; }
-    .foot-links a { color: var(--ink); font-weight: 500; }
-    footer small { color: var(--muted); }
+    footer { border-top: 1px solid var(--line); padding: 46px 0 64px; margin-top: 20px; }
+    .foot-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 24px; align-items: end; }
+    .foot-name { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 1.4rem; }
+    .foot-name span { color: var(--light); }
+    .foot-links { display: flex; gap: 20px; flex-wrap: wrap; }
+    .foot-links a { color: var(--ink); font-weight: 500; font-family: "JetBrains Mono", monospace; font-size: 0.9rem; }
+    footer small { color: var(--muted); display: block; margin-top: 22px; font-family: "JetBrains Mono", monospace; font-size: 0.8rem; }
 
     /* ---------- Load animation ---------- */
-    .rise { opacity: 0; transform: translateY(14px); animation: rise 0.6s ease forwards; }
-    .rise:nth-child(2) { animation-delay: 0.06s; }
-    .rise:nth-child(3) { animation-delay: 0.12s; }
+    .rise { opacity: 0; transform: translateY(16px); animation: rise 0.6s ease forwards; }
+    .rise:nth-child(2){animation-delay:.06s;} .rise:nth-child(3){animation-delay:.12s;}
+    .rise:nth-child(4){animation-delay:.18s;} .rise:nth-child(5){animation-delay:.24s;}
     @keyframes rise { to { opacity: 1; transform: none; } }
 
+    a:focus-visible, .btn:focus-visible { outline: 2px solid var(--light); outline-offset: 3px; border-radius: 8px; }
+
     @media (prefers-reduced-motion: reduce) {
-      * { animation: none !important; transition: none !important; }
+      *, .rise { animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important; }
       html { scroll-behavior: auto; }
     }
-
-    @media (max-width: 620px) {
+    @media (max-width: 720px) {
       .nav-links { gap: 16px; }
+      .featured { grid-template-columns: 1fr; }
       .grid { grid-template-columns: 1fr; }
-      .hero { padding: 56px 0 40px; }
-    }
-
-    /* visible keyboard focus */
-    a:focus-visible, .btn:focus-visible {
-      outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px;
+      .hero { padding: 64px 0 40px; }
     }
   </style>
 </head>
@@ -164,11 +222,11 @@
   <!-- ============ TOP BAR ============ -->
   <header>
     <div class="wrap nav">
-      <!-- EDIT: your name or initials -->
-      <span class="brand">Taylor Cadwallader</span>
+      <span class="brand">Taylor <span>Cadwallader</span></span>
       <nav class="nav-links">
+        <a href="#work">Games</a>
+        <a href="#tools">Tools</a>
         <a href="#about">About</a>
-        <a href="#work">Work</a>
         <a href="#contact">Contact</a>
       </nav>
     </div>
@@ -177,100 +235,172 @@
   <!-- ============ HERO ============ -->
   <div class="wrap">
     <div class="hero">
-      <!-- EDIT: short label — your role or field -->
-      <span class="eyebrow rise">Designer &amp; Maker</span>
-
-      <!-- EDIT: your name. The accent span can wrap your last name or a key word -->
-      <h1 class="rise">Taylor <span class="accent">C</span></h1>
-
-      <!-- EDIT: one or two sentences on who you are and what you do -->
+      <span class="eyebrow rise"><span class="dot"></span>Technical Game Designer</span>
+      <h1 class="rise">Taylor <span class="glow">Cadwallader</span></h1>
       <p class="lede rise">
-        A short, human intro. Say what you make, who it's for, and what makes
-        your work worth a second look. One or two sentences is plenty.
+        I design mechanics and build the systems behind them — focusing on clarity,
+        responsiveness, and scalability. I turn prototypes into polished, satisfying
+        gameplay, iterating relentlessly on feel until the concept clicks.
       </p>
-
       <div class="cta-row rise">
-        <!-- EDIT: your email address (keep the mailto: prefix) -->
-        <a class="btn btn-primary" href="mailto:you@example.com">Get in touch</a>
-        <a class="btn btn-ghost" href="#work">See my work</a>
+        <a class="btn btn-primary" href="#work">View my work</a>
+        <!-- Résumé PDF is currently hosted on your old Wix files. Later you can drop the PDF into your repo and point this link at it instead. -->
+        <a class="btn btn-ghost" href="https://b93d3333-2e11-4930-88bc-18f8573c522e.filesusr.com/ugd/03368a_14a1748e47a94c4e957176a4ef0acadd.pdf" target="_blank" rel="noopener">Résumé ↗</a>
+      </div>
+
+      <div class="creds rise">
+        <span class="cred">BA · <b>DigiPen Institute of Technology</b></span>
+        <span class="cred">Shipped on <b>Steam</b> · 110+ reviews</span>
+        <span class="cred">Custom <b>C++</b> engine · <b>Unity</b> · <b>C#</b></span>
       </div>
     </div>
+  </div>
+
+  <!-- ============ GAMES ============ -->
+  <div class="wrap">
+    <section id="work">
+      <div class="section-head">
+        <span class="idx mono">01</span>
+        <h2>Games</h2>
+      </div>
+
+      <!-- Featured: KnightLight (shipped) -->
+      <article class="card featured" style="margin-bottom:20px;">
+        <!-- EDIT: add a screenshot -> background: url('images/knightlight.png') center/cover; -->
+        <div class="thumb"><span class="label">KnightLight</span></div>
+        <div class="card-body">
+          <h3><a href="https://store.steampowered.com/app/3086850/KnightLight" target="_blank" rel="noopener">KnightLight</a></h3>
+          <p>
+            A 2D puzzle-platformer built in a custom C++ engine where you control both a
+            living suit of armor and the Light that powers it. Separate and recall the two
+            forms to solve light-based environmental puzzles in a dark, underground world.
+          </p>
+          <div class="meta">
+            <span class="badge hot">Custom Engine</span>
+            <span class="badge">C++</span>
+            <span class="badge hot">110+ Reviews</span>
+          </div>
+          <a class="steam" href="https://store.steampowered.com/app/3086850/KnightLight" target="_blank" rel="noopener">▸ View on Steam</a>
+        </div>
+      </article>
+
+      <div class="grid">
+        <article class="card">
+          <div class="thumb"><span class="label">Forgeborne</span></div>
+          <div class="card-body">
+            <h3>Forgeborne</h3>
+            <p>
+              First-person action prototype where weapons dynamically assemble from
+              fragmented metal, enabling melee and ranged combat from a shared systemic
+              foundation.
+            </p>
+            <div class="meta">
+              <span class="badge">Prototype</span>
+              <span class="badge">Systems Design</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="thumb"><span class="label">Trash</span></div>
+          <div class="card-body">
+            <h3>Trash</h3>
+            <p>
+              A 3D top-down extraction game built around a modular vacuum weapon system.
+              Collect, manage, and weaponize debris under time-based quotas, upgrading your
+              gear to unlock new mechanics.
+            </p>
+            <div class="meta">
+              <span class="badge">3D</span>
+              <span class="badge soon">Coming Soon</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ TOOLS ============ -->
+  <div class="wrap">
+    <section id="tools">
+      <div class="section-head">
+        <span class="idx mono">02</span>
+        <h2>Tools</h2>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <div class="thumb"><span class="label">I.R.A.</span></div>
+          <div class="card-body">
+            <h3>Input Replay Analyzer</h3>
+            <p>
+              Standalone C# tool for recording, visualizing, and replaying player input —
+              enabling precise playtesting and bug reproduction with timeline inspection,
+              filters, and JSON control profiles.
+            </p>
+            <div class="meta">
+              <span class="badge hot">Tool</span>
+              <span class="badge">C#</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="thumb"><span class="label">Sprite Layerer</span></div>
+          <div class="card-body">
+            <h3>3D Sprite Layerer</h3>
+            <p>
+              A custom Unity editor tool that automates the creation of layered sprite
+              prefabs in 3D space, replacing a manual setup process with fast, configurable
+              generation.
+            </p>
+            <div class="meta">
+              <span class="badge hot">Tool</span>
+              <span class="badge">Unity</span>
+              <span class="badge soon">Coming Soon</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
   </div>
 
   <!-- ============ ABOUT ============ -->
   <div class="wrap">
     <section id="about" class="about">
-      <h2 class="section-head">About</h2>
-      <!-- EDIT: a paragraph or two about you -->
-      <p>
-        This is where you tell your story. Where you're based, what you've done,
-        what you're into. Write it the way you'd say it out loud — skip the
-        buzzwords and be specific.
-      </p>
-      <p>
-        A second paragraph is optional. Use it for background, current focus, or
-        the kind of work you're looking for.
-      </p>
-    </section>
-  </div>
-
-  <!-- ============ WORK ============ -->
-  <div class="wrap">
-    <section id="work">
-      <h2 class="section-head">Selected Work</h2>
-      <div class="grid">
-
-        <!-- EDIT: duplicate a card block to add more projects -->
-        <article class="card">
-          <h3><a href="#">Project One</a></h3>
-          <p>One line on what it is and why it mattered. Focus on the outcome.</p>
-          <div class="tags">
-            <span class="tag">Category</span>
-            <span class="tag">Tool</span>
-          </div>
-        </article>
-
-        <article class="card">
-          <h3><a href="#">Project Two</a></h3>
-          <p>Keep descriptions short — the work should do most of the talking.</p>
-          <div class="tags">
-            <span class="tag">Category</span>
-            <span class="tag">Tool</span>
-          </div>
-        </article>
-
-        <article class="card">
-          <h3><a href="#">Project Three</a></h3>
-          <p>Link the title to a live page, case study, or repo.</p>
-          <div class="tags">
-            <span class="tag">Category</span>
-          </div>
-        </article>
-
-        <article class="card">
-          <h3><a href="#">Project Four</a></h3>
-          <p>Four cards fills the grid nicely, but any number works.</p>
-          <div class="tags">
-            <span class="tag">Category</span>
-          </div>
-        </article>
-
+      <div class="section-head">
+        <span class="idx mono">03</span>
+        <h2>About</h2>
       </div>
+      <p>
+        I'm Taylor, a Technical Game Designer finishing up my BA at DigiPen Institute of
+        Technology. I design mechanics and build the systems behind them, focusing on
+        clarity, responsiveness, and scalability.
+      </p>
+      <p>
+        I love collaborating with teammates, shaping ideas through feedback and turning
+        prototypes into polished, satisfying gameplay. I iterate relentlessly on feel and
+        clarity, adapting and solving whatever problems stand between concept and completion.
+      </p>
     </section>
   </div>
 
   <!-- ============ FOOTER / CONTACT ============ -->
   <footer id="contact">
     <div class="wrap">
-      <div class="foot-links">
-        <!-- EDIT: your real links. Delete any you don't use. -->
-        <a href="mailto:you@example.com">Email</a>
-        <a href="https://github.com/yourusername">GitHub</a>
-        <a href="https://linkedin.com/in/yourusername">LinkedIn</a>
-        <a href="#">Instagram</a>
+      <div class="foot-grid">
+        <div>
+          <div class="foot-name">Taylor <span>Cadwallader</span></div>
+          <!-- EDIT: add your email here if you'd like a direct contact:
+               <a href="mailto:you@example.com">Email</a> -->
+        </div>
+        <div class="foot-links">
+          <a href="https://www.linkedin.com/in/taylor-cadwallader" target="_blank" rel="noopener">LinkedIn ↗</a>
+          <a href="https://discord.com/users/641844475068547072" target="_blank" rel="noopener">Discord ↗</a>
+          <a href="https://b93d3333-2e11-4930-88bc-18f8573c522e.filesusr.com/ugd/03368a_14a1748e47a94c4e957176a4ef0acadd.pdf" target="_blank" rel="noopener">Résumé ↗</a>
+        </div>
       </div>
-      <!-- EDIT: year + name -->
-      <small>© 2026 Your Name. Built and hosted on GitHub Pages.</small>
+      <small>© 2026 Taylor Cadwallader · Built &amp; hosted on GitHub Pages</small>
     </div>
   </footer>
 </body>
