@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Taylor Cadwallader — Technical Game Designer</title>
-  <meta name="description" content="Taylor Cadwallader — Technical Game Designer. I design mechanics and build the systems behind them: clarity, responsiveness, and scalability." />
+  <title>Taylor Cadwallader | Technical Game Designer</title>
+  <meta name="description" content="Taylor Cadwallader, Technical Game Designer. I design mechanics and build the systems behind them, focusing on clarity, responsiveness, and scalability." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <a class="skip" href="#main">Skip to content</a>
   <header>
     <div class="wrap nav">
       <a class="brand" href="index.html">Taylor <span>Cadwallader</span></a>
@@ -23,15 +24,15 @@
     </div>
   </header>
 
-  <div class="wrap">
+  <div class="wrap" id="main">
     <div class="hero">
       <span class="eyebrow rise"><span class="dot"></span>Technical Game Designer</span>
       <h1 class="rise">Taylor <span class="glow">Cadwallader</span></h1>
       <p class="lede rise">
-        I design mechanics and build the systems behind them &mdash; focusing on clarity,
-        responsiveness, and scalability. I sit around 70% designer, 30% programmer: I like to
-        build a flexible system first, then express many mechanics through it, iterating on feel
-        until the concept clicks.
+        I design mechanics and build the systems behind them, focusing on clarity,
+        responsiveness, and scalability. I sit around 70% designer and 30% programmer, and I like
+        to build a flexible system first, then express a lot of different mechanics through it,
+        iterating on feel until the idea clicks.
       </p>
       <div class="cta-row rise">
         <a class="btn btn-primary" href="#featured">View my work</a>
@@ -54,9 +55,9 @@
           <div class="fcard-body">
             <h3><a href="projects/trash.html">Trash</a></h3>
             <div class="fsub">3D Top-Down Extraction Game &middot; Unity &middot; Academic</div>
-            <p>Trash is my final academic project at DigiPen, currently still in development. It's a 3D top-down extraction game where the player uses a vacuum gun to suck up trash and materials, then fires them into collectors to complete quotas. Materials can be stored in the ship and spent on upgrades that unlock new mechanics and improve run efficiency.</p>
-            <div class="meta"><span class="badge">In Development</span><span class="badge">Unity</span><span class="badge">Systems</span></div>
-            <div class="fcard-link"><a href="projects/trash.html">Read more &rarr;</a></div>
+            <p>Trash was my final academic project at DigiPen, built by a team of three. It's a 3D top-down extraction game where you use a vacuum gun to suck up trash, then fire it into collectors to hit quotas. With such a small team I took the primary gameplay role and built almost all of the core systems myself.</p>
+            <div class="meta"><span class="badge">Final Project</span><span class="badge">Unity</span><span class="badge">Systems</span></div>
+            <div class="fcard-link"><span>Read more</span></div>
           </div>
         </article>
         <article class="fcard tool">
@@ -64,9 +65,9 @@
           <div class="fcard-body">
             <h3><a href="projects/input-replay-analyzer.html">Input Replay Analyzer</a></h3>
             <div class="fsub">Input Analysis &amp; Replay Tool &middot; C# WinForms &middot; Academic</div>
-            <p>The Input Replay Analyzer is a standalone WinForms tool I built over four weeks to load, visualize, and replay recorded player-input logs from playtest sessions. I wanted to work outside of Unity and make something genuinely useful for QA testers, user researchers, and designers who need a clearer way to inspect player behavior and reproduce bugs reliably.</p>
+            <p>A standalone WinForms tool I built over four weeks to load, view, and replay recorded player input from playtest sessions. I wanted to try building something outside of Unity, and I wanted it to actually be useful for QA testers, user researchers, and designers who need a clearer way to see what a player did and reproduce bugs.</p>
             <div class="meta"><span class="badge">Tool</span><span class="badge">C#</span><span class="badge">WinForms</span></div>
-            <div class="fcard-link"><a href="projects/input-replay-analyzer.html">Read more &rarr;</a></div>
+            <div class="fcard-link"><span>Read more</span></div>
           </div>
         </article>
         <article class="fcard">
@@ -74,9 +75,9 @@
           <div class="fcard-body">
             <h3><a href="projects/depth-strider.html">Depth Strider</a></h3>
             <div class="fsub">First-Person Kinesthetic Experience &middot; Unity &middot; Academic</div>
-            <p>Depth Strider was my second DES365 Game Feel prototype, built solo over five weeks. The whole goal was a feeling: making the player feel like a deep-sea diver walking the ocean floor. It leans entirely on controller feel and environmental immersion rather than traditional mechanics or objectives.</p>
+            <p>My second Game Feel prototype, built solo over five weeks. The whole goal was a feeling, which was making the player feel like a deep-sea diver walking along the ocean floor. There are no real mechanics or objectives, so it leans entirely on how the controller feels and how the environment sells the place.</p>
             <div class="meta"><span class="badge">Game Feel</span><span class="badge">Unity</span><span class="badge">Solo</span></div>
-            <div class="fcard-link"><a href="projects/depth-strider.html">Read more &rarr;</a></div>
+            <div class="fcard-link"><span>Read more</span></div>
           </div>
         </article>
         <article class="fcard">
@@ -84,9 +85,9 @@
           <div class="fcard-body">
             <h3><a href="projects/forgeborne.html">Forgeborne</a></h3>
             <div class="fsub">First-Person Action Prototype &middot; Unity &middot; Academic</div>
-            <p>Forgeborne was a five-week solo prototype for DigiPen's DES365 Game Feel course — a first-person action experience built around a single unifying mechanic: electromagnetism. The player uses metal-manipulating tech to forge and test adaptive weapons in a junkyard arena. The brief wanted three weapons with three attacks each; my goal was to tie all nine together through one systemic interaction rather than nine isolated kits.</p>
+            <p>A five-week solo prototype for my Game Feel course, built around one mechanic: electromagnetism. The player uses metal-manipulating tech to forge and test weapons in a junkyard arena. The assignment asked for three weapons with three attacks each, and my goal was to tie all nine of them together through one system instead of building nine separate kits.</p>
             <div class="meta"><span class="badge">Game Feel</span><span class="badge">Unity</span><span class="badge">Solo</span></div>
-            <div class="fcard-link"><a href="projects/forgeborne.html">Read more &rarr;</a></div>
+            <div class="fcard-link"><span>Read more</span></div>
           </div>
         </article>
         <article class="fcard">
@@ -94,9 +95,9 @@
           <div class="fcard-body">
             <h3><a href="projects/knightlight-2d.html">KnightLight</a></h3>
             <div class="fsub">2D Puzzle-Platformer &middot; Custom C++ Engine &middot; Academic</div>
-            <p>KnightLight was a two-semester, multidisciplinary project where programmers built a custom C++ engine while designers created the gameplay inside it. I served as Design Lead, owning player controller design, core mechanic design and implementation, prototyping, and playtesting. With no engine yet in semester one, I prototyped relentlessly in Unity — sometimes weekly — to keep playtests running while the engine came together.</p>
+            <p>A two-semester team project where the programmers built a custom C++ engine and the designers built the gameplay inside it. I was the Design Lead, handling player controller design, core mechanics, prototyping, and playtesting. The engine did not exist yet in the first semester, so I prototyped in Unity, sometimes weekly, to keep playtests running while it came together.</p>
             <div class="meta"><span class="badge">Shipped on Steam</span><span class="badge">Custom Engine</span><span class="badge">Design Lead</span></div>
-            <div class="fcard-link"><a href="projects/knightlight-2d.html">Read more &rarr;</a></div>
+            <div class="fcard-link"><span>Read more</span></div>
           </div>
         </article>
       </div>
@@ -111,79 +112,79 @@
         <div class="row-title"><a href="projects/antimasking.html">AntiMasking</a></div>
         <div class="row-role">Game Designer (Support)</div>
         <div class="row-date">Feb 2026</div>
-        <a class="row-arrow" href="projects/antimasking.html" aria-label="Open AntiMasking">&rarr;</a>
+        <span class="row-arrow" aria-hidden="true">&rarr;</span>
       </div>
       <div class="row">
         <div class="row-title"><a href="projects/trash.html">Trash</a></div>
-        <div class="row-role">Gameplay Designer &amp; Programmer</div>
+        <div class="row-role">Lead Gameplay Designer &amp; Programmer</div>
         <div class="row-date">Dec 2025 &ndash; Feb 2026</div>
-        <a class="row-arrow" href="projects/trash.html" aria-label="Open Trash">&rarr;</a>
+        <span class="row-arrow" aria-hidden="true">&rarr;</span>
       </div>
       <div class="row">
         <div class="row-title"><a href="projects/line-9.html">Line 9</a></div>
         <div class="row-role">Systems Designer &amp; Gameplay Programmer</div>
         <div class="row-date">Aug 2025</div>
-        <a class="row-arrow" href="projects/line-9.html" aria-label="Open Line 9">&rarr;</a>
+        <span class="row-arrow" aria-hidden="true">&rarr;</span>
       </div>
       <div class="row">
         <div class="row-title"><a href="projects/strip-miner.html">Strip Miner</a></div>
         <div class="row-role">Systems &amp; Gameplay Designer</div>
         <div class="row-date">Summer 2025</div>
-        <a class="row-arrow" href="projects/strip-miner.html" aria-label="Open Strip Miner">&rarr;</a>
+        <span class="row-arrow" aria-hidden="true">&rarr;</span>
       </div>
       <div class="row">
         <div class="row-title"><a href="projects/depth-strider.html">Depth Strider</a></div>
         <div class="row-role">Solo Developer &amp; Game Feel Designer</div>
         <div class="row-date">Mar &ndash; Apr 2025</div>
-        <a class="row-arrow" href="projects/depth-strider.html" aria-label="Open Depth Strider">&rarr;</a>
+        <span class="row-arrow" aria-hidden="true">&rarr;</span>
       </div>
       <div class="row">
         <div class="row-title"><a href="projects/nitelite.html">NiteLite</a></div>
-        <div class="row-role">QA Tester &amp; Technical Designer</div>
+        <div class="row-role">QA Lead &amp; Technical Designer</div>
         <div class="row-date">Jan &ndash; Apr 2025</div>
-        <a class="row-arrow" href="projects/nitelite.html" aria-label="Open NiteLite">&rarr;</a>
+        <span class="row-arrow" aria-hidden="true">&rarr;</span>
       </div>
       <div class="row">
         <div class="row-title"><a href="projects/bloops.html">BLOOPS</a></div>
         <div class="row-role">Gameplay Designer &amp; Programmer</div>
         <div class="row-date">Jan 2025</div>
-        <a class="row-arrow" href="projects/bloops.html" aria-label="Open BLOOPS">&rarr;</a>
+        <span class="row-arrow" aria-hidden="true">&rarr;</span>
       </div>
       <div class="row">
         <div class="row-title"><a href="projects/forgeborne.html">Forgeborne</a></div>
         <div class="row-role">Solo Developer &amp; Systems Designer</div>
         <div class="row-date">Jan &ndash; Feb 2025</div>
-        <a class="row-arrow" href="projects/forgeborne.html" aria-label="Open Forgeborne">&rarr;</a>
+        <span class="row-arrow" aria-hidden="true">&rarr;</span>
       </div>
       <div class="row">
         <div class="row-title"><a href="projects/knight-light-3d.html">Knight Light (3D)</a></div>
         <div class="row-role">UX &amp; Combat Designer</div>
         <div class="row-date">Sep &ndash; Dec 2024</div>
-        <a class="row-arrow" href="projects/knight-light-3d.html" aria-label="Open Knight Light (3D)">&rarr;</a>
+        <span class="row-arrow" aria-hidden="true">&rarr;</span>
       </div>
       <div class="row">
-        <div class="row-title"><a href="projects/agp.html">AGP &mdash; Alien Game Project</a></div>
+        <div class="row-title"><a href="projects/agp.html">AGP: Alien Game Project</a></div>
         <div class="row-role">Systems Designer &amp; Gameplay Programmer</div>
         <div class="row-date">Summer 2024</div>
-        <a class="row-arrow" href="projects/agp.html" aria-label="Open AGP &mdash; Alien Game Project">&rarr;</a>
+        <span class="row-arrow" aria-hidden="true">&rarr;</span>
       </div>
       <div class="row">
         <div class="row-title"><a href="projects/knightlight-2d.html">KnightLight</a></div>
-        <div class="row-role">Design Lead</div>
+        <div class="row-role">Design Lead, UX &amp; Systems Designer</div>
         <div class="row-date">Sep 2023 &ndash; May 2024</div>
-        <a class="row-arrow" href="projects/knightlight-2d.html" aria-label="Open KnightLight">&rarr;</a>
+        <span class="row-arrow" aria-hidden="true">&rarr;</span>
       </div>
       <div class="row">
-        <div class="row-title"><a href="projects/sgp.html">SGP &mdash; Streamer Game Project</a></div>
+        <div class="row-title"><a href="projects/sgp.html">SGP: Streamer Game Project</a></div>
         <div class="row-role">Systems Designer &amp; Programmer</div>
         <div class="row-date">Summer 2023</div>
-        <a class="row-arrow" href="projects/sgp.html" aria-label="Open SGP &mdash; Streamer Game Project">&rarr;</a>
+        <span class="row-arrow" aria-hidden="true">&rarr;</span>
       </div>
       <div class="row">
         <div class="row-title"><a href="projects/project-nasu.html">Project Nasu</a></div>
-        <div class="row-role">Systems Designer &amp; Programmer</div>
+        <div class="row-role">Producer, Systems Designer &amp; Programmer</div>
         <div class="row-date">Jan &ndash; Apr 2023</div>
-        <a class="row-arrow" href="projects/project-nasu.html" aria-label="Open Project Nasu">&rarr;</a>
+        <span class="row-arrow" aria-hidden="true">&rarr;</span>
       </div>
       </div>
     </section>
@@ -197,13 +198,13 @@
         <div class="row-title"><a href="projects/input-replay-analyzer.html">Input Replay Analyzer</a></div>
         <div class="row-role">Tools Programmer &amp; Software Developer</div>
         <div class="row-date">Nov &ndash; Dec 2025</div>
-        <a class="row-arrow" href="projects/input-replay-analyzer.html" aria-label="Open Input Replay Analyzer">&rarr;</a>
+        <span class="row-arrow" aria-hidden="true">&rarr;</span>
       </div>
       <div class="row tool">
         <div class="row-title"><a href="projects/3d-sprite-layerer.html">3D Sprite Layerer</a></div>
         <div class="row-role">Tools Programmer &amp; Technical Designer</div>
         <div class="row-date">Sep &ndash; Oct 2025</div>
-        <a class="row-arrow" href="projects/3d-sprite-layerer.html" aria-label="Open 3D Sprite Layerer">&rarr;</a>
+        <span class="row-arrow" aria-hidden="true">&rarr;</span>
       </div>
       </div>
     </section>
@@ -214,19 +215,22 @@
       <div class="section-head"><span class="idx mono">03</span><h2>About</h2></div>
       <p>
         I'm Taylor, a Technical Game Designer finishing my BA at DigiPen Institute of Technology,
-        with roughly six years of hands-on game design and development experience. My skill set
-        sits at the intersection of design and implementation &mdash; I care most about designing
-        mechanics, building tools, and implementing features directly in-engine, taking ideas from
-        concept all the way through iteration.
+        with about six years of hands-on game design and development experience. Before DigiPen I
+        went to a technical school called Sno-Isle TECH during my last two years of high school,
+        which is what started all of this. My skill set sits somewhere between design and
+        implementation. I've worked in UX, systems, and technical design, but what I enjoy most is
+        designing mechanics, building tools, and putting features into the engine myself, taking an
+        idea from a rough concept all the way through iteration.
       </p>
       <p>
-        I'm a logical, systems-oriented problem solver with a strong focus on polish and player
-        clarity. I'm comfortable making design tradeoffs around scope and technical constraints,
-        and willing to simplify, refactor, or cut features when it improves the experience. I've
-        served as Design Lead on multiple team projects, run SCRUM as a de facto lead, and
-        collaborated closely with programmers, artists, and audio designers. I'm strongest in
-        Unity, with additional experience in Unreal and custom C++ engines, programming primarily
-        in C#.
+        I'm a logical, systems-oriented problem solver, and I care a lot about polish and about
+        whether things are clear to the player. I'm comfortable making tradeoffs around scope and
+        technical limits, and I'm fine simplifying or cutting a feature when it makes the game
+        better. I've been Design Lead on a few team projects, run SCRUM meetings to keep production
+        on track, and worked closely with programmers, artists, and audio designers. I'm strongest
+        in Unity, and I've also worked in Unreal and in two custom C++ engines. I program mostly in
+        C#. I'm not a full computer science programmer, but I'm comfortable enough to build my own
+        designs and keep iterating quickly.
       </p>
       <div class="edu">
         <div class="edu-item">
@@ -255,5 +259,6 @@
       <small>&copy; 2026 Taylor Cadwallader &middot; Built &amp; hosted on GitHub Pages</small>
     </div>
   </footer>
+  <script src="particles.js" defer></script>
 </body>
 </html>

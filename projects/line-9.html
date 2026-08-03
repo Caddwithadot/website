@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Line 9 — Taylor Cadwallader</title>
-  <meta name="description" content="Taylor Cadwallader — Line 9" />
+  <title>Line 9 | Taylor Cadwallader</title>
+  <meta name="description" content="Line 9: 72-hour GMTK Game Jam inspection game, built around a randomized anomaly system and layer-mask inspection stations sharing one framework." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../style.css" />
 </head>
 <body>
+  <a class="skip" href="#main">Skip to content</a>
   <header>
     <div class="wrap nav">
       <a class="brand" href="../index.html">Taylor <span>Cadwallader</span></a>
@@ -22,31 +23,89 @@
       </nav>
     </div>
   </header>
-  <div class="wrap">
+  <div class="wrap" id="main">
     <div class="detail-hero">
       <a class="back" href="../index.html#work">&larr; All work</a>
       <h1>Line 9</h1>
       <div class="detail-sub">First-Person 2.5D Inspection Game &middot; Unity &middot; Game Jam</div>
-      <div class="detail-meta"><span class="badge hot">Aug 2025</span><span class="badge">Systems Designer &amp; Gameplay Programmer</span><span class="badge">Team of 6</span></div>
+      <div class="detail-meta"><span class="badge hot">Aug 2025</span><span class="badge">Systems Designer &amp; Gameplay Programmer</span><span class="badge">Team of 6</span><span class="badge">72 hours</span></div>
     </div>
 
     <div class="detail-banner"><span class="label">Line 9</span></div>
 
     <div class="detail-body">
       <h2>Overview</h2>
-      <p>Made during the 2025 GMTK Game Jam in 72 hours, Line 9 is a first-person 2.5D inspection game where you examine dolls moving along a conveyor belt that wraps around you, marking anomalies on faulty ones and approving the rest. With fewer programmers on this team, I did more hands-on implementation than in previous jams.</p>
-      <p>I designed and implemented the core anomaly system and a set of inspection stations that reused one shared framework — a UV lens for hidden marks, a magnifier for stitching detail, and an X-ray for internal components — built to be re-skinned quickly without blowing the 72-hour scope.</p>
-      <h2>What I did</h2>
-      <ul class="contrib">
-        <li>Completed a 72-hour GMTK Game Jam project on a remote six-person team.</li>
-        <li>Helped consolidate team brainstorming into a single direction everyone felt good about.</li>
-        <li>Took on more hands-on implementation because the team had fewer programmers than BLOOPS.</li>
-        <li>Designed and implemented the core anomaly system, including randomized doll features and traits flagged as correct or faulty.</li>
-        <li>Implemented a difficulty scaling system where anomalies became subtler as the player improved.</li>
-        <li>Built inspection stations using layer masks to simulate different viewing lenses while reusing a shared system.</li>
-        <li>Created the UV station, magnifier station, and X-ray station, each exposing different anomaly types.</li>
-        <li>Focused on building a flexible framework that could be iterated on and re-skinned without overwhelming the 72-hour scope.</li>
-      </ul>
+      <p>Line 9 was made during the 2025 GMTK Game Jam in 72 hours. It's a first-person 2.5D inspection game where dolls move along a conveyor belt that wraps around the player, and your job is to catch the ones with anomalies while approving the ones that are fine.</p>
+      <p>This was my second jam, on a remote team of six I had not worked with before aside from the other designer. Because we had fewer programmers than my previous jam, I took on considerably more hands-on implementation.</p>
+
+      <div class="specs">
+        <div class="spec"><div class="k">Role</div><div class="v">Systems Designer &amp; Gameplay Programmer</div></div>
+        <div class="spec"><div class="k">Engine</div><div class="v">Unity</div></div>
+        <div class="spec"><div class="k">Team size</div><div class="v">6, fully remote</div></div>
+        <div class="spec"><div class="k">Duration</div><div class="v">72 hours</div></div>
+        <div class="spec"><div class="k">Year</div><div class="v">2025</div></div>
+        <div class="spec"><div class="k">Event</div><div class="v">GMTK Game Jam</div></div>
+        <div class="spec wide"><div class="k">Goal</div><div class="v">Build an inspection loop flexible enough to keep producing new anomalies and new ways of seeing them, without exceeding what six people can finish in three days.</div></div>
+      </div>
+
+      <figure class="shot">
+        <div class="ph">MEDIA SLOT: Line 9 inspection gameplay</div>
+        <figcaption>Replace with a gameplay still or clip.</figcaption>
+      </figure>
+
+      <h2>The anomaly system</h2>
+      <p>I designed and implemented the core anomaly system that drives the whole experience. Each round randomizes the doll's features, with specific traits flagged as either correct or faulty, so the player is comparing what they see against a mental model of what a correct doll looks like rather than memorizing a checklist.</p>
+      <p>On top of that I built a difficulty scaling system that makes anomalies subtler the more consistently the player catches them. The tension ramps up because the player is getting better, not because a script decided round three should be harder, and that difference is what keeps a jam game interesting past the first couple minutes.</p>
+
+      <h2>Inspection stations</h2>
+      <p>The inspection stations along the conveyor belt are where the systemic approach paid off. Each station uses layer masks to simulate a different viewing lens while reusing one shared underlying system, so building the second and third stations cost a fraction of what the first one did.</p>
+
+      <div class="systems">
+        <div class="sys">
+          <span class="tag">Station 01</span>
+          <h3>UV lens</h3>
+          <p>Reveals hidden glowing marks that are completely invisible under normal light, making some anomalies undetectable unless the player thinks to check.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Station 02</span>
+          <h3>Magnifier</h3>
+          <p>Shows a close-up of the doll's stitching, which catches defects too small to notice from normal viewing distance.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Station 03</span>
+          <h3>X-ray</h3>
+          <p>Shows the internal components, which is the only way to catch faults that leave nothing visible on the outside.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Architecture</span>
+          <h3>One shared framework</h3>
+          <p>All three stations are the same system set up with different layer masks, so a fourth or fifth station would have just been more content instead of more code if we had the time.</p>
+        </div>
+      </div>
+
+      <div class="shot-row">
+        <figure class="shot">
+          <div class="ph">MEDIA SLOT: UV station revealing hidden marks</div>
+          <figcaption>Same system, different lens.</figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="ph">MEDIA SLOT: X-ray station internals</div>
+          <figcaption>Faults with no external trace.</figcaption>
+        </figure>
+      </div>
+
+      <h2>Working remote under a 72-hour clock</h2>
+      <p>Like my previous jam we started with a group brainstorm where everyone pitched ideas, and I helped pull those into one direction the team felt good about. Doing that quickly matters even more remotely, since you can't read the room and a disagreement can quietly cost you six hours.</p>
+      <p>With a smaller asset count than BLOOPS, more of my time went directly into gameplay systems rather than art integration, though I still supported that where it was needed.</p>
+
+      <h2>Recognition</h2>
+      <p>Published to itch.io.</p>
+
+      <h2>What I took from it</h2>
+      <p>The station framework is a small version of how I like to work in general. One system, three different uses of it, built so that a fourth would have been easy.</p>
+      <p class="takeaway">With only 72 hours, building the flexible version was also the fast version.</p>
+
+      <!-- LINK SLOT: add the itch.io button here once you have the URL -->
       <div class="pager"><a href="3d-sprite-layerer.html"><span class="lbl">&larr; Previous</span>3D Sprite Layerer</a><a class="nxt" href="strip-miner.html"><span class="lbl">Next &rarr;</span>Strip Miner</a></div>
     </div>
   </div>
@@ -64,5 +123,6 @@
       <small>&copy; 2026 Taylor Cadwallader &middot; Built &amp; hosted on GitHub Pages</small>
     </div>
   </footer>
+  <script src="../particles.js" defer></script>
 </body>
 </html>
