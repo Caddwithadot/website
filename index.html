@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- EDIT: your page title (shows in the browser tab) -->
+  <title>Your Name — Portfolio</title>
+
+  <!-- EDIT: a one-line description for search engines / link previews -->
+  <meta name="description" content="Portfolio of Your Name — what you do, in one line." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS — change these to re-skin the whole site
+       ============================================================ */
+    :root {
+      --bg:      #f5f6f3;   /* page background (cool paper) */
+      --surface: #ffffff;   /* cards */
+      --ink:     #16181d;   /* main text */
+      --muted:   #676d75;   /* secondary text */
+      --line:    #e3e5e0;   /* hairline borders */
+      --accent:  #2e5eaa;   /* primary accent (links, highlights) */
+      --gold:    #c99a34;   /* small warm highlight */
+
+      --maxw: 820px;
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Inter", system-ui, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ---------- Top bar ---------- */
+    header {
+      position: sticky; top: 0; z-index: 10;
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .brand {
+      font-family: "Fraunces", serif;
+      font-weight: 900; font-size: 1.15rem; letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+    .nav-links { display: flex; gap: 22px; }
+    .nav-links a { color: var(--muted); font-size: 0.95rem; font-weight: 500; }
+    .nav-links a:hover { color: var(--ink); text-decoration: none; }
+
+    /* ---------- Hero ---------- */
+    .hero { padding: 88px 0 64px; }
+    .eyebrow {
+      display: inline-block; font-size: 0.82rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 18px;
+    }
+    .hero h1 {
+      font-family: "Fraunces", serif;
+      font-weight: 900; font-size: clamp(2.6rem, 8vw, 4.4rem);
+      line-height: 1.02; letter-spacing: -0.02em; color: var(--ink);
+    }
+    .hero h1 .accent { color: var(--accent); }
+    .hero .lede {
+      margin-top: 22px; font-size: clamp(1.05rem, 2.4vw, 1.25rem);
+      color: var(--muted); max-width: 56ch;
+    }
+    .cta-row { margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      display: inline-block; padding: 11px 20px; border-radius: 999px;
+      font-weight: 600; font-size: 0.95rem;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { text-decoration: none; opacity: 0.92; }
+    .btn-ghost { border: 1px solid var(--line); color: var(--ink); }
+    .btn-ghost:hover { text-decoration: none; border-color: var(--ink); }
+
+    /* ---------- Sections ---------- */
+    section { padding: 56px 0; }
+    .section-head {
+      font-family: "Fraunces", serif; font-weight: 600;
+      font-size: 1.5rem; letter-spacing: -0.01em; margin-bottom: 24px;
+      display: flex; align-items: baseline; gap: 12px;
+    }
+    .section-head::before {
+      content: ""; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--gold); display: inline-block;
+    }
+    .about p { color: var(--muted); font-size: 1.05rem; max-width: 62ch; }
+    .about p + p { margin-top: 14px; }
+
+    /* ---------- Work grid ---------- */
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .card {
+      background: var(--surface); border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 22px;
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+      box-shadow: 0 10px 30px -12px rgba(46,94,170,0.25);
+    }
+    .card h3 { font-size: 1.15rem; margin-bottom: 6px; }
+    .card h3 a { color: var(--ink); }
+    .card p { color: var(--muted); font-size: 0.95rem; }
+    .tags { margin-top: 14px; display: flex; gap: 8px; flex-wrap: wrap; }
+    .tag {
+      font-size: 0.75rem; font-weight: 500; color: var(--muted);
+      border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px;
+    }
+
+    /* ---------- Footer ---------- */
+    footer { border-top: 1px solid var(--line); padding: 40px 0 60px; }
+    .foot-links { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 14px; }
+    .foot-links a { color: var(--ink); font-weight: 500; }
+    footer small { color: var(--muted); }
+
+    /* ---------- Load animation ---------- */
+    .rise { opacity: 0; transform: translateY(14px); animation: rise 0.6s ease forwards; }
+    .rise:nth-child(2) { animation-delay: 0.06s; }
+    .rise:nth-child(3) { animation-delay: 0.12s; }
+    @keyframes rise { to { opacity: 1; transform: none; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+      html { scroll-behavior: auto; }
+    }
+
+    @media (max-width: 620px) {
+      .nav-links { gap: 16px; }
+      .grid { grid-template-columns: 1fr; }
+      .hero { padding: 56px 0 40px; }
+    }
+
+    /* visible keyboard focus */
+    a:focus-visible, .btn:focus-visible {
+      outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ============ TOP BAR ============ -->
+  <header>
+    <div class="wrap nav">
+      <!-- EDIT: your name or initials -->
+      <span class="brand">Your Name</span>
+      <nav class="nav-links">
+        <a href="#about">About</a>
+        <a href="#work">Work</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <div class="wrap">
+    <div class="hero">
+      <!-- EDIT: short label — your role or field -->
+      <span class="eyebrow rise">Designer &amp; Maker</span>
+
+      <!-- EDIT: your name. The accent span can wrap your last name or a key word -->
+      <h1 class="rise">Your <span class="accent">Name</span></h1>
+
+      <!-- EDIT: one or two sentences on who you are and what you do -->
+      <p class="lede rise">
+        A short, human intro. Say what you make, who it's for, and what makes
+        your work worth a second look. One or two sentences is plenty.
+      </p>
+
+      <div class="cta-row rise">
+        <!-- EDIT: your email address (keep the mailto: prefix) -->
+        <a class="btn btn-primary" href="mailto:you@example.com">Get in touch</a>
+        <a class="btn btn-ghost" href="#work">See my work</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ABOUT ============ -->
+  <div class="wrap">
+    <section id="about" class="about">
+      <h2 class="section-head">About</h2>
+      <!-- EDIT: a paragraph or two about you -->
+      <p>
+        This is where you tell your story. Where you're based, what you've done,
+        what you're into. Write it the way you'd say it out loud — skip the
+        buzzwords and be specific.
+      </p>
+      <p>
+        A second paragraph is optional. Use it for background, current focus, or
+        the kind of work you're looking for.
+      </p>
+    </section>
+  </div>
+
+  <!-- ============ WORK ============ -->
+  <div class="wrap">
+    <section id="work">
+      <h2 class="section-head">Selected Work</h2>
+      <div class="grid">
+
+        <!-- EDIT: duplicate a card block to add more projects -->
+        <article class="card">
+          <h3><a href="#">Project One</a></h3>
+          <p>One line on what it is and why it mattered. Focus on the outcome.</p>
+          <div class="tags">
+            <span class="tag">Category</span>
+            <span class="tag">Tool</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3><a href="#">Project Two</a></h3>
+          <p>Keep descriptions short — the work should do most of the talking.</p>
+          <div class="tags">
+            <span class="tag">Category</span>
+            <span class="tag">Tool</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3><a href="#">Project Three</a></h3>
+          <p>Link the title to a live page, case study, or repo.</p>
+          <div class="tags">
+            <span class="tag">Category</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3><a href="#">Project Four</a></h3>
+          <p>Four cards fills the grid nicely, but any number works.</p>
+          <div class="tags">
+            <span class="tag">Category</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ FOOTER / CONTACT ============ -->
+  <footer id="contact">
+    <div class="wrap">
+      <div class="foot-links">
+        <!-- EDIT: your real links. Delete any you don't use. -->
+        <a href="mailto:you@example.com">Email</a>
+        <a href="https://github.com/yourusername">GitHub</a>
+        <a href="https://linkedin.com/in/yourusername">LinkedIn</a>
+        <a href="#">Instagram</a>
+      </div>
+      <!-- EDIT: year + name -->
+      <small>© 2026 Your Name. Built and hosted on GitHub Pages.</small>
+    </div>
+  </footer>
+</body>
+</html>
