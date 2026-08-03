@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KnightLight — Taylor Cadwallader</title>
-  <meta name="description" content="Taylor Cadwallader — KnightLight" />
+  <meta name="description" content="KnightLight — 2D puzzle-platformer built in a custom C++ engine. Design Lead: dual-form Knight/Light mechanic, puzzle systems, readability, and playtesting." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -27,34 +27,148 @@
       <a class="back" href="../index.html#work">&larr; All work</a>
       <h1>KnightLight</h1>
       <div class="detail-sub">2D Puzzle-Platformer &middot; Custom C++ Engine &middot; Academic</div>
-      <div class="detail-meta"><span class="badge hot">Sep 2023 &ndash; May 2024</span><span class="badge">Design Lead</span><span class="badge">Team of 7</span></div>
+      <div class="detail-meta"><span class="badge hot">Sep 2023 &ndash; May 2024</span><span class="badge">Design Lead, UX &amp; Systems Designer</span><span class="badge">Team of 7</span><span class="badge">Shipped on Steam</span></div>
     </div>
 
     <div class="detail-banner"><span class="label">KnightLight</span></div>
 
     <div class="detail-body">
       <h2>Overview</h2>
-      <p>KnightLight was a two-semester, multidisciplinary project where programmers built a custom C++ engine while designers created the gameplay inside it. I served as Design Lead, owning player controller design, core mechanic design and implementation, prototyping, and playtesting. With no engine yet in semester one, I prototyped relentlessly in Unity — sometimes weekly — to keep playtests running while the engine came together.</p>
-      <p>When it became clear how much the engine required, I helped push a scope cut from a combat/metroidvania concept to a focused puzzle game built around light. That led to the Knight-and-Light split: the Light can leave the armor and move independently to solve light-based puzzles. I designed and built the Flash ability, the lamp/door progression system, checkpoint torches that doubled as recall points, the Signiflyer collectibles that guide players through the dark, the pipe traversal system, and most of the Steam achievements.</p>
-      <h2>What I did</h2>
-      <ul class="contrib">
-        <li>Served as Design Lead on a multidisciplinary two-semester project built on a custom C++ engine.</li>
-        <li>Created frequent Unity prototypes, sometimes weekly, to test gameplay concepts, player abilities, lighting interactions, and movement feel while the engine was still being built.</li>
-        <li>Helped scale the project down from a larger combat/metroidvania concept to a puzzle-focused game centered on light.</li>
-        <li>Redesigned the player into two interconnected parts, the Knight and the Light, creating a mechanic where the Light could move independently while the Knight remained behind.</li>
-        <li>Designed and implemented the Flash ability, lamp/door pairing progression system, and checkpoint torches that functioned as save points and recall points.</li>
-        <li>Iterated on visual and audio feedback after playtests showed players were confused about the armor recall system.</li>
-        <li>Created the Signiflyers collectible system, which doubled as subtle visual guidance in dark spaces.</li>
-        <li>Implemented most Steam achievements by building tracking hooks across multiple gameplay systems.</li>
-        <li>Built the pipe traversal system using directional tags, giving the level designer flexibility in puzzle construction.</li>
-        <li>Helped reinforce readability and atmosphere through lighting, particle work, and a proximity-based red glow on spike hazards.</li>
-        <li>Conducted regular playtests across both semesters and authored numerous detailed reports on player behavior, confusion points, and usability issues.</li>
-        <li>Co-authored an Engine Design Guide documenting workflows for future designers working in the custom engine.</li>
-        <li>Transitioned from Unity prototyping to direct implementation in the custom engine once it became stable.</li>
+      <p>KnightLight is a 2D puzzle-platformer built from scratch over two semesters by a seven-person team, where the programmers wrote a custom C++ engine while the designers built the gameplay inside it. I served as Design Lead, responsible for player controller design, core mechanic design and implementation, prototyping, playtesting, and helping steer the overall gameplay direction.</p>
+      <p>The engine did not exist yet when we started, so most of the first semester was spent prototyping in Unity, sometimes weekly, to test player abilities, lighting interactions, and movement feel while the programmers built in parallel. Those prototypes let us keep running playtests months before there was an engine to test in, and they became the foundation the final game was built on.</p>
+
+      <div class="specs">
+        <div class="spec"><div class="k">Role</div><div class="v">Design Lead, UX &amp; Systems Designer</div></div>
+        <div class="spec"><div class="k">Engine</div><div class="v">Custom C++ engine</div></div>
+        <div class="spec"><div class="k">Team size</div><div class="v">7</div></div>
+        <div class="spec"><div class="k">Duration</div><div class="v">9 months, two semesters</div></div>
+        <div class="spec"><div class="k">Year</div><div class="v">2023 &ndash; 2024</div></div>
+        <div class="spec"><div class="k">Platform</div><div class="v">PC &middot; Steam</div></div>
+        <div class="spec wide"><div class="k">Goal</div><div class="v">Deliver a cohesive, enjoyable puzzle experience inside a custom engine that was still being written underneath us.</div></div>
+      </div>
+
+      <figure class="shot">
+        <div class="ph">MEDIA SLOT &mdash; KnightLight hero shot / launch trailer</div>
+        <figcaption>Replace with a gameplay still or trailer clip.</figcaption>
+      </figure>
+
+      <h2>Scoping down to one strong mechanic</h2>
+      <p>The original concept was much larger. It had combat, enemies, collectible upgrades, and a metroidvania structure. As development went on and it became clear how much work the custom engine still needed, I helped push the decision to scale the project back and focus entirely on puzzle gameplay built around light.</p>
+      <p>That cut is what produced the mechanic the rest of the game rests on. Instead of one character, the player is two interconnected parts: the Light, and the suit of armor it can inhabit. Looking back, learning when to cut scope and strengthen a smaller, more cohesive core was the single most important lesson of the project.</p>
+
+      <h2>Core mechanic: Light and Knight</h2>
+      <p>The player primarily controls the Light, a small mobile entity that can slip through tight spaces and interact with puzzle elements. When the Light finds an abandoned suit of armor it can inhabit it and become the Knight, which changes what the player is able to do with the environment. The Knight is slower, but it is immune to hazards that would destroy the Light on contact, so progress depends on separating and recombining the two forms at the right moments.</p>
+
+      <div class="cols">
+        <div class="col">
+          <h3>Light</h3>
+          <ul>
+            <li>Fast and highly mobile</li>
+            <li>Fits through tight spaces the armor cannot</li>
+            <li>Illuminates dark areas and activates lamps</li>
+            <li>Destroyed by hazards on contact</li>
+          </ul>
+        </div>
+        <div class="col alt">
+          <h3>Knight</h3>
+          <ul>
+            <li>Slower, but durable</li>
+            <li>Safely traverses spike hazards</li>
+            <li>Can launch the Light across larger gaps</li>
+            <li>Stays behind when the Light leaves</li>
+          </ul>
+        </div>
+      </div>
+
+      <p>Most puzzles run on a simple loop, and nearly every space in the game is some variation of it:</p>
+      <ol class="steps">
+        <li>Explore as the Light to scout the space and activate lamps.</li>
+        <li>Return to the armor and become the Knight to cross hazards safely.</li>
+        <li>Separate again to reach what the Knight is too large or too slow to get to.</li>
+      </ol>
+
+      <figure class="shot">
+        <div class="ph">MEDIA SLOT &mdash; Knight / Light separation and recall in motion</div>
+        <figcaption>Ideal spot for a short looping clip of the swap.</figcaption>
+      </figure>
+
+      <p>Later in the game the mechanic expands rather than being replaced: the Light gains the ability to launch upward as it exits the armor, which opens the same interaction into vertical traversal puzzles without asking the player to learn anything new.</p>
+
+      <h2>Gameplay systems I designed and built</h2>
+      <div class="systems">
+        <div class="sys">
+          <span class="tag">Core interaction</span>
+          <h3>Flash ability</h3>
+          <p>The Light emits a short burst of illumination to light dark areas and trigger lamps. This was one of the first mechanics I built and became the primary way players interact with every puzzle element in the game.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Progression</span>
+          <h3>Lamp and door pairing</h3>
+          <p>A tag-based system linking each lamp to a specific door. Flashing the lamp opens its paired door, which gave us clean cause-and-effect puzzles and let the level designer wire up progression without touching code.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Checkpointing</span>
+          <h3>Torches and armor recall</h3>
+          <p>Torches act as save points and as anchors for the armor. If the Knight ends up stranded somewhere the Light cannot return to, the player can recall the armor to the nearest lit torch, which turns checkpointing itself into a puzzle tool.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Traversal</span>
+          <h3>Pipe network</h3>
+          <p>A network system letting the Light travel through connected pipes using directional tags. The tags gave our level designer flexibility to build traversal puzzles and hidden routes out of the same components.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Collectibles</span>
+          <h3>Signiflyers</h3>
+          <p>Small firefly-like collectibles scattered through the world. They reward exploration, but they also do quiet guidance work, giving players a distant point of interest to move toward in the dark without an objective marker breaking the atmosphere.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Meta</span>
+          <h3>Steam achievements</h3>
+          <p>I implemented most of the achievements the team settled on, which meant building tracking hooks across several unrelated gameplay systems and making sure they fired reliably under conditions players could reach in any order.</p>
+        </div>
+      </div>
+
+      <h2>Guidance and readability in the dark</h2>
+      <p>The entire game takes place underground in near-total darkness, which made readability the design problem I spent the most time on. Players needed to identify hazards, interactables, and progression paths without the atmosphere being flattened by UI.</p>
+      <p>The clearest example is the spike hazards. Rather than making them permanently visible, I gave them a proximity-based red glow that intensifies gradually as the player approaches, so the hazard warns you before it kills you but never reveals the whole room from a distance. It is a small addition that measurably improved fairness while keeping the tension intact, and we reused the same proximity glow for dialogue interactions so players could tell what was interactive. I also added a subtle floating dust effect around the player to keep the cave from feeling static.</p>
+
+      <div class="shot-row">
+        <figure class="shot">
+          <div class="ph">MEDIA SLOT &mdash; spike proximity glow</div>
+          <figcaption>Hazard readability without breaking the dark.</figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="ph">MEDIA SLOT &mdash; Signiflyers guiding through a dark room</div>
+          <figcaption>Collectibles doing double duty as guidance.</figcaption>
+        </figure>
+      </div>
+
+      <h2>Prototyping, then moving into the custom engine</h2>
+      <p>Because the engine was still being written, every system started life as a Unity prototype. That let us test mechanics and puzzle interactions quickly and commit to them before anyone spent engine time implementing them. Once the engine stabilized in the second semester, I transitioned from prototyping to implementing mechanics directly inside it, adapting each design to the engine's own tools, components, and limitations.</p>
+      <p>This meant working closely and constantly with the programmers, since the engine's capabilities kept expanding underneath the gameplay. It was my first time designing extensively inside a custom engine, and it taught me more about designing within technical constraints than any project before it. To pass that on, I co-authored a 36-page Engine Design Guide with our other designer, documenting the workflows we used to prototype and implement gameplay so future designers would not have to rediscover them.</p>
+
+      <h2>Playtesting</h2>
+      <p>I ran playtests regularly across both semesters, recruiting participants, organizing sessions, and authoring 12 reports documenting player behavior, confusion points, usability issues, and technical problems. The feedback drove continuous refinement of the player controller, mechanic behavior, and how clearly systems communicated themselves.</p>
+      <p>The armor recall system is the best example of that loop working. Testing showed players consistently misunderstood how recall functioned, so rather than explaining it in text I iterated on its visual and audio feedback until the mechanic taught itself.</p>
+
+      <figure class="shot">
+        <div class="ph">MEDIA SLOT &mdash; playtest report pages / first-semester Unity prototypes</div>
+        <figcaption>12 reports across two semesters.</figcaption>
+      </figure>
+
+      <h2>Outcome</h2>
+      <ul class="outcome">
+        <li>Released on Steam as a fully playable student project with 110+ positive reviews.</li>
+        <li>Highlighted on DigiPen's Game Gallery.</li>
+        <li>Completed over nine months by a seven-person multidisciplinary team.</li>
+        <li>Successfully transitioned gameplay from Unity prototypes into a custom C++ engine mid-development.</li>
       </ul>
-      <h2>Recognition</h2>
-      <p>Highlighted on DigiPen's Game Gallery and Steam &mdash; 110+ positive reviews.</p>
-      <div class="detail-links"><a class="btn btn-primary" href="https://store.steampowered.com/app/3086850/KnightLight" target="_blank" rel="noopener">View on Steam &#8599;</a></div>
+
+      <h2>What I took from it</h2>
+      <p>This was my first time serving as Design Lead on a multidisciplinary team, and my first time designing gameplay systems inside an engine being built at the same time. It taught me how to manage scope, iterate on mechanics from real player feedback, and design systems that were both good and actually achievable within the technical reality of the project.</p>
+      <p class="takeaway">Focusing everything around a single mechanic is what let a seven-person team ship something cohesive. The metroidvania version of this game would have been worse and unfinished.</p>
+
+      <div class="detail-links"><a class="btn btn-primary" href="https://store.steampowered.com/app/3086850/KnightLight" target="_blank" rel="noopener">Play it on Steam &#8599;</a></div>
       <div class="pager"><a href="agp.html"><span class="lbl">&larr; Previous</span>AGP &mdash; Alien Game Project</a><a class="nxt" href="sgp.html"><span class="lbl">Next &rarr;</span>SGP &mdash; Streamer Game Project</a></div>
     </div>
   </div>
