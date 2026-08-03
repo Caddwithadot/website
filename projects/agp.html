@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AGP &amp;mdash; Alien Game Project — Taylor Cadwallader</title>
-  <meta name="description" content="Taylor Cadwallader — AGP &amp;mdash; Alien Game Project" />
+  <title>AGP: Alien Game Project | Taylor Cadwallader</title>
+  <meta name="description" content="AGP (Alien Game Project): two-person co-op extraction prototype in Unity, covering multiplayer architecture and node-based procedural dungeon generation." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../style.css" />
 </head>
 <body>
+  <a class="skip" href="#main">Skip to content</a>
   <header>
     <div class="wrap nav">
       <a class="brand" href="../index.html">Taylor <span>Cadwallader</span></a>
@@ -22,31 +23,91 @@
       </nav>
     </div>
   </header>
-  <div class="wrap">
+  <div class="wrap" id="main">
     <div class="detail-hero">
       <a class="back" href="../index.html#work">&larr; All work</a>
-      <h1>AGP &mdash; Alien Game Project</h1>
+      <h1>AGP: <span style="color:var(--faint);font-weight:400;">Alien Game Project</span></h1>
       <div class="detail-sub">Multiplayer Extraction Prototype &middot; Unity</div>
-      <div class="detail-meta"><span class="badge hot">Summer 2024</span><span class="badge">Systems Designer &amp; Gameplay Programmer</span><span class="badge">Team of 2</span></div>
+      <div class="detail-meta"><span class="badge hot">Summer 2024</span><span class="badge">Systems Designer &amp; Gameplay Programmer</span><span class="badge">Team of 2</span><span class="badge soon">Shelved</span></div>
     </div>
 
     <div class="detail-banner"><span class="label">AGP</span></div>
 
     <div class="detail-body">
       <h2>Overview</h2>
-      <p>AGP, short for Alien Game Project, was a summer attempt at a Lethal Company-style co-op prototype with one other designer. We shelved it midway, but it pushed me further technically than anything before it — my first real crack at multiplayer gameplay rather than just networked movement, learning synchronization, shared state, and server authority the hard way.</p>
-      <p>I implemented a physics-based networked controller with an interaction/inventory system, adopted ScriptableObjects for item data, and built a node-based procedural dungeon generator that stitched room prefabs together with seed-based rules, synchronized drop-pod deployment, and ship extraction for all players.</p>
-      <h2>What I did</h2>
-      <ul class="contrib">
-        <li>Helped build a Lethal Company-style co-op prototype over the summer with one other designer.</li>
-        <li>Gained first serious experience with multiplayer gameplay architecture, including synchronization, shared game states, and server authority decisions.</li>
-        <li>Implemented a physics-based player controller and a networked interaction/inventory system for picking up and dropping items.</li>
-        <li>Learned Scriptable Object workflows and used them to define item data.</li>
-        <li>Built a node-based procedural dungeon generator that connected room prefabs through doorways and randomly selected and rotated rooms during expansion.</li>
-        <li>Designed rules for drop-off zones, including guaranteed spacing and a seed-based active insertion point.</li>
-        <li>Implemented drop-pod deployment and ship extraction sequences synchronized for all players.</li>
-        <li>Helped explore a larger refuge-and-escape concept centered on deploying, looting, and extracting before the ship fled again.</li>
-      </ul>
+      <p>AGP, short for Alien Game Project, was a summer attempt at a Lethal Company-style co-op extraction prototype, built with the designer I usually work with. The concept was that players are refugees being hunted by their own mothership, forced to deploy, loot, and extract before the autopiloted ship leaves without them.</p>
+      <p>We shelved it midway through the summer. It still pushed me further technically than anything I had done before it, because it was my first real attempt at building a multiplayer gameplay space rather than experimenting with basic networked movement.</p>
+
+      <div class="specs">
+        <div class="spec"><div class="k">Role</div><div class="v">Systems Designer &amp; Gameplay Programmer</div></div>
+        <div class="spec"><div class="k">Engine</div><div class="v">Unity</div></div>
+        <div class="spec"><div class="k">Team size</div><div class="v">2 designers</div></div>
+        <div class="spec"><div class="k">Duration</div><div class="v">One summer</div></div>
+        <div class="spec"><div class="k">Year</div><div class="v">2024</div></div>
+        <div class="spec"><div class="k">Status</div><div class="v">Shelved prototype</div></div>
+        <div class="spec wide"><div class="k">Goal</div><div class="v">Build a co-op loop of deploying into a procedurally generated space, looting under pressure, and extracting together, with everything synchronized across players.</div></div>
+      </div>
+
+      <figure class="shot">
+        <div class="ph">MEDIA SLOT: AGP co-op gameplay / dungeon interior</div>
+        <figcaption>Replace with a gameplay still or clip.</figcaption>
+      </figure>
+
+      <h2>Learning multiplayer the hard way</h2>
+      <p>This was where I first had to take multiplayer architecture seriously. I spent a lot of time learning how to properly synchronize player actions, manage shared game states, and decide when the server should have authority over an interaction rather than the client.</p>
+      <p>I implemented a physics-based player controller along with an interaction and inventory system supporting picking up and dropping items across the network, and picked up ScriptableObject workflows around the same time, using them to define item data. None of those systems are especially complex on their own. Combining them with multiplayer logic made everything significantly harder, and honestly it was more than I was ready to handle cleanly at the time. A lot of it turned into spaghetti.</p>
+
+      <div class="systems">
+        <div class="sys">
+          <span class="tag">Networking</span>
+          <h3>Synchronization and authority</h3>
+          <p>Shared game state across clients, and actual decisions about which interactions the server should own. This was my first real look at the difference between something working on my machine and something working for everyone at once.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Movement</span>
+          <h3>Physics-based controller</h3>
+          <p>A networked physics controller, which gave the loose and slightly chaotic feel that co-op games like this get a lot of value from. It was also where most of my synchronization problems came from.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Items</span>
+          <h3>Networked interaction and inventory</h3>
+          <p>Picking up and dropping items across the network, with item definitions moved into ScriptableObjects so new loot could be authored as data rather than code.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Sequences</span>
+          <h3>Drop-pod and extraction</h3>
+          <p>Deploying by drop pod and extracting on the returning ship, both synced for every player. These are the start and end of a run, so they are also the moments where things being out of sync would have been most obvious.</p>
+        </div>
+      </div>
+
+      <h2>Procedural dungeon generation</h2>
+      <p>The other half of the project was generation. I built a node-based dungeon generator that connected room prefabs through their doorways, accepting an array of rooms and randomly selecting and rotating them as it expanded outward from a starting room.</p>
+      <p>On top of that I wrote placement rules for the drop-off zones where players deploy. Generation guaranteed three of those rooms per dungeon and spaced them apart based on the seed, with one selected as the active insertion point each run. The starting room doubled as the extraction zone, where players could activate a beacon to call the ship in and deploy a platform for depositing items.</p>
+
+      <div class="shot-row">
+        <figure class="shot">
+          <div class="ph">MEDIA SLOT: generated dungeon layout</div>
+          <figcaption>Node-based expansion from a starting room.</figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="ph">MEDIA SLOT: drop-pod deployment sequence</div>
+          <figcaption>Synchronized across all players.</figcaption>
+        </figure>
+      </div>
+
+      <ol class="steps">
+        <li>Generate the dungeon and pick a seeded insertion point.</li>
+        <li>Deploy the team by drop pod into that room.</li>
+        <li>Loot outward through connected rooms under time pressure.</li>
+        <li>Return to the starting room and activate the extraction beacon.</li>
+        <li>Deposit items on the ship's platform before it leaves.</li>
+      </ol>
+
+      <h2>Why it stopped</h2>
+      <p>It was ambitious for a two-person summer prototype with no dedicated programmer, and it never got to a polished state. What it taught me was pretty concrete though: multiplayer architecture, procedural systems, and the limits of trying to brute force everything on my own. If I go back to the idea I would rebuild it from scratch with cleaner systems and proper programming support, because I still think the concept is worth exploring.</p>
+      <p class="takeaway">Shelving it was the right call. I had already gotten what I was going to get out of it.</p>
+
+      <!-- LINK SLOT: add a build or video link here if one exists -->
       <div class="pager"><a href="knight-light-3d.html"><span class="lbl">&larr; Previous</span>Knight Light (3D)</a><a class="nxt" href="knightlight-2d.html"><span class="lbl">Next &rarr;</span>KnightLight</a></div>
     </div>
   </div>
@@ -64,5 +125,6 @@
       <small>&copy; 2026 Taylor Cadwallader &middot; Built &amp; hosted on GitHub Pages</small>
     </div>
   </footer>
+  <script src="../particles.js" defer></script>
 </body>
 </html>

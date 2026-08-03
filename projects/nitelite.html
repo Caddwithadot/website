@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NiteLite — Taylor Cadwallader</title>
-  <meta name="description" content="Taylor Cadwallader — NiteLite" />
+  <title>NiteLite | Taylor Cadwallader</title>
+  <meta name="description" content="NiteLite: QA and technical design on a custom 3D C++ engine with a C# scripting layer, including a non-Euclidean scene transition system for the final demo." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../style.css" />
 </head>
 <body>
+  <a class="skip" href="#main">Skip to content</a>
   <header>
     <div class="wrap nav">
       <a class="brand" href="../index.html">Taylor <span>Cadwallader</span></a>
@@ -22,30 +23,83 @@
       </nav>
     </div>
   </header>
-  <div class="wrap">
+  <div class="wrap" id="main">
     <div class="detail-hero">
       <a class="back" href="../index.html#work">&larr; All work</a>
       <h1>NiteLite</h1>
       <div class="detail-sub">3D Custom C++ Engine w/ C# Scripting Layer &middot; Academic</div>
-      <div class="detail-meta"><span class="badge hot">Jan &ndash; Apr 2025</span><span class="badge">QA Tester &amp; Technical Designer</span><span class="badge">Team of 9</span></div>
+      <div class="detail-meta"><span class="badge hot">Jan &ndash; Apr 2025</span><span class="badge">QA Lead &amp; Technical Designer</span><span class="badge">Team of 9</span></div>
     </div>
 
     <div class="detail-banner"><span class="label">NiteLite</span></div>
 
     <div class="detail-body">
       <h2>Overview</h2>
-      <p>NiteLite was a custom 3D engine written entirely in C++ with a custom C# scripting layer, built by the same team behind the 2D engine used for KnightLight. Another designer and I used the scripting layer to build gameplay demos that showcased its functionality, and a large part of my time went to playtesting engine features, reporting bugs, and documenting usability issues from a designer's perspective.</p>
-      <p>For the final demo I built the player navigation and scene transition system, including a non-Euclidean door transition achieved by controlling scene loads and teleporting the player while the camera was fully obscured, plus a standardized showcase room template the rest of the team used to present their prototypes.</p>
-      <h2>What I did</h2>
-      <ul class="contrib">
-        <li>Worked on a custom 3D C++ engine with a custom C# scripting layer alongside another designer.</li>
-        <li>Spent substantial time playtesting engine features, reporting bugs, documenting usability issues, and suggesting missing workflow improvements from a designer's perspective.</li>
-        <li>Built the player navigation and scene transition system for the final engine demo.</li>
-        <li>Implemented a basic first-person controller and interactive doors that connected prototype showcase scenes.</li>
-        <li>Created a non-Euclidean transition effect by controlling scene loads and teleporting the player while the camera was obscured.</li>
-        <li>Built a standardized showcase room template with a viewing window and interaction point to present prototypes in a consistent format.</li>
-        <li>Contributed design-focused usability feedback that improved the engine workflow for the rest of the team.</li>
-      </ul>
+      <p>The NiteLite Engine was a custom 3D engine written entirely in C++ by the same team that previously built the 2D engine behind KnightLight, joined by two additional programmers. It included a custom C# scripting layer, which another designer and I used to build gameplay demos showcasing what the engine could do.</p>
+      <p>I joined during the second semester of my junior year while still working on the senior Knight Light project in Unreal. The plan was that by the time the Unreal project wrapped, NiteLite would be far enough along for us to start using it directly.</p>
+
+      <div class="specs">
+        <div class="spec"><div class="k">Role</div><div class="v">QA Lead &amp; Technical Designer</div></div>
+        <div class="spec"><div class="k">Engine</div><div class="v">Custom C++ engine, C# scripting layer</div></div>
+        <div class="spec"><div class="k">Team size</div><div class="v">9</div></div>
+        <div class="spec"><div class="k">Duration</div><div class="v">One semester</div></div>
+        <div class="spec"><div class="k">Year</div><div class="v">2025</div></div>
+        <div class="spec"><div class="k">Deliverable</div><div class="v">Final engine showcase demo</div></div>
+        <div class="spec wide"><div class="k">Goal</div><div class="v">Stress the engine as its first real user, then build the demo that presents everyone else's prototypes in a single coherent space.</div></div>
+      </div>
+
+      <figure class="shot">
+        <div class="ph">MEDIA SLOT: NiteLite engine demo / hub lobby</div>
+        <figcaption>Replace with a screenshot or demo capture.</figcaption>
+      </figure>
+
+      <h2>Being the engine's first user</h2>
+      <p>A large part of my time went into playtesting engine features, reporting bugs, and documenting usability issues, plus suggesting missing features and workflow improvements from a designer's point of view. That mattered more here than it would on a commercial engine, because the programmers were building tools for an audience of two, and we were the two.</p>
+      <p>Working this way is also where I learned how much of a designer's speed is decided before they even open the editor. A missing inspector field or a confusing component name slows you down just as much as a bug does, and being the person who noticed those and wrote them down ended up helping the whole team, not just me.</p>
+
+      <h2>The final demo</h2>
+      <p>For the final showcase, the team built a hub-like lobby that let players walk between different prototype scenes. My main contribution was the player navigation and scene transition system holding it together.</p>
+      <p>I built a basic first-person controller and interactive doors that act as gateways between scenes. When the player walks up to a door an interact prompt appears, and opening it reveals a hallway that creates a non-Euclidean transition effect. I did that by carefully controlling when the new scene loaded and teleporting the player at the exact moment the camera was fully covered by the door surface, so you never see the swap and the space feels connected even though it isn't.</p>
+
+      <div class="systems">
+        <div class="sys">
+          <span class="tag">Navigation</span>
+          <h3>First-person controller</h3>
+          <p>Built inside the custom C# scripting layer instead of an established engine, which meant working without most of the conveniences I was used to and figuring out where the limits of the layer were.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Transitions</span>
+          <h3>Non-Euclidean doors</h3>
+          <p>Scene loads timed around when the camera is blocked, with the player teleported while the door surface covers the view. The hub feels like one connected space even though it's separate scenes.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Templates</span>
+          <h3>Showcase room</h3>
+          <p>A standardized exhibit room with a large viewing window and an interaction point that triggers the prototype and shifts the camera from first-person to a controlled presentation angle. Other team members used it as a drop-in template.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">QA</span>
+          <h3>Bug and usability reporting</h3>
+          <p>Structured reporting on engine features, keeping actual bugs separate from workflow problems so the programmers could tell what was broken apart from what was just annoying to use.</p>
+        </div>
+      </div>
+
+      <div class="shot-row">
+        <figure class="shot">
+          <div class="ph">MEDIA SLOT: non-Euclidean door transition</div>
+          <figcaption>The seam the player never sees.</figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="ph">MEDIA SLOT: standardized showcase room</div>
+          <figcaption>One template, every prototype.</figcaption>
+        </figure>
+      </div>
+
+      <h2>What I took from it</h2>
+      <p>This gave me real experience building gameplay systems on top of unfamiliar tools that were changing while I used them, and it made me better at giving feedback to the people building those tools. Designing inside something half-finished is uncomfortable, but it's also where a designer who can explain exactly why a workflow is painful is worth the most.</p>
+      <p class="takeaway">Explaining why a tool is hard to use is part of the design work, not just complaining about it.</p>
+
+      <!-- LINK SLOT: add a demo video or engine repo link here if available -->
       <div class="pager"><a href="depth-strider.html"><span class="lbl">&larr; Previous</span>Depth Strider</a><a class="nxt" href="bloops.html"><span class="lbl">Next &rarr;</span>BLOOPS</a></div>
     </div>
   </div>
@@ -63,5 +117,6 @@
       <small>&copy; 2026 Taylor Cadwallader &middot; Built &amp; hosted on GitHub Pages</small>
     </div>
   </footer>
+  <script src="../particles.js" defer></script>
 </body>
 </html>

@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Project Nasu — Taylor Cadwallader</title>
-  <meta name="description" content="Taylor Cadwallader — Project Nasu" />
+  <title>Project Nasu | Taylor Cadwallader</title>
+  <meta name="description" content="Project Nasu: first team project at DigiPen, a 2D action-puzzle platformer where I ran production and built the player controller, hazards, and enemies." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../style.css" />
 </head>
 <body>
+  <a class="skip" href="#main">Skip to content</a>
   <header>
     <div class="wrap nav">
       <a class="brand" href="../index.html">Taylor <span>Cadwallader</span></a>
@@ -22,33 +23,87 @@
       </nav>
     </div>
   </header>
-  <div class="wrap">
+  <div class="wrap" id="main">
     <div class="detail-hero">
       <a class="back" href="../index.html#work">&larr; All work</a>
       <h1>Project Nasu</h1>
       <div class="detail-sub">2D Action-Puzzle Platformer &middot; Unity &middot; Academic</div>
-      <div class="detail-meta"><span class="badge hot">Jan &ndash; Apr 2023</span><span class="badge">Systems Designer &amp; Programmer</span><span class="badge">Team of 3</span></div>
+      <div class="detail-meta"><span class="badge hot">Jan &ndash; Apr 2023</span><span class="badge">Producer, Systems Designer &amp; Main Programmer</span><span class="badge">Team of 3</span></div>
     </div>
 
     <div class="detail-banner"><span class="label">Project Nasu</span></div>
 
     <div class="detail-body">
       <h2>Overview</h2>
-      <p>Project Nasu was my first team project at DigiPen — a 2D action-puzzle platformer built entirely in Unity with Visual Scripting, on a team of three designers. Coming from a technical school background, I stepped into a leadership role: setting up the project, onboarding the team to source control, establishing workflow, and running SCRUM. Since the others were still learning Unity, I took on most of the implementation and effectively acted as lead programmer.</p>
-      <p>I designed and built the player controller, collectibles, hazards, enemies, and a speedrun timer — including a flexible, readable set of hazard tools (three laser types) and layered enemy behaviors like a patrolling rat with a respawner and a mutated hamster that combined patrol movement with timed laser attacks.</p>
-      <h2>What I did</h2>
-      <ul class="contrib">
-        <li>Served on a three-designer team and naturally stepped into a leadership role after coming from a technical school background.</li>
-        <li>Set up the Unity project, introduced the team to source control, helped establish workflow, and ran SCRUM meetings to keep production on track.</li>
-        <li>Took on most of the implementation work and effectively acted as the lead programmer while still contributing to design.</li>
-        <li>Designed, prototyped, and implemented the player controller, collectibles, hazards, enemies, and a speedrun timer with time tracking.</li>
-        <li>Built readable hazard tools for level design, including three laser types: a red laser disabled by shooting a level button, a green laser that blinked on an interval, and a blue laser that rotated within a 90-degree range.</li>
-        <li>Implemented enemy behaviors including a rat that patrolled between two points, a rat spawner that respawned rats after death, and a mutated hamster that combined patrol behavior with laser attacks.</li>
-        <li>Gained first-hand experience fully owning both design and implementation on a team.</li>
-      </ul>
+      <p>Project Nasu was my first team project at DigiPen, during my freshman year. It's a 2D action-puzzle platformer built entirely in Unity using Visual Scripting, made by a team of three designers.</p>
+      <p>Because I had come from a technical school before DigiPen, I had a head start on the tools and naturally stepped into a leadership role. I set up the Unity project, introduced my teammates to source control, helped establish workflow, and ran SCRUM meetings to keep us on track. Since the rest of the team was still learning Unity, I also took on most of the implementation and effectively acted as lead programmer while still contributing to design.</p>
+
+      <div class="specs">
+        <div class="spec"><div class="k">Role</div><div class="v">Producer, Systems Designer &amp; Main Programmer</div></div>
+        <div class="spec"><div class="k">Engine</div><div class="v">Unity &middot; Visual Scripting</div></div>
+        <div class="spec"><div class="k">Team size</div><div class="v">3 designers</div></div>
+        <div class="spec"><div class="k">Duration</div><div class="v">One semester</div></div>
+        <div class="spec"><div class="k">Year</div><div class="v">2023</div></div>
+        <div class="spec"><div class="k">Context</div><div class="v">First team project, DigiPen</div></div>
+        <div class="spec wide"><div class="k">Goal</div><div class="v">Ship a complete platformer with a team still learning the engine, which meant building hazards our level designer could actually use without asking me to change anything.</div></div>
+      </div>
+
+      <figure class="shot">
+        <div class="ph">MEDIA SLOT: Project Nasu gameplay</div>
+        <figcaption>Replace with a gameplay still or clip.</figcaption>
+      </figure>
+
+      <h2>Hazards as level design tools</h2>
+      <p>I designed, prototyped, and implemented the player controller, collectibles, hazards, enemies, and a speedrun timer with time tracking. The hazards are the part I would still point at, because they were built specifically to give the level designer a flexible set of simple, readable tools rather than one-off obstacles.</p>
+
+      <div class="systems">
+        <div class="sys">
+          <span class="tag">Hazard 01</span>
+          <h3>Red laser</h3>
+          <p>Always on, but it can be disabled by shooting a button placed somewhere in the level. It turns a hazard into a puzzle by putting the off switch somewhere the player has to get to first.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Hazard 02</span>
+          <h3>Green laser</h3>
+          <p>Blinks on a fixed interval, creating timing windows the level designer could tune purely by placement and rhythm.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Hazard 03</span>
+          <h3>Blue laser</h3>
+          <p>Rotates within a 90 degree range, so it sweeps an area instead of blocking a line. It gave rooms a moving threat without needing to put an enemy in them.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Enemies</span>
+          <h3>Rats and the mutated hamster</h3>
+          <p>A rat patrolling between two points, a spawner that respawns rats after death, and a mutated hamster combining patrol movement with laser attacks, pausing at each turn point before firing horizontally.</p>
+        </div>
+      </div>
+
+      <p>Three lasers with clear, separate rules covered way more level design situations than a longer list of one-off hazards would have, and each one is easy to understand within a second of seeing it. The habit of building the flexible thing and letting content come out of it started here.</p>
+
+      <div class="shot-row">
+        <figure class="shot">
+          <div class="ph">MEDIA SLOT: the three laser types</div>
+          <figcaption>Readable hazard vocabulary.</figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="ph">MEDIA SLOT: mutated hamster enemy</div>
+          <figcaption>Patrol behavior plus timed laser attacks.</figcaption>
+        </figure>
+      </div>
+
+      <h2>Running production</h2>
+      <p>Alongside the implementation work I handled the production side, which meant project setup, getting everyone onto source control, establishing workflow, and running SCRUM meetings. Teaching two teammates source control while also writing most of the game is not a split I would recommend, but it did teach me early how much it costs a small team when the process isn't clear.</p>
+
       <h2>Recognition</h2>
-      <p>Showcased in Foundry10's K-12 audio workshops; awarded a team honorarium.</p>
-      <div class="pager"><a href="sgp.html"><span class="lbl">&larr; Previous</span>SGP &mdash; Streamer Game Project</a></div>
+      <p>Showcased in Foundry10's K-12 audio workshops and awarded a team honorarium, with the project also featured on DigiPen's Game Gallery and published on Steam.</p>
+
+      <h2>What I took from it</h2>
+      <p>This was my first real experience fully owning both design and implementation on a team, and it pushed me toward the kind of technical design work I still gravitate toward now. Most of what I have built since is a more developed version of what I stumbled into here.</p>
+      <p class="takeaway">Design one hazard well and the level designer can build twenty rooms out of it.</p>
+
+      <!-- LINK SLOT: add the Steam and DigiPen Game Gallery buttons here once you have the URLs -->
+      <div class="pager"><a href="sgp.html"><span class="lbl">&larr; Previous</span>SGP: Streamer Game Project</a></div>
     </div>
   </div>
   <footer id="contact">
@@ -65,5 +120,6 @@
       <small>&copy; 2026 Taylor Cadwallader &middot; Built &amp; hosted on GitHub Pages</small>
     </div>
   </footer>
+  <script src="../particles.js" defer></script>
 </body>
 </html>
