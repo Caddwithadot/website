@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SGP &amp;mdash; Streamer Game Project — Taylor Cadwallader</title>
-  <meta name="description" content="Taylor Cadwallader — SGP &amp;mdash; Streamer Game Project" />
+  <title>SGP: Streamer Game Project | Taylor Cadwallader</title>
+  <meta name="description" content="SGP: Twitch-integrated Unity prototype turning live chat activity into in-engine avatars, emote particle effects, and persistent player data." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../style.css" />
 </head>
 <body>
+  <a class="skip" href="#main">Skip to content</a>
   <header>
     <div class="wrap nav">
       <a class="brand" href="../index.html">Taylor <span>Cadwallader</span></a>
@@ -22,10 +23,10 @@
       </nav>
     </div>
   </header>
-  <div class="wrap">
+  <div class="wrap" id="main">
     <div class="detail-hero">
       <a class="back" href="../index.html#work">&larr; All work</a>
-      <h1>SGP &mdash; Streamer Game Project</h1>
+      <h1>SGP: <span style="color:var(--faint);font-weight:400;">Streamer Game Project</span></h1>
       <div class="detail-sub">Twitch-Integrated Interactive Prototype &middot; Unity</div>
       <div class="detail-meta"><span class="badge hot">Summer 2023</span><span class="badge">Systems Designer &amp; Programmer</span><span class="badge">Team of 2</span></div>
     </div>
@@ -34,19 +35,70 @@
 
     <div class="detail-body">
       <h2>Overview</h2>
-      <p>SGP, short for Streamer Game Prototype, was a summer exploration of how Twitch chat could directly drive an in-engine Unity experience. Each chatter spawned an avatar with a floating nametag the moment they sent a message; sending another message reset their lifetime timer and triggered a small hop — turning passive viewers into visible participants in a simulated audience space.</p>
-      <p>As it grew, I prototyped networking so chatters could control avatars in first person, integrated a public Google Sheet as a username-keyed data store for inventories and cosmetics, built a “!color” customization command, and made an emote parser that spawned particle effects using the emote image as the sprite.</p>
-      <h2>What I did</h2>
-      <ul class="contrib">
-        <li>Built a prototype exploring how Twitch chat could directly drive an in-engine Unity experience.</li>
-        <li>Designed and implemented a system that spawned avatars in-scene based on live chat activity, with floating nametags tied to usernames.</li>
-        <li>Added lifetime timers to avatars, resetting them and triggering a hop animation whenever the same chatter sent another message.</li>
-        <li>Prototyped networking so chatters could connect directly to the game and control their own avatars in first person.</li>
-        <li>Integrated a public Google Sheet as a persistent data store keyed by username to support inventories, currency, and cosmetic unlocks.</li>
-        <li>Implemented a command-driven customization system where users could change avatar color using a “!color” command with validated and saved values.</li>
-        <li>Built a dynamic emote parsing system that detected chat emotes and spawned particle effects using the emote image as the sprite.</li>
-        <li>Worked on modular live-data pipelines and readable feedback loops connecting community interaction to gameplay space.</li>
-      </ul>
+      <p>After Project Nasu I spent the summer building a prototype with another designer called SGP, short for Streamer Game Prototype. The goal was to explore how Twitch chat could directly drive an in-engine Unity experience, treating the chat window as an input device rather than as a feed sitting next to the game.</p>
+      <p>The longer-term vision was an interactive playground where a streamer could move through the space with a spectator-style controller and interact with their community in real time.</p>
+
+      <div class="specs">
+        <div class="spec"><div class="k">Role</div><div class="v">Systems Designer &amp; Programmer</div></div>
+        <div class="spec"><div class="k">Engine</div><div class="v">Unity</div></div>
+        <div class="spec"><div class="k">Team size</div><div class="v">2 designers</div></div>
+        <div class="spec"><div class="k">Duration</div><div class="v">One summer</div></div>
+        <div class="spec"><div class="k">Year</div><div class="v">2023</div></div>
+        <div class="spec"><div class="k">Integration</div><div class="v">Twitch chat &middot; Google Sheets</div></div>
+        <div class="spec wide"><div class="k">Goal</div><div class="v">Turn passive viewers into visible participants, so that sending a message in chat produces something the whole stream can see happen in the world.</div></div>
+      </div>
+
+      <figure class="shot">
+        <div class="ph">MEDIA SLOT: chat-driven avatars in-scene</div>
+        <figcaption>Replace with a capture of the prototype running against live chat.</figcaption>
+      </figure>
+
+      <h2>Chat as an input device</h2>
+      <p>I designed and implemented a system that instantiated avatars in the scene based on live chat activity from a connected stream. Each chatter spawns an avatar the moment they send a message, complete with a floating nametag tied to their username.</p>
+      <p>Every avatar has a lifetime timer, and when that same chatter sends another message the timer resets and triggers a small hop animation. That tiny bit of feedback is the whole idea in a nutshell. The system turns live chat activity into something you can actually watch happen, so a busy chat becomes a visibly busy crowd instead of a wall of scrolling text.</p>
+
+      <div class="systems">
+        <div class="sys">
+          <span class="tag">Representation</span>
+          <h3>Avatar spawning and lifetimes</h3>
+          <p>Avatars spawn from messages, with nametags pulled from usernames and lifetime timers running per chatter, so the crowd in the scene is a live picture of who is actually talking.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Networking</span>
+          <h3>First-person chatter control</h3>
+          <p>Prototyped networking that let chatters connect directly to the game and drive their own avatar in first person, moving the system from a visualization toward a shared space.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Persistence</span>
+          <h3>Google Sheets as a data store</h3>
+          <p>A public Google Sheet used as a persistent data store keyed by username, meant to support inventories, currency, and cosmetic unlocks. It's a pretty hacky solution, but it worked for what I needed.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Commands</span>
+          <h3>Chat-driven customization</h3>
+          <p>A "!color" command letting viewers change their avatar color, with values validated on input and saved externally so the change persisted across sessions.</p>
+        </div>
+      </div>
+
+      <h2>Emote parsing</h2>
+      <p>Toward the end of development I built a dynamic emote parsing system that detected emotes in chat messages and spawned particle effects using the emote image itself as the sprite, tied to whoever sent it. It's the feature I would most want to go back to, because it takes something viewers already do constantly and turns it into something visible in the world without asking them to learn anything new.</p>
+
+      <div class="shot-row">
+        <figure class="shot">
+          <div class="ph">MEDIA SLOT: emote particle effects</div>
+          <figcaption>Chat emotes as in-world sprites.</figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="ph">MEDIA SLOT: !color customization</div>
+          <figcaption>Validated, saved, persistent across sessions.</figcaption>
+        </figure>
+      </div>
+
+      <h2>What I took from it</h2>
+      <p>The full progression system never got finished, but the prototype covered a lot of ground I hadn't touched before. I worked with live data coming in from an outside service, built modular systems for representing players, and spent most of my time on feedback that both the streamer and the chat could follow in real time.</p>
+      <p class="takeaway">If a viewer can't see their own message do something, the whole integration may as well not be there.</p>
+
+      <!-- LINK SLOT: add a demo video link here if one exists -->
       <div class="pager"><a href="knightlight-2d.html"><span class="lbl">&larr; Previous</span>KnightLight</a><a class="nxt" href="project-nasu.html"><span class="lbl">Next &rarr;</span>Project Nasu</a></div>
     </div>
   </div>
@@ -64,5 +116,6 @@
       <small>&copy; 2026 Taylor Cadwallader &middot; Built &amp; hosted on GitHub Pages</small>
     </div>
   </footer>
+  <script src="../particles.js" defer></script>
 </body>
 </html>

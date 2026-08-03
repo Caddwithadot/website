@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trash — Taylor Cadwallader</title>
-  <meta name="description" content="Taylor Cadwallader — Trash" />
+  <title>Trash | Taylor Cadwallader</title>
+  <meta name="description" content="Trash: 3D top-down extraction game in Unity. Lead gameplay designer and programmer on the vacuum gun, ScriptableObject-driven object framework, and quota system." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../style.css" />
 </head>
 <body>
+  <a class="skip" href="#main">Skip to content</a>
   <header>
     <div class="wrap nav">
       <a class="brand" href="../index.html">Taylor <span>Cadwallader</span></a>
@@ -22,32 +23,113 @@
       </nav>
     </div>
   </header>
-  <div class="wrap">
+  <div class="wrap" id="main">
     <div class="detail-hero">
       <a class="back" href="../index.html#work">&larr; All work</a>
       <h1>Trash</h1>
       <div class="detail-sub">3D Top-Down Extraction Game &middot; Unity &middot; Academic</div>
-      <div class="detail-meta"><span class="badge hot">Jan 2026 &ndash; Present</span><span class="badge">Gameplay Designer &amp; Programmer</span><span class="badge">Team of 3</span></div>
+      <div class="detail-meta"><span class="badge hot">Dec 2025 &ndash; Feb 2026</span><span class="badge">Lead Gameplay Designer &amp; Programmer</span><span class="badge">Team of 3</span></div>
     </div>
 
     <div class="detail-banner"><span class="label">Trash</span></div>
 
     <div class="detail-body">
       <h2>Overview</h2>
-      <p>Trash is my final academic project at DigiPen, currently still in development. It's a 3D top-down extraction game where the player uses a vacuum gun to suck up trash and materials, then fires them into collectors to complete quotas. Materials can be stored in the ship and spent on upgrades that unlock new mechanics and improve run efficiency.</p>
-      <p>With only three people on the team, ownership is very direct. I took the primary gameplay role and designed and implemented nearly all core systems, from the navmesh-driven controller to the ScriptableObject-based framework that makes every suckable object modular and expandable.</p>
-      <h2>What I did</h2>
-      <ul class="contrib">
-        <li>Took on the primary gameplay role and designed and implemented nearly all core systems.</li>
-        <li>Built the navmesh-based player controller, vacuum gun, suckable object framework, collectors, levers, trash piles, inventory system, quota system, controller support, camera orbit controls, and ship transitions.</li>
-        <li>Added game feel features including screenshake, FOV shifts, and rumble feedback.</li>
-        <li>Implemented the navmesh-driven controller with mouse-facing rotation, directional dash, and “fake” movement via fed position arrays for transitions and possible cinematics.</li>
-        <li>Built the vacuum gun as a layered mechanic with sphere-overlap suction, spiral force, adjustable strength, inventory insertion, clogging behavior, and automatic firing with cooldown ramping.</li>
-        <li>Designed precision-based interaction for levers and collectors using forward raycast targeting and sustained input feedback.</li>
-        <li>Built a ScriptableObject-driven framework for suckable objects with adjustable physics, spiral interaction, break-apart behavior, large-state behavior, firing force, cooldown ramping, and spawn-on-break logic.</li>
-        <li>Designed the quota system around a percentage of total spawned trash, an in-world time limit, early submission rewards, strikes, and soft/hard failure states.</li>
-        <li>Currently developing a charge mechanic that condenses full inventory slots into a single large projectile for faster deposits and deeper decision-making.</li>
-      </ul>
+      <p>Trash is my final academic project at DigiPen, a 3D top-down extraction game built by a team of three. The player uses a vacuum gun to suck up trash and materials, then fires them into collectors to complete quotas. Materials can be stored in the ship and spent on upgrades that unlock new mechanics and improve efficiency across a run, and completing quotas rewards credits that feed back into upgrading the player and the gun.</p>
+      <p>With only three people on the team, ownership was very direct. I took the primary gameplay role and designed and implemented nearly all of the core systems, from the controller up through the quota loop that frames every run.</p>
+
+      <div class="specs">
+        <div class="spec"><div class="k">Role</div><div class="v">Lead Gameplay Designer &amp; Programmer</div></div>
+        <div class="spec"><div class="k">Engine</div><div class="v">Unity</div></div>
+        <div class="spec"><div class="k">Team size</div><div class="v">3</div></div>
+        <div class="spec"><div class="k">Duration</div><div class="v">3 months</div></div>
+        <div class="spec"><div class="k">Year</div><div class="v">2025 &ndash; 2026</div></div>
+        <div class="spec"><div class="k">Context</div><div class="v">Final academic project, DigiPen</div></div>
+        <div class="spec wide"><div class="k">Goal</div><div class="v">Build an extraction loop around a single expressive tool, where the vacuum gun is the answer to movement, collection, interaction, and combat pressure alike.</div></div>
+      </div>
+
+      <figure class="shot">
+        <div class="ph">MEDIA SLOT: Trash hero shot / gameplay reel</div>
+        <figcaption>Replace with a gameplay still or montage clip.</figcaption>
+      </figure>
+
+      <h2>The vacuum gun</h2>
+      <p>The vacuum gun is the core mechanic and everything else in the game is designed around it. While sucking, the gun projects a sphere overlap that pulls valid objects in using spiral force with adjustable strength values, and sucked objects enter the inventory if there is space for them. Large objects clog the gun and block any more suction until the player either drops them or fires them out with extra force, so a full inventory turns into something you have to deal with instead of just a number. The gun can also auto-fire whatever is in the inventory, on a cooldown that ramps up the longer you hold it.</p>
+      <p>Layering those states is what keeps the gun interesting to use. Suction, clogging, inventory space, and firing speed all push against each other, so the player is constantly making small decisions about what to pick up and when to dump it.</p>
+
+      <figure class="shot">
+        <div class="ph">MEDIA SLOT: vacuum gun suction, clogging, and firing</div>
+        <figcaption>The layered states of the core mechanic.</figcaption>
+      </figure>
+
+      <h2>Systems I designed and built</h2>
+      <div class="systems">
+        <div class="sys">
+          <span class="tag">Movement</span>
+          <h3>Navmesh player controller</h3>
+          <p>I built the controller on a navmesh, partly as an experiment, and it ended up fitting the top-down structure extremely well. The character rotates toward the mouse position and has a directional dash, plus a "fake" movement mode driven by fed position arrays that currently handles ship transitions and could carry cinematic moments later.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Architecture</span>
+          <h3>Suckable object framework</h3>
+          <p>A ScriptableObject-driven framework covering every suckable in the game. New types are defined by data rather than code, with adjustable scale, physics properties, spiral behavior, break-apart clustering, large-state behavior, firing force, cooldown ramping, and spawn-on-break logic.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Interaction</span>
+          <h3>Levers and collectors</h3>
+          <p>Levers are activated by sucking on them, using a forward raycast for precision targeting rather than pure proximity, and they require sustained input while communicating progress through escalating shake. Collectors accept a single assigned object type until emptied, using the same targeting logic.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Pressure</span>
+          <h3>Quota system</h3>
+          <p>Quotas are a percentage of the total trash spawned in a level, running against an in-world time limit. When time expires the collector closes and a short submission window opens. Submitting early pays a bonus based on speed and surplus, missing quota costs a strike, and three strikes is a hard fail.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Failure states</span>
+          <h3>Soft and hard loss</h3>
+          <p>Beyond the strike system there is a soft failure case: fail to board the ship in time and you lose your inventory rather than the run. End-of-day results surface quota status, credits earned, strikes, and progression options.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Game feel</span>
+          <h3>Feedback layer</h3>
+          <p>Screenshake, FOV shifts, and controller rumble tied to suction and firing, plus full controller support and camera orbit controls. None of it matters much on its own, but together it's what makes the gun feel like it's actually pulling on things.</p>
+        </div>
+      </div>
+
+      <div class="shot-row">
+        <figure class="shot">
+          <div class="ph">MEDIA SLOT: lever interaction with escalating shake</div>
+          <figcaption>Precision raycast targeting, sustained input.</figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="ph">MEDIA SLOT: quota submission / end-of-day results</div>
+          <figcaption>The pressure frame around each run.</figcaption>
+        </figure>
+      </div>
+
+      <h2>The run loop</h2>
+      <ol class="steps">
+        <li>Deploy from the ship into a level with a quota and a clock.</li>
+        <li>Vacuum trash and materials, managing inventory space and clogs.</li>
+        <li>Fire collected material into collectors, or submit early for a speed and surplus bonus.</li>
+        <li>Board the ship before time runs out, or lose the inventory you were carrying.</li>
+        <li>Spend credits on upgrades that unlock mechanics and improve run efficiency.</li>
+      </ol>
+
+      <h2>Designing for flexibility</h2>
+      <p>The main thing I focused on was avoiding hardcoded behavior. Every object the vacuum can interact with is defined through data, so adding a new type of trash is something a designer can do without touching code, and changing how an object breaks apart or how much force it needs is just changing a value. That is what let three people build as much content as we did in the time we had.</p>
+      <p>Near the end of development I was working on a charge mechanic where a full inventory slot could be condensed into a single large projectile, letting the player deposit instantly instead of firing repeatedly and adding a higher-level decision layer on top of the moment-to-moment loop. We also discussed destructible environments tied to those large projectiles, though that stayed scope-dependent.</p>
+
+      <figure class="shot">
+        <div class="ph">MEDIA SLOT: ScriptableObject inspector / object variety</div>
+        <figcaption>Data-driven object definitions in the editor.</figcaption>
+      </figure>
+
+      <h2>What I took from it</h2>
+      <p>This is the clearest example of the pattern I keep coming back to. Build one flexible system underneath, then express as many mechanics through it as the schedule allows. On a three-person team that was not really a preference, it was the only way the scope was going to work at all.</p>
+      <p class="takeaway">If I build the framework first, adding new content stops being a big job.</p>
+
+      <!-- LINK SLOT: add a build, itch.io page, or trailer button here when available -->
       <div class="pager"><a href="antimasking.html"><span class="lbl">&larr; Previous</span>AntiMasking</a><a class="nxt" href="input-replay-analyzer.html"><span class="lbl">Next &rarr;</span>Input Replay Analyzer</a></div>
     </div>
   </div>
@@ -65,5 +147,6 @@
       <small>&copy; 2026 Taylor Cadwallader &middot; Built &amp; hosted on GitHub Pages</small>
     </div>
   </footer>
+  <script src="../particles.js" defer></script>
 </body>
 </html>

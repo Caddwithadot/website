@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BLOOPS — Taylor Cadwallader</title>
-  <meta name="description" content="Taylor Cadwallader — BLOOPS" />
+  <title>BLOOPS | Taylor Cadwallader</title>
+  <meta name="description" content="BLOOPS: 96-hour Global Game Jam puzzle game where I designed the bubble trajectory mechanics and owned 3D gameplay asset integration for a nine-person team." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../style.css" />
 </head>
 <body>
+  <a class="skip" href="#main">Skip to content</a>
   <header>
     <div class="wrap nav">
       <a class="brand" href="../index.html">Taylor <span>Cadwallader</span></a>
@@ -22,30 +23,82 @@
       </nav>
     </div>
   </header>
-  <div class="wrap">
+  <div class="wrap" id="main">
     <div class="detail-hero">
       <a class="back" href="../index.html#work">&larr; All work</a>
       <h1>BLOOPS</h1>
       <div class="detail-sub">3D Top-Down Puzzle Game &middot; Unity &middot; Game Jam</div>
-      <div class="detail-meta"><span class="badge hot">Jan 2025</span><span class="badge">Gameplay Designer &amp; Programmer</span><span class="badge">Team of 9</span></div>
+      <div class="detail-meta"><span class="badge hot">Jan 2025</span><span class="badge">Gameplay Designer &amp; Programmer</span><span class="badge">Team of 9</span><span class="badge">96 hours</span></div>
     </div>
 
     <div class="detail-banner"><span class="label">BLOOPS</span></div>
 
     <div class="detail-body">
       <h2>Overview</h2>
-      <p>Made during the 2025 Global Game Jam in 96 hours, BLOOPS is a 3D top-down puzzle game where players redirect bubbles from a soap dispenser to a drain using objects that alter each bubble's trajectory. It was my first game jam, on a nine-person multidisciplinary team that included artists from DigiPen's Spain campus.</p>
-      <p>Knowing those artists had seen their jam work go unimplemented before, I made integration a personal goal — handling most of the 3D gameplay asset implementation, connecting art to systems, and helping a programmer new to Unity find their footing, while designing the trajectory-altering mechanics that structured the puzzles.</p>
-      <h2>What I did</h2>
-      <ul class="contrib">
-        <li>Completed a 96-hour Global Game Jam project on a nine-person multidisciplinary team.</li>
-        <li>Helped guide the team toward a shared concept during brainstorming after the theme reveal.</li>
-        <li>Assisted one programmer who was new to Unity by helping them navigate the engine and troubleshoot issues.</li>
-        <li>Handled most of the 3D gameplay asset implementation, connecting art assets to systems and ensuring prefabs worked correctly in-game.</li>
-        <li>Designed the mechanics that changed bubble trajectory and structured the puzzle flow.</li>
-        <li>Implemented the camera perspective swap toggle, randomized floor tile generator, counter prop spawner, and an early inventory prototype.</li>
-        <li>Focused on making sure the core mechanics worked and the team stayed aligned within a tight deadline.</li>
-      </ul>
+      <p>BLOOPS was made during the 2025 Global Game Jam in 96 hours. It's a 3D top-down puzzle game where players redirect bubbles from a soap dispenser to a drain using objects that alter each bubble's trajectory.</p>
+      <p>This was my first game jam, on a multidisciplinary team of nine. I only knew a few people going in, including the other designer and one programmer I had worked with before. The team also included artists from DigiPen's Spain campus who had jam experience, and who mentioned that in past jams their work had never really been implemented the way they envisioned it.</p>
+
+      <div class="specs">
+        <div class="spec"><div class="k">Role</div><div class="v">Gameplay Designer &amp; Programmer</div></div>
+        <div class="spec"><div class="k">Engine</div><div class="v">Unity</div></div>
+        <div class="spec"><div class="k">Team size</div><div class="v">9, multidisciplinary</div></div>
+        <div class="spec"><div class="k">Duration</div><div class="v">96 hours</div></div>
+        <div class="spec"><div class="k">Year</div><div class="v">2025</div></div>
+        <div class="spec"><div class="k">Event</div><div class="v">Global Game Jam</div></div>
+        <div class="spec wide"><div class="k">Goal</div><div class="v">Ship a working puzzle game in four days, and make sure the artists' work actually reached the build this time.</div></div>
+      </div>
+
+      <figure class="shot">
+        <div class="ph">MEDIA SLOT: BLOOPS gameplay / bubble puzzle</div>
+        <figcaption>Replace with a gameplay still or clip.</figcaption>
+      </figure>
+
+      <h2>Making sure the art shipped</h2>
+      <p>That comment from the Spain artists set my personal goal for the jam. Going in, I made it my job to make sure the gameplay assets actually got integrated and worked the way they were supposed to, because spending a weekend on art that never makes it into the build has to be a terrible feeling.</p>
+      <p>The other designer focused mainly on 2D elements like UI and menus, while I handled most of the 3D gameplay asset implementation. A lot of my time went into connecting assets to systems, setting up prefabs correctly, and confirming that what the artists made actually functioned in-game rather than just existing in the project.</p>
+
+      <h2>Design and implementation</h2>
+      <p>Once the theme was revealed I helped kick off brainstorming and made sure everyone's ideas got considered, so we landed on something the whole team was actually excited to build. My main design responsibility was the mechanics that affected bubble trajectory, which gave structure to the puzzles the other designer then built out.</p>
+
+      <div class="systems">
+        <div class="sys">
+          <span class="tag">Core design</span>
+          <h3>Trajectory mechanics</h3>
+          <p>The objects that redirect and change a bubble's path. These are the pieces every puzzle is built out of, so they had to be easy to read at a glance and predictable enough that players could plan around them.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Camera</span>
+          <h3>Perspective swap toggle</h3>
+          <p>A toggle letting players change viewing perspective, which mattered for reading bubble paths in a 3D space from a top-down view.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Environment</span>
+          <h3>Floor tile generator and prop spawner</h3>
+          <p>A randomized floor tile generator and a counter prop spawner, which added variety to levels without anyone having to hand-place decoration during a 96-hour deadline.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Systems</span>
+          <h3>Early inventory prototype</h3>
+          <p>A working inventory built before the final art assets existed, so the system could be tested and iterated while the art was still in progress.</p>
+        </div>
+      </div>
+
+      <h2>Supporting the team</h2>
+      <p>One of our programmers was completely new to Unity, so I spent a good amount of time helping him navigate the engine and troubleshoot problems as they came up. On a 96-hour project that isn't a distraction from the work, it is the work, because getting him unstuck was worth more than anything I would have gotten done taking his tasks myself.</p>
+
+      <figure class="shot">
+        <div class="ph">MEDIA SLOT: art assets integrated in-game</div>
+        <figcaption>The goal I set going in.</figcaption>
+      </figure>
+
+      <h2>Recognition</h2>
+      <p>Published to itch.io.</p>
+
+      <h2>What I took from it</h2>
+      <p>My first jam taught me that on a big team with a short deadline, the thing holding you back is almost never ideas. It's whether the work is getting integrated, whether everyone is aligned, and whether anyone is stuck.</p>
+      <p class="takeaway">Getting someone else's work into the build counts as your contribution too.</p>
+
+      <!-- LINK SLOT: add the itch.io button here once you have the URL -->
       <div class="pager"><a href="nitelite.html"><span class="lbl">&larr; Previous</span>NiteLite</a><a class="nxt" href="forgeborne.html"><span class="lbl">Next &rarr;</span>Forgeborne</a></div>
     </div>
   </div>
@@ -63,5 +116,6 @@
       <small>&copy; 2026 Taylor Cadwallader &middot; Built &amp; hosted on GitHub Pages</small>
     </div>
   </footer>
+  <script src="../particles.js" defer></script>
 </body>
 </html>

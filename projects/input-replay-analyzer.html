@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Input Replay Analyzer — Taylor Cadwallader</title>
-  <meta name="description" content="Taylor Cadwallader — Input Replay Analyzer" />
+  <title>Input Replay Analyzer | Taylor Cadwallader</title>
+  <meta name="description" content="Input Replay Analyzer: standalone C# WinForms tool for visualizing, filtering, and replaying recorded player input logs from playtest sessions." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../style.css" />
 </head>
 <body>
+  <a class="skip" href="#main">Skip to content</a>
   <header>
     <div class="wrap nav">
       <a class="brand" href="../index.html">Taylor <span>Cadwallader</span></a>
@@ -22,31 +23,110 @@
       </nav>
     </div>
   </header>
-  <div class="wrap">
+  <div class="wrap" id="main">
     <div class="detail-hero">
-      <a class="back" href="../index.html#work">&larr; All work</a>
+      <a class="back" href="../index.html#tools">&larr; All work</a>
       <h1>Input Replay Analyzer</h1>
       <div class="detail-sub">Input Analysis &amp; Replay Tool &middot; C# WinForms &middot; Academic</div>
-      <div class="detail-meta"><span class="badge hot">Nov &ndash; Dec 2025</span><span class="badge">Tools Programmer &amp; Software Developer</span><span class="badge">Solo</span></div>
+      <div class="detail-meta tool"><span class="badge hot">Nov &ndash; Dec 2025</span><span class="badge">Tools Programmer &amp; Software Developer</span><span class="badge">Solo</span></div>
     </div>
 
     <div class="detail-banner tool"><span class="label">I.R.A.</span></div>
 
     <div class="detail-body tool">
       <h2>Overview</h2>
-      <p>The Input Replay Analyzer is a standalone WinForms tool I built over four weeks to load, visualize, and replay recorded player-input logs from playtest sessions. I wanted to work outside of Unity and make something genuinely useful for QA testers, user researchers, and designers who need a clearer way to inspect player behavior and reproduce bugs reliably.</p>
-      <p>The core feature is full input replay: load a recorded log and replay the entire session locally using the original timestamps, reproducing player behavior exactly as it happened. A JSON profile system lets it adapt to different games and control schemes.</p>
-      <h2>What I did</h2>
-      <ul class="contrib">
-        <li>Built a standalone WinForms tool over four weeks to analyze recorded player input logs from playtest sessions.</li>
-        <li>Designed it for QA testers, user researchers, and designers who needed a clearer way to inspect player behavior and reproduce bugs.</li>
-        <li>Added timeline-based log visualization with filtering and trimming by input type or time range.</li>
-        <li>Supported exporting cleaned logs so specific moments could be isolated and shared.</li>
-        <li>Implemented full input replay functionality using original timestamps to reproduce sessions locally.</li>
-        <li>Built a profile system where users could define custom input maps and save them as JSON for different games and control schemes.</li>
-        <li>Added an executable focus check so recording only happened while the target app was active, preventing unrelated input capture and helping with privacy and data accuracy.</li>
-        <li>Strengthened my skills in tool development, input handling, data serialization, and standalone debugging utilities outside a game engine.</li>
+      <p>The Input Replay Analyzer is a standalone WinForms tool I built over four weeks for my Tech Design class. I wanted to work outside of Unity for once and try building something that would actually be useful during playtesting and debugging rather than another thing that only runs inside an engine.</p>
+      <p>It loads recorded player input logs from playtest sessions, displays them on a timeline, and lets you replay the session locally using the original timestamps. The audience I designed it for is QA testers, user researchers, and designers who need to analyze player behavior, find confusion points, and reproduce bugs reliably.</p>
+
+      <div class="specs">
+        <div class="spec"><div class="k">Role</div><div class="v">Tool Designer &amp; Developer</div></div>
+        <div class="spec"><div class="k">Tech</div><div class="v">C# &middot; WinForms &middot; JSON</div></div>
+        <div class="spec"><div class="k">Team size</div><div class="v">Solo</div></div>
+        <div class="spec"><div class="k">Duration</div><div class="v">4 weeks</div></div>
+        <div class="spec"><div class="k">Year</div><div class="v">2025</div></div>
+        <div class="spec"><div class="k">Audience</div><div class="v">QA, user researchers, designers</div></div>
+        <div class="spec wide"><div class="k">Goal</div><div class="v">Make a playtest session reproducible, so a bug that happened once in front of a tester can be replayed exactly instead of described from memory.</div></div>
+      </div>
+
+      <figure class="shot">
+        <div class="ph">MEDIA SLOT: I.R.A. main window / timeline view</div>
+        <figcaption>Replace with a screenshot of the tool in use.</figcaption>
+      </figure>
+
+      <h2>The problem</h2>
+      <p>When debugging playtests, designers usually end up relying on written notes, memory, and incomplete logs. All three have the same problem, which is that they only capture what someone thought was worth writing down at the time, and that's often not the thing that ends up mattering. Reproducing what a player did is close to impossible when you don't know the exact order of their inputs, and a bug nobody can reproduce usually just gets dropped.</p>
+      <p>So the goal was pretty specific. Let a developer see what the player actually did, pull out one moment from a session, and reproduce a bug reliably by replaying the inputs that caused it.</p>
+
+      <h2>Core features</h2>
+      <div class="systems">
+        <div class="sys">
+          <span class="tag">Visualization</span>
+          <h3>Input log timeline</h3>
+          <p>Loads recorded logs into a structured timeline so you can see what the player did and when at a glance, instead of reading through raw log lines.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Reproduction</span>
+          <h3>Full session replay</h3>
+          <p>Replays a recorded session locally using the original timestamps, reproducing player behavior exactly as it happened. This is the feature the rest of the tool exists to support.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Analysis</span>
+          <h3>Filtering and trimming</h3>
+          <p>Filter or trim inputs by type or by time range, so you can pull out the thirty seconds that actually matter from a twenty minute session.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Sharing</span>
+          <h3>Cleaned log export</h3>
+          <p>Export trimmed logs so you can hand a specific moment to another developer as a file instead of a paragraph trying to describe it.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Configuration</span>
+          <h3>JSON profile system</h3>
+          <p>Users define custom input maps saved as JSON, letting the tool adapt to different games and control schemes rather than being hardcoded to one project.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Privacy</span>
+          <h3>Executable focus check</h3>
+          <p>Recording only happens while the target application is in focus. Assign the game executable, run the playtest, and unrelated input from outside the game never enters the log.</p>
+        </div>
+      </div>
+
+      <div class="shot-row">
+        <figure class="shot">
+          <div class="ph">MEDIA SLOT: filtering and trimming a log</div>
+          <figcaption>Isolating the moment that matters.</figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="ph">MEDIA SLOT: JSON profile configuration</div>
+          <figcaption>Adapting to a different control scheme.</figcaption>
+        </figure>
+      </div>
+
+      <h2>Example workflow</h2>
+      <ol class="steps">
+        <li>Assign the game executable so recording stays scoped to it.</li>
+        <li>Record player input during a playtest session.</li>
+        <li>Load the recorded log into the tool.</li>
+        <li>Inspect the timeline and trim to the moment in question.</li>
+        <li>Replay the session locally to reproduce the bug.</li>
+      </ol>
+
+      <h2>Why WinForms</h2>
+      <p>Building outside a game engine was the whole point. I wanted to see what tool development is like when none of the engine's conveniences are there, which meant handling input capture, log parsing, timestamp syncing, JSON configuration, and the UI myself.</p>
+      <p>The focus check is the part I'm happiest with, because it came from thinking about the person running the test instead of the person reading the data. Recording every keystroke on someone's machine during a playtest is both a privacy problem and an accuracy problem, and only recording while the game is in focus fixes both without the tester having to remember anything.</p>
+
+      <h2>Outcome</h2>
+      <ul class="outcome">
+        <li>Fully functional input visualization and replay tool.</li>
+        <li>Loads and replays real playtest input logs using original timestamps.</li>
+        <li>Supports multiple games and control schemes through JSON profiles.</li>
       </ul>
+
+      <h2>What I took from it</h2>
+      <p>I didn't finish every feature I had planned, but the project taught me a lot about input handling, data serialization, and building standalone debugging tools outside an engine. It also reinforced how valuable good tools are for playtesting and iteration, which is why it's something I'd like to come back to.</p>
+      <p class="takeaway">The most useful playtest data is the kind you can just run again.</p>
+
+      <!-- LINK SLOT: add a GitHub repo or download button here if you want to share the tool -->
       <div class="pager"><a href="trash.html"><span class="lbl">&larr; Previous</span>Trash</a><a class="nxt" href="3d-sprite-layerer.html"><span class="lbl">Next &rarr;</span>3D Sprite Layerer</a></div>
     </div>
   </div>
@@ -64,5 +144,6 @@
       <small>&copy; 2026 Taylor Cadwallader &middot; Built &amp; hosted on GitHub Pages</small>
     </div>
   </footer>
+  <script src="../particles.js" defer></script>
 </body>
 </html>

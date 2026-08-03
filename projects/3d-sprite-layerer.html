@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3D Sprite Layerer — Taylor Cadwallader</title>
-  <meta name="description" content="Taylor Cadwallader — 3D Sprite Layerer" />
+  <title>3D Sprite Layerer | Taylor Cadwallader</title>
+  <meta name="description" content="3D Sprite Layerer: custom Unity editor tool automating layered sprite prefab generation for a 2.5D stacked-sprite art style." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../style.css" />
 </head>
 <body>
+  <a class="skip" href="#main">Skip to content</a>
   <header>
     <div class="wrap nav">
       <a class="brand" href="../index.html">Taylor <span>Cadwallader</span></a>
@@ -22,29 +23,82 @@
       </nav>
     </div>
   </header>
-  <div class="wrap">
+  <div class="wrap" id="main">
     <div class="detail-hero">
-      <a class="back" href="../index.html#work">&larr; All work</a>
+      <a class="back" href="../index.html#tools">&larr; All work</a>
       <h1>3D Sprite Layerer</h1>
       <div class="detail-sub">Unity Editor Tool &middot; C# &middot; Academic</div>
-      <div class="detail-meta"><span class="badge hot">Sep &ndash; Oct 2025</span><span class="badge">Tools Programmer &amp; Technical Designer</span><span class="badge">Solo</span></div>
+      <div class="detail-meta tool"><span class="badge hot">Sep &ndash; Oct 2025</span><span class="badge">Tools Programmer &amp; Technical Designer</span><span class="badge">Solo</span></div>
     </div>
 
     <div class="detail-banner tool"><span class="label">Sprite Layerer</span></div>
 
     <div class="detail-body tool">
       <h2>Overview</h2>
-      <p>The 3D Sprite Layerer is a custom Unity editor tool I built over about three weeks to automate the creation of layered sprite prefabs. It was made for a 2.5D prototype where props were built from stacked sprites arranged in 3D space to create a paper-like depth effect — a process that previously meant duplicating sprites, positioning them by hand, and tweaking values one at a time.</p>
-      <p>With the tool, you provide an array of sprites and it generates a prefab with configurable spacing, angles, and ordering, plus random offsets and variant generation. I designed it with future collaborators in mind, especially artists, so they could import assets and generate usable props without manual scene assembly.</p>
-      <h2>What I did</h2>
-      <ul class="contrib">
-        <li>Created a custom Unity editor tool over about three weeks to automate layered sprite prefab creation.</li>
-        <li>Built it to speed up environment creation for a 2.5D prototype that used stacked sprites in 3D space for a paper-like depth effect.</li>
-        <li>Replaced a manual workflow involving sprite duplication, placement, and value tweaking with automated prefab generation.</li>
-        <li>Supported arrays of sprites with configurable spacing, angles, ordering, random positional offsets, variant generation, and save-location control.</li>
-        <li>Designed the tool to be useful for future collaborators, especially artists, so they could generate usable props without manual scene assembly.</li>
-        <li>Improved early prototype workflow by reducing environment setup time and keeping focus on gameplay systems.</li>
-      </ul>
+      <p>The 3D Sprite Layerer is a custom Unity editor tool I built over about three weeks to automate the creation of layered sprite prefabs. It was made for a 2.5D prototype where props are built out of stacked sprites arranged in 3D space, producing a paper-like depth effect.</p>
+      <p>Before the tool, building one of those props meant duplicating sprites, placing each layer by hand, and tweaking values one at a time. It worked, but it made every prop slow enough that I started avoiding making them, which is a bad sign when environment setup is supposed to be the quick part.</p>
+
+      <div class="specs">
+        <div class="spec"><div class="k">Role</div><div class="v">Tools Programmer &amp; Technical Designer</div></div>
+        <div class="spec"><div class="k">Tech</div><div class="v">Unity Editor &middot; C#</div></div>
+        <div class="spec"><div class="k">Team size</div><div class="v">Solo</div></div>
+        <div class="spec"><div class="k">Duration</div><div class="v">~3 weeks</div></div>
+        <div class="spec"><div class="k">Year</div><div class="v">2025</div></div>
+        <div class="spec"><div class="k">Audience</div><div class="v">Designers and artists</div></div>
+        <div class="spec wide"><div class="k">Goal</div><div class="v">Turn a slow manual assembly process into a generated one, so building environment props stops competing with time spent on gameplay systems.</div></div>
+      </div>
+
+      <figure class="shot">
+        <div class="ph">MEDIA SLOT: the tool window in the Unity editor</div>
+        <figcaption>Replace with a screenshot of the tool's interface.</figcaption>
+      </figure>
+
+      <h2>What it does</h2>
+      <p>You give the tool an array of sprites and it generates a finished prefab, handling the layer placement in 3D space for you. Everything about how those layers sit relative to each other can be configured, so the same set of sprites can produce pretty different looking props.</p>
+
+      <div class="systems">
+        <div class="sys">
+          <span class="tag">Layout</span>
+          <h3>Spacing, angles, and ordering</h3>
+          <p>Configurable spacing between layers, per-layer angles, and draw ordering, which together control how strong the stacked paper effect looks from any given camera angle.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Variation</span>
+          <h3>Random offsets and variants</h3>
+          <p>Random positional offsets and variant generation, so a set of props built from identical sprites doesn't look copy-pasted across a scene.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Workflow</span>
+          <h3>Save-location control</h3>
+          <p>Define where the generated prefabs get saved, so output stays organized instead of ending up wherever the tool happened to run.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Collaboration</span>
+          <h3>Built for artists</h3>
+          <p>Designed so a future collaborator, particularly an artist, could import their own sprites and generate usable props without assembling anything in the scene by hand or knowing how the effect works.</p>
+        </div>
+      </div>
+
+      <div class="shot-row">
+        <figure class="shot">
+          <div class="ph">MEDIA SLOT: before / after prop assembly</div>
+          <figcaption>Manual stacking vs. generated prefab.</figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="ph">MEDIA SLOT: generated variants in-scene</div>
+          <figcaption>Random offsets producing variety.</figcaption>
+        </figure>
+      </div>
+
+      <h2>Why it mattered</h2>
+      <p>The point was getting time back. Cutting down environment setup meant I could stay focused on gameplay systems during early prototyping, which is where my time should have been going. Building it so artists could use it was the other half, since a tool only I know how to run isn't much of a tool.</p>
+      <p>The prototype it was built for eventually got shelved, but the tool still works and could be reused if we ever take another shot at a game in that style.</p>
+
+      <h2>What I took from it</h2>
+      <p>This was my first custom editor tool, and it set up the same pattern I followed with the Input Replay Analyzer a month later. Find the repetitive thing that's quietly shaping what you're willing to build, then get rid of it.</p>
+      <p class="takeaway">If a workflow is slow enough that I start avoiding it, that's a problem worth fixing with a tool.</p>
+
+      <!-- LINK SLOT: add a GitHub repo or package download here if you want to share the tool -->
       <div class="pager"><a href="input-replay-analyzer.html"><span class="lbl">&larr; Previous</span>Input Replay Analyzer</a><a class="nxt" href="line-9.html"><span class="lbl">Next &rarr;</span>Line 9</a></div>
     </div>
   </div>
@@ -62,5 +116,6 @@
       <small>&copy; 2026 Taylor Cadwallader &middot; Built &amp; hosted on GitHub Pages</small>
     </div>
   </footer>
+  <script src="../particles.js" defer></script>
 </body>
 </html>
