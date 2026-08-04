@@ -5,9 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Knight Light (3D) | Taylor Cadwallader</title>
   <meta name="description" content="Knight Light (3D): UX and combat design on a 25-person Unreal senior team, auditing an existing build and turning findings into cross-discipline production work." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="preload" href="../fonts/public-sans-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="../fonts/familjen-grotesk-700.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="../style.css" />
 </head>
 <body>
@@ -20,7 +19,6 @@
         <a href="../index.html#work">Games</a>
         <a href="../index.html#tools">Tools</a>
         <a href="../index.html#about">About</a>
-        
       </nav>
     </div>
   </header>
@@ -106,7 +104,7 @@
       <p>Stepping into a large project that was already running, looking at its problems objectively, and contributing in a way that made it more cohesive instead of starting over is a different skill than building something from nothing. It's also closer to what most actual jobs look like.</p>
       <p class="takeaway">On a big team, a clearly written request that four people can act on is worth more than a feature only I could have built.</p>
 
-      <!-- LINK SLOT: add the Steam and DigiPen Game Gallery buttons here once you have the URLs -->
+      <div class="detail-links"><a class="btn btn-primary" href="https://store.steampowered.com/app/3560620/Knight_Light/" target="_blank" rel="noopener">Play it on Steam &#8599;</a></div>
       <div class="pager"><a href="forgeborne.html"><span class="lbl">&larr; Previous</span>Forgeborne</a><a class="nxt" href="agp.html"><span class="lbl">Next &rarr;</span>AGP: Alien Game Project</a></div>
     </div>
   </div>
@@ -135,7 +133,6 @@
         </div>
       <small>&copy; 2026 Taylor Cadwallader &middot; Built &amp; hosted on GitHub Pages</small>
     </div>
-  </footer>
-  <script src="../particles.js" defer></script>
+  </footer>
 </body>
 </html>
