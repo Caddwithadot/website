@@ -39,24 +39,24 @@
   /* Mid-value mauve grey. Almost every site is light or dark; sitting between
      the two is the whole point, and it is what will make cover art read like
      prints on a wall instead of tiles on a screen. */
-  --bg:        #9A939F;   /* the field */
-  --bg-2:      #8B8490;   /* recessed */
-  --surface:   #A6A0AC;   /* raised */
-  --surface-2: #B0AAB5;   /* raised, hover */
+  --bg:        #ADA6B2;   /* the field */
+  --bg-2:      #9E97A3;   /* recessed */
+  --surface:   #B8B2BD;   /* raised */
+  --surface-2: #C2BCC7;   /* raised, hover */
 
   /* Contrast against --bg is measured, not guessed:
-     ink 6.12:1, muted 5.41:1, faint 4.49:1. All clear AA for body text. */
+     ink 7.70:1, muted 6.82:1, faint 5.66:1. All clear AA for body text. */
   --ink:    #17141B;
   --muted:  #241F28;
   --faint:  #322D38;
 
-  --line:   #6F6875;
-  --line-2: #55505B;
+  --line:   #827B88;
+  --line-2: #68626E;
 
-  /* Oxblood, one saturated moment per view. It measures 3.98:1 on the field,
-     which clears the 3:1 threshold for UI indicators but NOT the 4.5:1
-     threshold for text, so it is only ever a fill or a marker, never body
-     copy. Type sitting on top of it uses --accent-ink at 10.4:1. */
+  /* Oxblood, one saturated moment per view. On the lighter field it measures
+     5.01:1, which clears the 4.5:1 text threshold, so unlike the earlier
+     darker field it can carry type as well as fills. Type on top of it uses
+     --accent-ink at 10.4:1. */
   --accent:     #6E0F2E;
   --accent-ink: #F2EFF3;
 
@@ -92,25 +92,26 @@ html {
    top, printed grid beneath. 40px minor rule, 200px major, drawn as SVG
    hairlines rather than gradients so they stay crisp at any zoom.
 
-   The marks are the vocabulary of level whiteboxing: a direction arrow, a
-   circled point of interest, a dashed route, a hazard cross, an annotation
-   bracket, a rough boxed-out room. Sparse on purpose, roughly seven per
-   1200px tile.
+   Only the grid lives here. The pencil marks are an inline <svg class="paper">
+   in the markup instead, because CSS cannot animate anything inside a data
+   URI and the marks need to draw themselves. See .paper below.
 
    Tile sizes matter for the loop. The grid repeats every 200px and the marks
-   every 1200px, so the drift has to travel a common multiple of both or the
-   marks jump when it resets. 1200 is 6 grid tiles, so both layers loop clean.
+   every 1600px, so the drift has to travel a common multiple of both or the
+   marks jump when it resets. 1600 is 8 grid tiles, so both layers loop clean.
 
-   This animates background-position rather than transform. Transform was the
-   cheaper option but it moved the element itself, so after 1200px the layer
-   had slid out from under the viewport and left bare field behind it. Sizing
-   the element to survive that would have meant a compositor layer around
-   4500px square. Scrolling the tiles inside a viewport-sized element loops
-   forever at no size cost.
+   The drift uses transform, not background-position. At 1.67px/sec a
+   background-position animation only advances a whole pixel every 0.6s, and
+   rasterisation snaps it to integers, so it visibly stutters no matter what
+   timing function is used. Transform interpolates at subpixel precision on
+   the compositor and stays smooth.
 
-   steps(1200) advances one pixel at a time instead of repainting every frame:
-   1200 repaints across 720s, about 1.7 per second, which matches the drift
-   speed exactly and is imperceptible on a background this faint.
+   That means the element itself moves, so it has to be large enough to still
+   cover the viewport after travelling the full 1600px. Extending it 1600px up
+   and left, flush right and bottom, is the minimum that works: at rest it
+   covers from -1600 to the viewport edge, and at the end of the cycle from 0
+   to viewport+1600. Both cover the visible area. Sizing it 1600px on every
+   side instead would have doubled the layer for no benefit.
 
    The drift is the one deliberate exception to the motion rules: it is
    decorative, and the brief bans decorative background animation. It is
@@ -119,17 +120,55 @@ html {
 body::before {
   content: "";
   position: fixed;
-  inset: 0;
+  /* 1600px of lead on the top and left is the travel distance; the 24px on the
+     other two edges is slack so a rounding error cannot expose a seam at the
+     end of the cycle. */
+  top: -1600px; left: -1600px; right: -24px; bottom: -24px;
   z-index: -1;
   pointer-events: none;
   background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='1200'%3E%3Cg fill='none' stroke='%233F3A46' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round' opacity='0.34'%3E%3Cpath d='M110 170c30-8 58-3 84 11'/%3E%3Cpath d='M182 168l16 13-18 11'/%3E%3Cpath d='M516 84c24-12 48 4 45 24-3 19-31 27-47 14-14-11-11-30 4-36'/%3E%3Cpath stroke-dasharray='9 12' d='M870 300c44 42 96 18 138 62'/%3E%3Cpath d='M296 606l30 28M328 604l-32 30'/%3E%3Cpath d='M694 770c-9 0-9 32 0 32M694 786h36'/%3E%3Cpath d='M170 972c28-11 42 11 70 0s42 11 66 0'/%3E%3Cpath d='M239 443c13-2 27-3 41-2M281 440c2 13 2 27 1 40M282 481c-14 1-28 2-42 1M240 482c-2-14-2-28 0-42'/%3E%3Cpath d='M759 522c40-3 81-4 121-2M881 519c3 26 3 53 2 80M882 600c-41 2-82 3-122 2M760 603c-3-27-3-54-1-82'/%3E%3Cpath d='M602 884c12 5 26-5 36 3-11 6-25-3-35 5 12 5 24-4 34 4-11 6-23-1-33 5 11 4 23-3 33 3'/%3E%3Cpath d='M322 242l36 36M336 242l36 36M350 242l36 36M364 242l34 34M322 256l22 22M322 270l8 8M378 242l20 20'/%3E%3Cpath d='M247 424l4-3v15M258 425c2-4 9-3 9 1 0 5-8 8-10 12h11'/%3E%3Cpath d='M898 548c-7 1-10 7-9 12 1 4 4 6 7 5 3-1 5-4 4-7-1-3-4-4-7-3-2 1-3 3-3 5'/%3E%3Cpath d='M640 862c2-4 9-3 9 1 0 5-8 8-10 12h11M661 859l-7 11h11M661 864v13'/%3E%3C/g%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cg fill='none' stroke='%23514B58'%3E%3Cpath stroke-width='1' opacity='0.24' d='M40 0v200M80 0v200M120 0v200M160 0v200M0 40h200M0 80h200M0 120h200M0 160h200'/%3E%3Cpath stroke-width='1' opacity='0.46' d='M0 0v200M0 0h200'/%3E%3C/g%3E%3C/svg%3E");
-  animation: drift 720s steps(1200) infinite;
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cg fill='none' stroke='%23645E6B'%3E%3Cpath stroke-width='1' opacity='0.24' d='M40 0v200M80 0v200M120 0v200M160 0v200M0 40h200M0 80h200M0 120h200M0 160h200'/%3E%3Cpath stroke-width='1' opacity='0.46' d='M0 0v200M0 0h200'/%3E%3C/g%3E%3C/svg%3E");
+  animation: drift 960s linear infinite;
 }
 @keyframes drift {
-  from { background-position: 0 0, 0 0; }
-  to   { background-position: 1200px 1200px, 1200px 1200px; }
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(1600px, 1600px, 0); }
+}
+
+/* Pencil marks. Inline SVG rather than a background image, because CSS cannot
+   reach inside a data URI and these need to draw themselves.
+
+   One <g> is defined once and repeated by nine <use> instances on a 1600px
+   pitch, which is what makes the pattern periodic with the drift. Sizing:
+   the layer leads 1600px up and left, so it must be at least viewport+1600
+   wide to still cover the screen at the end of a cycle. 4800 covers viewports
+   up to 3200px.
+
+   Every path carries pathLength="1", which normalises its length so the draw
+   animation runs at the same rate on a 20px tick and a 300px scribble. Each
+   also carries its own negative animation-delay, so marks are partway through
+   the cycle at load and only a few are ever drawing at once. */
+.paper {
+  position: fixed;
+  top: -1600px; left: -1600px;
+  width: 4800px; height: 4800px;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.34;
+  animation: drift 960s linear infinite;
+}
+.paper path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: sketch 60s linear infinite;
+}
+/* Draw in, hold, fade, then reset while invisible so the loop has no pop. */
+@keyframes sketch {
+  0%   { stroke-dashoffset: 1; opacity: 1; }
+  14%  { stroke-dashoffset: 0; opacity: 1; }
+  86%  { stroke-dashoffset: 0; opacity: 1; }
+  97%  { stroke-dashoffset: 0; opacity: 0; }
+  100% { stroke-dashoffset: 1; opacity: 0; }
 }
 
 body {
@@ -693,6 +732,10 @@ a:focus-visible, .btn:focus-visible, button:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; transform: none !important; }
   html { scroll-behavior: auto; }
+  /* Killing the animation leaves paths at their start state, which is fully
+     undrawn. Without this the marks vanish entirely for reduced-motion users
+     instead of simply sitting still. */
+  .paper path { stroke-dashoffset: 0 !important; opacity: 1 !important; }
 }
 
 @media (max-width: 720px) {
