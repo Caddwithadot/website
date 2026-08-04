@@ -2,12 +2,27 @@
    Taylor Cadwallader, Portfolio stylesheet
    Change the tokens below to re-skin the entire site at once.
 
-   AFFORDANCE RULE (read before adding styles):
-   Only interactive elements get :hover states or cursor:pointer.
-   If a block reacts to the mouse, the whole block must be clickable.
-   Card/row click targets use the stretched-link pattern:
-     .container { position: relative; }
-     .container a::after { content:""; position:absolute; inset:0; }
+   AFFORDANCE RULES (read before adding styles):
+
+   1. Only interactive elements get :hover states or cursor:pointer.
+      If a block reacts to the mouse, the whole block must be clickable.
+
+   2. Card/row click targets use the stretched-link pattern:
+        .container { position: relative; cursor: pointer; }
+        .container a::after { content:""; position:absolute; inset:0; z-index:5; }
+      The z-index is NOT optional. Any positioned descendant (anything with
+      position:relative, such as a list item hanging its own bullet) will
+      otherwise paint on top of the overlay and silently kill clicks in that
+      region. This exact bug ate the bullet area of every .dproj card.
+
+   3. TWO VISUAL LANGUAGES, never mix them:
+        CLICKABLE  = raised (--surface), full border, radius, hover lift,
+                     accent bar on hover, cursor:pointer, visible arrow cue.
+        STATIC     = recessed (--bg-2) or borderless, no hover, no accent
+                     bar, no arrow, no pointer. Text keeps its I-beam cursor,
+                     which is itself a signal that it is content, not a control.
+      Used by: .fcard .row .focus .dproj (clickable)
+               .sys .col .spec .summary .outcome .steps (static)
    ============================================================ */
 :root {
   /* neutrals, cool ink with a violet cast, not pure black */
@@ -189,7 +204,7 @@ section { padding: 54px 0; }
 .fcard:hover { background: var(--surface-2); border-color: var(--line-2); box-shadow: var(--shadow); }
 .fcard:hover::before { opacity: 1; }
 /* the click target */
-.fcard-body h3 a::after { content: ""; position: absolute; inset: 0; z-index: 3; }
+.fcard-body h3 a::after { content: ""; position: absolute; inset: 0; z-index: 5; }
 .fcard:focus-within { border-color: var(--accent); }
 
 .thumb {
@@ -258,7 +273,7 @@ section { padding: 54px 0; }
 .row:hover::before { opacity: 1; }
 .row-title { font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif; font-weight: 600; font-size: 1.02rem; letter-spacing: -0.015em; }
 .row-title a { color: var(--ink); }
-.row-title a::after { content: ""; position: absolute; inset: 0; }
+.row-title a::after { content: ""; position: absolute; inset: 0; z-index: 5; }
 .row:hover .row-title a { color: var(--warm); text-decoration: none; }
 .row.tool:hover .row-title a { color: var(--cool); }
 .row:focus-within { background: var(--surface); }
@@ -304,7 +319,7 @@ section { padding: 54px 0; }
   font-size: 1.12rem; letter-spacing: -0.02em; margin-bottom: 8px;
 }
 .focus h3 a { color: var(--ink); }
-.focus h3 a::after { content: ""; position: absolute; inset: 0; }
+.focus h3 a::after { content: ""; position: absolute; inset: 0; z-index: 5; }
 .focus:hover h3 a { color: var(--pink); text-decoration: none; }
 .focus p { color: var(--muted); font-size: 0.92rem; flex: 1; }
 .focus .go {
@@ -316,19 +331,21 @@ section { padding: 54px 0; }
 
 /* ---------- Discipline page: project entries ---------- */
 .dproj {
-  position: relative; border: 1px solid var(--line); border-left: 3px solid var(--pink);
+  position: relative; cursor: pointer;
+  border: 1px solid var(--line); border-left: 3px solid var(--pink);
   border-radius: var(--radius); background: var(--surface);
   padding: 20px 22px; margin-bottom: 14px;
-  transition: background 0.18s ease, border-color 0.18s ease;
+  transition: background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
 }
-.dproj:hover { background: var(--surface-2); }
+.dproj:hover { background: var(--surface-2); border-color: var(--line-2); border-left-color: var(--pink); box-shadow: var(--shadow); }
+.dproj:focus-within { border-color: var(--pink); }
 .dproj-head { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin-bottom: 4px; }
 .dproj h3 {
   font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
   font-size: 1.08rem; letter-spacing: -0.02em;
 }
 .dproj h3 a { color: var(--ink); }
-.dproj h3 a::after { content: ""; position: absolute; inset: 0; }
+.dproj h3 a::after { content: ""; position: absolute; inset: 0; z-index: 5; }
 .dproj:hover h3 a { color: var(--pink); text-decoration: none; }
 .dproj-meta { font-family: "JetBrains Mono", monospace; font-size: 0.72rem; color: var(--faint); }
 .dproj-list { list-style: none; margin-top: 10px; }
@@ -336,15 +353,18 @@ section { padding: 54px 0; }
   color: var(--muted); font-size: 0.95rem; padding: 5px 0 5px 18px; position: relative;
 }
 .dproj-list li::before { content: "\2022"; position: absolute; left: 2px; color: var(--pink); }
+/* Always-visible arrow cue: the card is a link, so it should look like one. */
 .dproj .more {
-  font-family: "JetBrains Mono", monospace; font-size: 0.76rem; color: var(--faint); margin-top: 12px;
+  font-family: "JetBrains Mono", monospace; font-size: 0.76rem; color: var(--pink);
+  margin-top: 14px; display: inline-flex; align-items: center; gap: 6px;
 }
-.dproj:hover .more { color: var(--pink); }
+.dproj .more::after { content: "\2192"; transition: transform 0.18s ease; }
+.dproj:hover .more::after { transform: translateX(4px); }
 
 /* Summary strip at the top of a discipline page */
 .summary {
   border: 1px solid var(--line); border-radius: var(--radius);
-  background: var(--surface); padding: 20px 22px; margin: 8px 0 6px;
+  background: var(--bg-2); padding: 20px 22px; margin: 8px 0 6px;
 }
 .summary .k {
   font-family: "JetBrains Mono", monospace; font-size: 0.68rem; letter-spacing: 0.12em;
@@ -449,7 +469,7 @@ footer small { color: var(--faint); display: block; margin-top: 24px; font-famil
   background: var(--line); border: 1px solid var(--line); border-radius: var(--radius);
   overflow: hidden; margin: 10px 0 6px;
 }
-.spec { background: var(--surface); padding: 15px 18px; }
+.spec { background: var(--bg-2); padding: 15px 18px; }
 .spec .k {
   font-family: "JetBrains Mono", monospace; font-size: 0.68rem; letter-spacing: 0.1em;
   text-transform: uppercase; color: var(--faint); margin-bottom: 5px;
@@ -461,8 +481,10 @@ footer small { color: var(--faint); display: block; margin-top: 24px; font-famil
 
 /* ---------- Case study: side-by-side comparison cards ---------- */
 .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 6px; }
+/* Static comparison panels: recessed rather than raised, so they never read
+   as something you can click. */
 .col {
-  background: var(--surface); border: 1px solid var(--line);
+  background: var(--bg-2); border: 1px solid var(--line);
   border-radius: var(--radius); padding: 20px 22px;
 }
 .col h3 {
@@ -489,14 +511,17 @@ footer small { color: var(--faint); display: block; margin-top: 24px; font-famil
   display: flex; align-items: center; justify-content: center;
 }
 
-/* ---------- Case study: system / feature blocks (NOT interactive) ---------- */
-.systems { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 6px; }
+/* ---------- Case study: system / feature blocks (STATIC, never clickable) ----------
+   Deliberately NOT card-shaped. No surface fill, no radius, no left accent bar,
+   because that combination is reserved for things you can click. This reads as a
+   spec sheet instead: a rule, a label, and text. */
+.systems { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 26px; margin-top: 12px; }
 .sys {
-  border: 1px solid var(--line); border-left: 3px solid var(--line-2);
-  border-radius: var(--radius); padding: 18px 22px; background: var(--surface);
+  background: transparent; border: 0; border-radius: 0;
+  border-top: 2px solid var(--line-2); padding: 14px 0 0;
 }
-.detail-body .sys { border-left-color: color-mix(in srgb, var(--accent) 55%, transparent); }
-.detail-body.tool .sys { border-left-color: color-mix(in srgb, var(--cool) 55%, transparent); }
+.detail-body .sys { border-top-color: color-mix(in srgb, var(--accent) 50%, transparent); }
+.detail-body.tool .sys { border-top-color: color-mix(in srgb, var(--cool) 50%, transparent); }
 .sys h3 {
   font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif; font-size: 1rem;
   letter-spacing: -0.02em; margin-bottom: 8px;
