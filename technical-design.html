@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Technical Design Work | Taylor Cadwallader</title>
+  <meta name="description" content="Technical design work by Taylor Cadwallader: gameplay implementation in Unity and custom C++ engines, runtime mesh manipulation, editor tools, and standalone C# utilities." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="index.html">Taylor <span>Cadwallader</span></a>
+      <nav class="nav-links">
+        <a href="index.html#focus">Focus</a>
+        <a href="index.html#work">Games</a>
+        <a href="index.html#tools">Tools</a>
+        <a href="index.html#about">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="wrap" id="main">
+    <div class="detail-hero">
+      <a class="back" href="index.html#focus">&larr; All focus areas</a>
+      <h1>Technical Design</h1>
+      <div class="detail-sub">Selected technical work &middot; 7 projects</div>
+      <div class="detail-meta"><span class="badge hot">Focus area</span><span class="badge">C#</span><span class="badge">Unity</span><span class="badge">Custom C++ engines</span><span class="badge">WinForms</span></div>
+    </div>
+
+    <div class="detail-body">
+      <h2>How I approach it</h2>
+      <p>I sit around 70% designer and 30% programmer. I'm not a full computer science programmer, but I'm comfortable enough to build my own designs, which means I can prototype something, test it, and keep iterating without waiting on someone else's schedule.</p>
+      <p>Most of my technical work comes from that. If a system needs to exist for the design to work, I'd rather build it than write a document describing it, and if a workflow is slow enough that I start avoiding it, I'll usually build a tool to get rid of it.</p>
+
+      <div class="summary">
+        <div class="k">What this covers</div>
+        <ul>
+          <li>C# gameplay scripting</li>
+          <li>Unity development</li>
+          <li>Custom C++ engine workflows</li>
+          <li>Custom editor tools</li>
+          <li>Standalone tool development</li>
+          <li>Runtime mesh manipulation</li>
+          <li>Player controller implementation</li>
+          <li>Navmesh movement logic</li>
+          <li>Input handling and serialization</li>
+          <li>JSON data workflows</li>
+          <li>Scene transition systems</li>
+          <li>Gameplay debugging</li>
+        </ul>
+      </div>
+
+      <h2>Selected work</h2>
+
+      <article class="dproj">
+        <div class="dproj-head">
+          <h3><a href="projects/trash.html">Trash</a></h3>
+          <span class="dproj-meta">Unity &middot; Team of 3 &middot; Dec 2025 to Feb 2026</span>
+        </div>
+        <ul class="dproj-list">
+          <li>Took the primary gameplay role on a three-person team and implemented nearly all of the core systems myself.</li>
+          <li>Built the navmesh-driven player controller with mouse-facing rotation, a directional dash, and scripted movement via fed position arrays for transitions.</li>
+          <li>Implemented the vacuum gun using sphere-overlap suction with spiral force, adjustable strength, clogging behavior, and auto-firing on a ramping cooldown.</li>
+          <li>Built precision interaction for levers and collectors using forward raycast targeting with sustained input feedback.</li>
+        </ul>
+        <div class="more">Read the full case study</div>
+      </article>
+
+      <article class="dproj">
+        <div class="dproj-head">
+          <h3><a href="projects/input-replay-analyzer.html">Input Replay Analyzer</a></h3>
+          <span class="dproj-meta">C# WinForms &middot; Solo &middot; Nov to Dec 2025</span>
+        </div>
+        <ul class="dproj-list">
+          <li>Built a standalone tool outside any game engine, handling input capture, log parsing, timestamp syncing, and the UI myself.</li>
+          <li>Implemented full session replay using original timestamps, so a bug can be reproduced exactly instead of described from memory.</li>
+          <li>Built a profile system where users define custom input maps saved as JSON, so the tool adapts to different games and control schemes.</li>
+          <li>Added an executable focus check so recording only happens while the target app is active, which fixes a privacy problem and an accuracy problem at once.</li>
+        </ul>
+        <div class="more">Read the full case study</div>
+      </article>
+
+      <article class="dproj">
+        <div class="dproj-head">
+          <h3><a href="projects/forgeborne.html">Forgeborne</a></h3>
+          <span class="dproj-meta">Unity &middot; Solo &middot; Jan to Feb 2025</span>
+        </div>
+        <ul class="dproj-list">
+          <li>Built a runtime mesh-splitting system that breaks any assigned model into individual triangles to simulate metal shrapnel.</li>
+          <li>Wrote a second system to manage teleporting and reassembling that shrapnel behind the player, out of view.</li>
+          <li>Built the reform animation pipeline that flies, spins, and locks pieces into a weapon, then disperses them again on attack.</li>
+          <li>Learned runtime mesh manipulation from scratch mid-project, with the deadline already running.</li>
+        </ul>
+        <div class="more">Read the full case study</div>
+      </article>
+
+      <article class="dproj">
+        <div class="dproj-head">
+          <h3><a href="projects/nitelite.html">NiteLite</a></h3>
+          <span class="dproj-meta">Custom C++ engine, C# scripting layer &middot; Team of 9 &middot; 2025</span>
+        </div>
+        <ul class="dproj-list">
+          <li>Built the player navigation and scene transition system for the final engine demo inside a custom C# scripting layer.</li>
+          <li>Created a non-Euclidean transition by timing scene loads against camera occlusion and teleporting the player while the door surface blocked the view.</li>
+          <li>Built a standardized showcase room template that other team members used to present their own prototypes.</li>
+          <li>Acted as the engine's first real user, separating actual bugs from workflow problems so the programmers could tell them apart.</li>
+        </ul>
+        <div class="more">Read the full case study</div>
+      </article>
+
+      <article class="dproj">
+        <div class="dproj-head">
+          <h3><a href="projects/3d-sprite-layerer.html">3D Sprite Layerer</a></h3>
+          <span class="dproj-meta">Unity editor tool, C# &middot; Solo &middot; Sep to Oct 2025</span>
+        </div>
+        <ul class="dproj-list">
+          <li>Built a custom Unity editor tool that automates layered sprite prefab generation for a 2.5D stacked-sprite art style.</li>
+          <li>Supported configurable spacing, angles, ordering, random offsets, variant generation, and save-location control.</li>
+          <li>Designed it so artists could generate usable props without assembling anything by hand or knowing how the effect works.</li>
+        </ul>
+        <div class="more">Read the full case study</div>
+      </article>
+
+      <article class="dproj">
+        <div class="dproj-head">
+          <h3><a href="projects/knightlight-2d.html">KnightLight</a></h3>
+          <span class="dproj-meta">Custom C++ engine &middot; Team of 7 &middot; Shipped on Steam</span>
+        </div>
+        <ul class="dproj-list">
+          <li>Prototyped mechanics in Unity, sometimes weekly, while the custom engine was still being written, then reimplemented them in the engine once it stabilized.</li>
+          <li>Implemented the Flash ability, lamp and door pairing, checkpoint torches, armor recall, and the pipe traversal network directly in the custom engine.</li>
+          <li>Built achievement tracking hooks across several unrelated gameplay systems.</li>
+          <li>Co-authored a 36-page Engine Design Guide documenting the workflows for future designers.</li>
+        </ul>
+        <div class="more">Read the full case study</div>
+      </article>
+
+      <article class="dproj">
+        <div class="dproj-head">
+          <h3><a href="projects/project-nasu.html">Project Nasu</a></h3>
+          <span class="dproj-meta">Unity, Visual Scripting &middot; Team of 3 &middot; Jan to Apr 2023</span>
+        </div>
+        <ul class="dproj-list">
+          <li>Took on most of the implementation and effectively acted as lead programmer while still contributing to design.</li>
+          <li>Built the player controller, collectibles, hazards, enemies, and a speedrun timer with time tracking.</li>
+          <li>Set up the Unity project and got the team onto source control.</li>
+        </ul>
+        <div class="more">Read the full case study</div>
+      </article>
+
+      <h2>Elsewhere</h2>
+      <p>If you're looking for a different angle on the same work, there's a <a href="systems-design.html">systems design</a> page covering frameworks and progression, and a <a href="ux-design.html">UX design</a> page covering readability, player clarity, and playtesting.</p>
+
+      <div class="detail-links">
+        <a class="btn btn-primary" href="index.html#work">See all projects</a>
+        <a class="btn btn-ghost" href="resume.pdf" target="_blank" rel="noopener">R&eacute;sum&eacute; &#8599;</a>
+      </div>
+    </div>
+  </div>
+
+  <footer id="contact">
+    <div class="wrap">
+      <div class="foot-grid">
+        <div class="foot-name">Taylor <span>Cadwallader</span></div>
+        <div class="foot-cols">
+          <div class="foot-col">
+            <div class="kh">Focus areas</div>
+            <div class="foot-links">
+              <a href="systems-design.html">Systems Design</a>
+              <a href="technical-design.html">Technical Design</a>
+              <a href="ux-design.html">UX Design</a>
+            </div>
+          </div>
+          <div class="foot-col">
+            <div class="kh">Elsewhere</div>
+            <div class="foot-links">
+              <a href="mailto:tcadwallader.design@gmail.com">Email</a>
+              <a href="https://www.linkedin.com/in/taylor-cadwallader" target="_blank" rel="noopener">LinkedIn &#8599;</a>
+              <a href="https://discord.com/users/641844475068547072" target="_blank" rel="noopener">Discord &#8599;</a>
+              <a href="resume.pdf" target="_blank" rel="noopener">R&eacute;sum&eacute; &#8599;</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <small>&copy; 2026 Taylor Cadwallader &middot; Built &amp; hosted on GitHub Pages</small>
+    </div>
+  </footer>
+  <script src="particles.js" defer></script>
+</body>
+</html>

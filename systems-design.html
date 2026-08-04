@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Systems Design Work | Taylor Cadwallader</title>
+  <meta name="description" content="Systems design work by Taylor Cadwallader: modular gameplay frameworks, quota and progression economies, procedural generation, and multiplayer systems in Unity." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="index.html">Taylor <span>Cadwallader</span></a>
+      <nav class="nav-links">
+        <a href="index.html#focus">Focus</a>
+        <a href="index.html#work">Games</a>
+        <a href="index.html#tools">Tools</a>
+        <a href="index.html#about">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="wrap" id="main">
+    <div class="detail-hero">
+      <a class="back" href="index.html#focus">&larr; All focus areas</a>
+      <h1>Systems Design</h1>
+      <div class="detail-sub">Selected systems work &middot; 7 projects</div>
+      <div class="detail-meta"><span class="badge hot">Focus area</span><span class="badge">Unity</span><span class="badge">Unreal</span><span class="badge">Custom C++ engines</span></div>
+    </div>
+
+    <div class="detail-body">
+      <h2>How I approach it</h2>
+      <p>The pattern that shows up in almost everything I build is that I start with one flexible system and then express as many mechanics through it as the schedule allows. It's usually cheaper, it keeps the game feeling coherent, and it means new content becomes a designer task instead of a programmer task.</p>
+      <p>I design systems with the intent of building them myself, so I tend to think about the data layout and the edge cases at the same time as the player experience. That has kept my designs realistic about what a small team can actually finish.</p>
+
+      <div class="summary">
+        <div class="k">What this covers</div>
+        <ul>
+          <li>Modular gameplay frameworks</li>
+          <li>ScriptableObject-driven architecture</li>
+          <li>Quota and progression design</li>
+          <li>Economy and upgrade loops</li>
+          <li>Procedural generation</li>
+          <li>Multiplayer systems</li>
+          <li>Enemy and hazard design</li>
+          <li>Difficulty scaling</li>
+          <li>Scope management</li>
+          <li>Game design documentation</li>
+        </ul>
+      </div>
+
+      <h2>Selected work</h2>
+
+      <article class="dproj">
+        <div class="dproj-head">
+          <h3><a href="projects/trash.html">Trash</a></h3>
+          <span class="dproj-meta">Unity &middot; Team of 3 &middot; Dec 2025 to Feb 2026</span>
+        </div>
+        <ul class="dproj-list">
+          <li>Built a ScriptableObject-driven framework covering every object the vacuum can interact with, so new types are defined as data instead of code.</li>
+          <li>Designed the quota system around a percentage of spawned trash, an in-world time limit, early submission bonuses, strikes, and soft and hard fail states.</li>
+          <li>Designed the vacuum gun as layered states, where suction, clogging, inventory space, and firing speed all push against each other.</li>
+          <li>Built the upgrade loop that turns completed quotas into credits and new mechanics.</li>
+        </ul>
+        <div class="more">Read the full case study</div>
+      </article>
+
+      <article class="dproj">
+        <div class="dproj-head">
+          <h3><a href="projects/line-9.html">Line 9</a></h3>
+          <span class="dproj-meta">Unity &middot; Team of 6 &middot; 72-hour jam &middot; Aug 2025</span>
+        </div>
+        <ul class="dproj-list">
+          <li>Designed and implemented the core anomaly system, with randomized doll features and traits flagged correct or faulty each round.</li>
+          <li>Built a difficulty scaling system that makes anomalies subtler as the player gets more consistent, so tension ramps from player skill rather than a script.</li>
+          <li>Built three inspection stations as one shared system with different layer mask setups, so a fourth station would have been content rather than code.</li>
+        </ul>
+        <div class="more">Read the full case study</div>
+      </article>
+
+      <article class="dproj">
+        <div class="dproj-head">
+          <h3><a href="projects/forgeborne.html">Forgeborne</a></h3>
+          <span class="dproj-meta">Unity &middot; Solo &middot; Jan to Feb 2025</span>
+        </div>
+        <ul class="dproj-list">
+          <li>Designed three weapon archetypes with three attacks each, all nine driven by one shared runtime mesh-splitting system instead of nine separate kits.</li>
+          <li>Built the reform pipeline that flies, spins, and locks shrapnel into a weapon shape, then disperses it again during attacks.</li>
+          <li>Pivoted the whole approach mid-project when the original handcrafted method would not have scaled to nine attacks in five weeks.</li>
+        </ul>
+        <div class="more">Read the full case study</div>
+      </article>
+
+      <article class="dproj">
+        <div class="dproj-head">
+          <h3><a href="projects/strip-miner.html">Strip Miner</a></h3>
+          <span class="dproj-meta">Unity &middot; Team of 3 &middot; Summer 2025</span>
+        </div>
+        <ul class="dproj-list">
+          <li>Wrote the full game design document covering upgrade systems, quota progression, helper items, and the roguelike layer structure.</li>
+          <li>Designed the core economy where mining feeds deposits, deposits pay for upgrades, and upgrades make mining faster.</li>
+          <li>Tuned pacing so early progression is deliberately slow and later play becomes a genuine power fantasy.</li>
+          <li>Designed helper tools and depth-based unlocks so upgrading is a choice between approaches rather than one straight line.</li>
+        </ul>
+        <div class="more">Read the full case study</div>
+      </article>
+
+      <article class="dproj">
+        <div class="dproj-head">
+          <h3><a href="projects/agp.html">AGP: Alien Game Project</a></h3>
+          <span class="dproj-meta">Unity &middot; Team of 2 &middot; Summer 2024</span>
+        </div>
+        <ul class="dproj-list">
+          <li>Built a node-based procedural dungeon generator connecting room prefabs through doorways, randomly selecting and rotating rooms as it expanded.</li>
+          <li>Designed generation rules for drop-off zones with guaranteed spacing and a seed-based active insertion point each run.</li>
+          <li>Worked through multiplayer synchronization, shared game state, and server authority decisions for the first time.</li>
+        </ul>
+        <div class="more">Read the full case study</div>
+      </article>
+
+      <article class="dproj">
+        <div class="dproj-head">
+          <h3><a href="projects/knightlight-2d.html">KnightLight</a></h3>
+          <span class="dproj-meta">Custom C++ engine &middot; Team of 7 &middot; Shipped on Steam</span>
+        </div>
+        <ul class="dproj-list">
+          <li>Designed the lamp and door pairing system, a tag-based progression system the level designer could wire up without touching code.</li>
+          <li>Built the pipe traversal network using directional tags, giving the level designer flexible pieces to construct puzzles from.</li>
+          <li>Implemented most of the Steam achievements, which meant tracking hooks across several unrelated gameplay systems.</li>
+          <li>Pushed the scope cut from a metroidvania to a focused puzzle game so seven people could actually finish it.</li>
+        </ul>
+        <div class="more">Read the full case study</div>
+      </article>
+
+      <article class="dproj">
+        <div class="dproj-head">
+          <h3><a href="projects/project-nasu.html">Project Nasu</a></h3>
+          <span class="dproj-meta">Unity &middot; Team of 3 &middot; Jan to Apr 2023</span>
+        </div>
+        <ul class="dproj-list">
+          <li>Built three laser hazard types with clear separate rules, designed as reusable tools for the level designer rather than one-off obstacles.</li>
+          <li>Implemented enemy behaviors including a patrolling rat, a rat spawner, and a mutated hamster combining patrol movement with timed laser attacks.</li>
+        </ul>
+        <div class="more">Read the full case study</div>
+      </article>
+
+      <h2>Elsewhere</h2>
+      <p>If you're looking for a different angle on the same work, there's a <a href="technical-design.html">technical design</a> page covering implementation and tools, and a <a href="ux-design.html">UX design</a> page covering readability, player clarity, and playtesting.</p>
+
+      <div class="detail-links">
+        <a class="btn btn-primary" href="index.html#work">See all projects</a>
+        <a class="btn btn-ghost" href="resume.pdf" target="_blank" rel="noopener">R&eacute;sum&eacute; &#8599;</a>
+      </div>
+    </div>
+  </div>
+
+  <footer id="contact">
+    <div class="wrap">
+      <div class="foot-grid">
+        <div class="foot-name">Taylor <span>Cadwallader</span></div>
+        <div class="foot-cols">
+          <div class="foot-col">
+            <div class="kh">Focus areas</div>
+            <div class="foot-links">
+              <a href="systems-design.html">Systems Design</a>
+              <a href="technical-design.html">Technical Design</a>
+              <a href="ux-design.html">UX Design</a>
+            </div>
+          </div>
+          <div class="foot-col">
+            <div class="kh">Elsewhere</div>
+            <div class="foot-links">
+              <a href="mailto:tcadwallader.design@gmail.com">Email</a>
+              <a href="https://www.linkedin.com/in/taylor-cadwallader" target="_blank" rel="noopener">LinkedIn &#8599;</a>
+              <a href="https://discord.com/users/641844475068547072" target="_blank" rel="noopener">Discord &#8599;</a>
+              <a href="resume.pdf" target="_blank" rel="noopener">R&eacute;sum&eacute; &#8599;</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <small>&copy; 2026 Taylor Cadwallader &middot; Built &amp; hosted on GitHub Pages</small>
+    </div>
+  </footer>
+  <script src="particles.js" defer></script>
+</body>
+</html>

@@ -25,10 +25,15 @@
   --accent:      #a78bfa;   /* VIOLET, brand, links, primary UI */
   --accent-deep: #7c5cf0;   /* violet, pressed / gradients */
   --accent-soft: rgba(167,139,250,0.14);
+  --pink:        #f472b6;   /* PINK, violet's companion, gradients + focus areas */
+  --pink-soft:   rgba(244,114,182,0.14);
   --warm:        #f0b352;   /* AMBER, games context */
   --warm-soft:   rgba(240,179,82,0.13);
   --cool:        #6bc5e0;   /* CYAN, tools context */
   --cool-soft:   rgba(107,197,224,0.13);
+
+  /* the brand gradient: violet into pink */
+  --grad: linear-gradient(120deg, var(--accent) 0%, var(--pink) 100%);
 
   --maxw: 980px;
   --radius: 12px;
@@ -120,7 +125,14 @@ header {
   font-weight: 800; font-size: clamp(2.6rem, 8vw, 4.4rem);
   line-height: 1.0; letter-spacing: -0.04em;
 }
-.hero h1 .glow { color: var(--accent); }
+/* Gradient text, with a solid colour underneath as the fallback. */
+.hero h1 .glow {
+  color: var(--pink);
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 .hero .lede {
   margin-top: 22px; font-size: clamp(1.02rem, 2.2vw, 1.18rem);
   color: var(--muted); max-width: 62ch;
@@ -250,11 +262,100 @@ section { padding: 54px 0; }
 .row:hover .row-title a { color: var(--warm); text-decoration: none; }
 .row.tool:hover .row-title a { color: var(--cool); }
 .row:focus-within { background: var(--surface); }
+/* Engine / discipline tags under the title, so the list is scannable
+   for anyone hunting for a specific tool or type of work. */
+.row-tech {
+  font-family: "JetBrains Mono", monospace; font-size: 0.72rem; color: var(--faint);
+  margin-top: 4px; letter-spacing: 0.02em;
+}
+.row-tech b { color: var(--muted); font-weight: 500; }
 .row-role { color: var(--muted); font-size: 0.88rem; }
 .row-date { font-family: "JetBrains Mono", monospace; font-size: 0.78rem; color: var(--faint); text-align: right; white-space: nowrap; }
 .row-arrow { color: var(--faint); transition: transform 0.15s ease, color 0.15s ease; }
 .row:hover .row-arrow { color: var(--warm); transform: translateX(3px); }
 .row.tool:hover .row-arrow { color: var(--cool); }
+
+.section-intro { color: var(--muted); font-size: 1rem; max-width: 62ch; margin: -10px 0 26px; }
+
+/* ---------- Focus areas (discipline entry points) ----------
+   Whole card is one click target, same stretched-link pattern as .fcard. */
+.focus-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.focus {
+  position: relative; cursor: pointer;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 22px 22px 20px;
+  display: flex; flex-direction: column;
+  transition: background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+.focus::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  border-radius: var(--radius) 0 0 var(--radius);
+  background: var(--grad); opacity: 0; transition: opacity 0.18s ease;
+}
+.focus:hover { background: var(--surface-2); border-color: var(--line-2); box-shadow: var(--shadow); }
+.focus:hover::before { opacity: 1; }
+.focus:focus-within { border-color: var(--pink); }
+.focus .k {
+  font-family: "JetBrains Mono", monospace; font-size: 0.68rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--pink); margin-bottom: 9px;
+}
+.focus h3 {
+  font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
+  font-size: 1.12rem; letter-spacing: -0.02em; margin-bottom: 8px;
+}
+.focus h3 a { color: var(--ink); }
+.focus h3 a::after { content: ""; position: absolute; inset: 0; }
+.focus:hover h3 a { color: var(--pink); text-decoration: none; }
+.focus p { color: var(--muted); font-size: 0.92rem; flex: 1; }
+.focus .go {
+  font-family: "JetBrains Mono", monospace; font-size: 0.8rem; color: var(--pink);
+  margin-top: 16px; display: inline-flex; align-items: center; gap: 6px;
+}
+.focus .go::after { content: "\2192"; transition: transform 0.18s ease; }
+.focus:hover .go::after { transform: translateX(4px); }
+
+/* ---------- Discipline page: project entries ---------- */
+.dproj {
+  position: relative; border: 1px solid var(--line); border-left: 3px solid var(--pink);
+  border-radius: var(--radius); background: var(--surface);
+  padding: 20px 22px; margin-bottom: 14px;
+  transition: background 0.18s ease, border-color 0.18s ease;
+}
+.dproj:hover { background: var(--surface-2); }
+.dproj-head { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin-bottom: 4px; }
+.dproj h3 {
+  font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
+  font-size: 1.08rem; letter-spacing: -0.02em;
+}
+.dproj h3 a { color: var(--ink); }
+.dproj h3 a::after { content: ""; position: absolute; inset: 0; }
+.dproj:hover h3 a { color: var(--pink); text-decoration: none; }
+.dproj-meta { font-family: "JetBrains Mono", monospace; font-size: 0.72rem; color: var(--faint); }
+.dproj-list { list-style: none; margin-top: 10px; }
+.dproj-list li {
+  color: var(--muted); font-size: 0.95rem; padding: 5px 0 5px 18px; position: relative;
+}
+.dproj-list li::before { content: "\2022"; position: absolute; left: 2px; color: var(--pink); }
+.dproj .more {
+  font-family: "JetBrains Mono", monospace; font-size: 0.76rem; color: var(--faint); margin-top: 12px;
+}
+.dproj:hover .more { color: var(--pink); }
+
+/* Summary strip at the top of a discipline page */
+.summary {
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--surface); padding: 20px 22px; margin: 8px 0 6px;
+}
+.summary .k {
+  font-family: "JetBrains Mono", monospace; font-size: 0.68rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--pink); margin-bottom: 10px;
+}
+.summary ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.summary li {
+  font-family: "JetBrains Mono", monospace; font-size: 0.75rem;
+  padding: 5px 11px; border-radius: var(--radius-sm);
+  border: 1px solid var(--line-2); color: var(--muted); background: var(--bg-2);
+}
 
 /* ---------- About ---------- */
 .about p { color: var(--muted); font-size: 1.03rem; max-width: 68ch; }
@@ -271,8 +372,20 @@ section { padding: 54px 0; }
 footer { border-top: 1px solid var(--line); padding: 44px 0 60px; margin-top: 20px; background: var(--bg-2); }
 .foot-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; align-items: end; }
 .foot-name { font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif; font-weight: 700; font-size: 1.35rem; letter-spacing: -0.03em; }
-.foot-name span { color: var(--accent); }
+.foot-name span {
+  color: var(--pink);
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.foot-cols { display: flex; gap: 40px; flex-wrap: wrap; }
+.foot-col .kh {
+  font-family: "JetBrains Mono", monospace; font-size: 0.66rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--faint); margin-bottom: 6px; padding-left: 12px;
+}
 .foot-links { display: flex; gap: 6px; flex-wrap: wrap; }
+.foot-col .foot-links { flex-direction: column; gap: 0; }
 .foot-links a {
   color: var(--ink); font-weight: 500; font-family: "JetBrains Mono", monospace; font-size: 0.85rem;
   padding: 10px 12px; border-radius: var(--radius-sm); min-height: 44px;
@@ -477,7 +590,8 @@ a:focus-visible, .btn:focus-visible, button:focus-visible {
   /* keep the role visible on mobile, it's the most useful column */
   .row-role { grid-column: 1 / -1; grid-row: 2; font-size: 0.82rem; }
   .row-arrow { display: none; }
-  .cols, .systems, .shot-row { grid-template-columns: 1fr; }
+  .cols, .systems, .shot-row, .focus-grid { grid-template-columns: 1fr; }
+  .foot-cols { gap: 22px; }
   .shot .ph { height: 200px; }
   .pager { flex-direction: column; }
   .pager a { max-width: 100%; }
