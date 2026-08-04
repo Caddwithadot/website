@@ -88,87 +88,29 @@ html {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23g)' opacity='0.12'/%3E%3C/svg%3E");
 }
 
-/* Graph paper with sketch marks. Two layers on one element: pencil marks on
-   top, printed grid beneath. 40px minor rule, 200px major, drawn as SVG
-   hairlines rather than gradients so they stay crisp at any zoom.
+/* Printed graph paper: 40px minor rule, 200px major, drawn as SVG hairlines
+   rather than gradients so they stay crisp at any zoom.
 
-   Only the grid lives here. The pencil marks are an inline <svg class="paper">
-   in the markup instead, because CSS cannot animate anything inside a data
-   URI and the marks need to draw themselves. See .paper below.
-
-   Tile sizes matter for the loop. The grid repeats every 200px and the marks
-   every 1600px, so the drift has to travel a common multiple of both or the
-   marks jump when it resets. 1600 is 8 grid tiles, so both layers loop clean.
-
-   The drift uses transform, not background-position. At 1.67px/sec a
-   background-position animation only advances a whole pixel every 0.6s, and
-   rasterisation snaps it to integers, so it visibly stutters no matter what
-   timing function is used. Transform interpolates at subpixel precision on
-   the compositor and stays smooth.
-
-   That means the element itself moves, so it has to be large enough to still
-   cover the viewport after travelling the full 1600px. Extending it 1600px up
-   and left, flush right and bottom, is the minimum that works: at rest it
-   covers from -1600 to the viewport edge, and at the end of the cycle from 0
-   to viewport+1600. Both cover the visible area. Sizing it 1600px on every
-   side instead would have doubled the layer for no benefit.
-
-   The drift is the one deliberate exception to the motion rules: it is
-   decorative, and the brief bans decorative background animation. It is
-   isolated here so deleting the animation line below switches it off with
-   nothing else depending on it. */
+   The paper no longer drifts. The pencil marks are now drawn live by
+   sketch.js at fixed viewport positions, so a sliding grid underneath static
+   marks would have read as two unrelated layers. The drawing is the motion. */
 body::before {
   content: "";
   position: fixed;
-  /* 1600px of lead on the top and left is the travel distance; the 24px on the
-     other two edges is slack so a rounding error cannot expose a seam at the
-     end of the cycle. */
-  top: -1600px; left: -1600px; right: -24px; bottom: -24px;
-  z-index: -1;
+  inset: 0;
+  z-index: -2;
   pointer-events: none;
   background-image:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cg fill='none' stroke='%23645E6B'%3E%3Cpath stroke-width='1' opacity='0.24' d='M40 0v200M80 0v200M120 0v200M160 0v200M0 40h200M0 80h200M0 120h200M0 160h200'/%3E%3Cpath stroke-width='1' opacity='0.46' d='M0 0v200M0 0h200'/%3E%3C/g%3E%3C/svg%3E");
-  animation: drift 960s linear infinite;
-}
-@keyframes drift {
-  from { transform: translate3d(0, 0, 0); }
-  to   { transform: translate3d(1600px, 1600px, 0); }
 }
 
-/* Pencil marks. Inline SVG rather than a background image, because CSS cannot
-   reach inside a data URI and these need to draw themselves.
-
-   One <g> is defined once and repeated by nine <use> instances on a 1600px
-   pitch, which is what makes the pattern periodic with the drift. Sizing:
-   the layer leads 1600px up and left, so it must be at least viewport+1600
-   wide to still cover the screen at the end of a cycle. 4800 covers viewports
-   up to 3200px.
-
-   Every path carries pathLength="1", which normalises its length so the draw
-   animation runs at the same rate on a 20px tick and a 300px scribble. Each
-   also carries its own negative animation-delay, so marks are partway through
-   the cycle at load and only a few are ever drawing at once. */
-.paper {
+/* The pencil marks are drawn onto a canvas by sketch.js. Nothing here styles
+   them beyond placing the layer; the drawing itself is procedural. */
+#sketch {
   position: fixed;
-  top: -1600px; left: -1600px;
-  width: 4800px; height: 4800px;
+  inset: 0;
   z-index: -1;
   pointer-events: none;
-  opacity: 0.34;
-  animation: drift 960s linear infinite;
-}
-.paper path {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: sketch 60s linear infinite;
-}
-/* Draw in, hold, fade, then reset while invisible so the loop has no pop. */
-@keyframes sketch {
-  0%   { stroke-dashoffset: 1; opacity: 1; }
-  14%  { stroke-dashoffset: 0; opacity: 1; }
-  86%  { stroke-dashoffset: 0; opacity: 1; }
-  97%  { stroke-dashoffset: 0; opacity: 0; }
-  100% { stroke-dashoffset: 1; opacity: 0; }
 }
 
 body {
@@ -732,10 +674,7 @@ a:focus-visible, .btn:focus-visible, button:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; transform: none !important; }
   html { scroll-behavior: auto; }
-  /* Killing the animation leaves paths at their start state, which is fully
-     undrawn. Without this the marks vanish entirely for reduced-motion users
-     instead of simply sitting still. */
-  .paper path { stroke-dashoffset: 0 !important; opacity: 1 !important; }
+  /* Reduced motion: sketch.js draws one static set and never animates. */
 }
 
 @media (max-width: 720px) {
