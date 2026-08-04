@@ -258,12 +258,24 @@ section { padding: 54px 0; }
 /* ---------- Compact work list ----------
    Whole row is one click target. ---------- */
 .worklist { border-top: 1px solid var(--line); }
+/* Explicit placement: title and tech stack in one cell, everything else
+   spans both rows. Without this the six children wrap and the date ends up
+   underneath the title. */
 .row {
   position: relative; cursor: pointer;
-  display: grid; grid-template-columns: 1.4fr 1fr auto; gap: 16px; align-items: center;
-  padding: 17px 14px; border-bottom: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1.5fr) minmax(0, 1fr) auto auto;
+  grid-template-rows: auto auto;
+  column-gap: 16px; row-gap: 1px; align-items: center;
+  padding: 14px 14px; border-bottom: 1px solid var(--line);
   transition: background 0.15s ease;
 }
+.row-art   { grid-column: 1; grid-row: 1 / -1; }
+.row-title { grid-column: 2; grid-row: 1; align-self: end; }
+.row-tech  { grid-column: 2; grid-row: 2; align-self: start; }
+.row-role  { grid-column: 3; grid-row: 1 / -1; }
+.row-date  { grid-column: 4; grid-row: 1 / -1; }
+.row-arrow { grid-column: 5; grid-row: 1 / -1; }
 .row::before {
   content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
   background: var(--warm); opacity: 0; transition: opacity 0.15s ease;
@@ -281,7 +293,7 @@ section { padding: 54px 0; }
    for anyone hunting for a specific tool or type of work. */
 .row-tech {
   font-family: "JetBrains Mono", monospace; font-size: 0.72rem; color: var(--faint);
-  margin-top: 4px; letter-spacing: 0.02em;
+  letter-spacing: 0.02em;
 }
 .row-tech b { color: var(--muted); font-weight: 500; }
 .row-role { color: var(--muted); font-size: 0.88rem; }
@@ -329,26 +341,74 @@ section { padding: 54px 0; }
 .focus .go::after { content: "\2192"; transition: transform 0.18s ease; }
 .focus:hover .go::after { transform: translateX(4px); }
 
+/* ---------- Cover art slots ----------
+   Every capsule about a project has one. Drop art in by replacing the inner
+   span with an <img> or <video>:
+     <div class="row-art"><img src="images/trash.png" alt=""></div>
+     <div class="dproj-art"><img src="../images/trash.png" alt=""></div>
+   ------------------------------------------------ */
+.row-art, .dproj-art {
+  overflow: hidden; position: relative;
+  background:
+    radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0) 0 0 / 10px 10px,
+    var(--bg-2);
+  display: flex; align-items: center; justify-content: center;
+}
+.row-art img, .row-art video, .dproj-art img, .dproj-art video {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+
+/* Small square thumb for the work list rows. */
+.row-art {
+  width: 54px; height: 54px;
+  border-radius: var(--radius-sm); border: 1px dashed var(--line-2);
+}
+.row-art::after {
+  content: ""; width: 12px; height: 12px; border-radius: 3px;
+  border: 1px solid var(--line-2);
+}
+.row-art:has(img)::after, .row-art:has(video)::after { display: none; }
+.row-art:has(img), .row-art:has(video) { border-style: solid; border-color: var(--line); }
+
+/* Full-bleed cover panel for discipline cards. Negative margins pull it out
+   past the card padding so it meets the card edges, and the card's
+   overflow:hidden clips it to the rounded corners. */
+.dproj-art {
+  /* span 99, not "1 / -1": these rows are implicit, and -1 only counts
+     explicit grid lines, so it would collapse back to a single row. */
+  grid-column: 1; grid-row: 1 / span 99;
+  align-self: stretch; margin: -22px 0; min-height: 172px;
+  border: 0; border-right: 1px solid var(--line); border-radius: 0;
+  font-family: "JetBrains Mono", monospace; font-size: 0.62rem;
+  letter-spacing: 0.11em; text-transform: uppercase; color: var(--faint);
+  text-align: center; padding: 14px; line-height: 1.5;
+}
+
 /* ---------- Discipline page: project entries ---------- */
 .dproj {
-  position: relative; cursor: pointer;
+  position: relative; cursor: pointer; overflow: hidden;
+  display: grid; grid-template-columns: 280px minmax(0, 1fr);
+  column-gap: 26px; align-items: start; align-content: start;
   border: 1px solid var(--line); border-left: 3px solid var(--pink);
   border-radius: var(--radius); background: var(--surface);
-  padding: 20px 22px; margin-bottom: 14px;
+  padding: 22px 26px 22px 0; margin-bottom: 16px;
   transition: background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
 }
+.dproj > *:not(.dproj-art) { grid-column: 2; }
 .dproj:hover { background: var(--surface-2); border-color: var(--line-2); border-left-color: var(--pink); box-shadow: var(--shadow); }
 .dproj:focus-within { border-color: var(--pink); }
-.dproj-head { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin-bottom: 4px; }
+/* Title on its own line with the meta beneath it, rather than pushed to the
+   far right where it wrapped unpredictably against a narrower column. */
+.dproj-head { margin-bottom: 10px; }
 .dproj h3 {
   font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
-  font-size: 1.08rem; letter-spacing: -0.02em;
+  font-size: 1.15rem; letter-spacing: -0.02em; margin-bottom: 5px;
 }
 .dproj h3 a { color: var(--ink); }
 .dproj h3 a::after { content: ""; position: absolute; inset: 0; z-index: 5; }
 .dproj:hover h3 a { color: var(--pink); text-decoration: none; }
-.dproj-meta { font-family: "JetBrains Mono", monospace; font-size: 0.72rem; color: var(--faint); }
-.dproj-list { list-style: none; margin-top: 10px; }
+.dproj-meta { font-family: "JetBrains Mono", monospace; font-size: 0.72rem; color: var(--faint); display: block; }
+.dproj-list { list-style: none; margin-top: 0; }
 .dproj-list li {
   color: var(--muted); font-size: 0.95rem; padding: 5px 0 5px 18px; position: relative;
 }
@@ -609,14 +669,28 @@ a:focus-visible, .btn:focus-visible, button:focus-visible {
   .nav-links a { padding: 10px 9px; font-size: 0.8rem; }
   .featured-grid { grid-template-columns: 1fr; }
   .hero { padding: 56px 0 36px; }
-  .row { grid-template-columns: 1fr auto; gap: 6px 12px; padding: 15px 12px; }
-  .row-title { grid-column: 1; }
-  .row-date { grid-column: 2; grid-row: 1; }
+  .row {
+    grid-template-columns: 44px minmax(0, 1fr) auto;
+    grid-template-rows: auto auto auto;
+    column-gap: 12px; row-gap: 3px; padding: 13px 12px;
+  }
+  .row-art   { grid-column: 1; grid-row: 1 / -1; align-self: start; }
+  .row-title { grid-column: 2; grid-row: 1; align-self: center; }
+  .row-date  { grid-column: 3; grid-row: 1; align-self: center; }
+  .row-tech  { grid-column: 2 / -1; grid-row: 2; }
   /* keep the role visible on mobile, it's the most useful column */
-  .row-role { grid-column: 1 / -1; grid-row: 2; font-size: 0.82rem; }
+  .row-role  { grid-column: 2 / -1; grid-row: 3; font-size: 0.82rem; }
   .row-arrow { display: none; }
   .cols, .systems, .shot-row, .focus-grid { grid-template-columns: 1fr; }
   .foot-cols { gap: 22px; }
+  /* Cover art becomes a full-width banner above the text. */
+  .dproj { grid-template-columns: 1fr; padding: 0 20px 20px; }
+  .dproj-art {
+    grid-column: 1; grid-row: 1;
+    margin: 0 -20px 18px; min-height: 0; aspect-ratio: 16 / 9;
+    border-right: 0; border-bottom: 1px solid var(--line);
+  }
+  .dproj > *:not(.dproj-art) { grid-column: 1; }
   .shot .ph { height: 200px; }
   .pager { flex-direction: column; }
   .pager a { max-width: 100%; }
