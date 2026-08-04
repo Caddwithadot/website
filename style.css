@@ -24,164 +24,205 @@
       Used by: .fcard .row .focus .dproj (clickable)
                .sys .col .spec .summary .outcome .steps (static)
    ============================================================ */
+@font-face {
+  font-family: "Familjen Grotesk";
+  src: url("fonts/familjen-grotesk-700.woff2") format("woff2");
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Public Sans";
+  src: url("fonts/public-sans-var.woff2") format("woff2");
+  font-weight: 300 600; font-style: normal; font-display: swap;
+}
+
 :root {
-  /* neutrals, cool ink with a violet cast, not pure black */
-  --bg:        #0f0e15;
-  --bg-2:      #15141d;
-  --surface:   #1a1824;
-  --surface-2: #221f2e;   /* raised / hover */
-  --ink:       #ece9f4;
-  --muted:     #a29cb4;
-  --faint:     #6d6782;
-  --line:      #2a2637;
-  --line-2:    #3b3550;
+  /* Mid-value mauve grey. Almost every site is light or dark; sitting between
+     the two is the whole point, and it is what will make cover art read like
+     prints on a wall instead of tiles on a screen. */
+  --bg:        #9A939F;   /* the field */
+  --bg-2:      #8B8490;   /* recessed */
+  --surface:   #A6A0AC;   /* raised */
+  --surface-2: #B0AAB5;   /* raised, hover */
 
-  /* accents */
-  --accent:      #a78bfa;   /* VIOLET, brand, links, primary UI */
-  --accent-deep: #7c5cf0;   /* violet, pressed / gradients */
-  --accent-soft: rgba(167,139,250,0.14);
-  --pink:        #f472b6;   /* PINK, violet's companion, gradients + focus areas */
-  --pink-soft:   rgba(244,114,182,0.14);
-  --warm:        #f0b352;   /* AMBER, games context */
-  --warm-soft:   rgba(240,179,82,0.13);
-  --cool:        #6bc5e0;   /* CYAN, tools context */
-  --cool-soft:   rgba(107,197,224,0.13);
+  /* Contrast against --bg is measured, not guessed:
+     ink 6.12:1, muted 5.41:1, faint 4.49:1. All clear AA for body text. */
+  --ink:    #17141B;
+  --muted:  #241F28;
+  --faint:  #322D38;
 
-  /* the brand gradient: violet into pink */
-  --grad: linear-gradient(120deg, var(--accent) 0%, var(--pink) 100%);
+  --line:   #6F6875;
+  --line-2: #55505B;
 
-  --maxw: 980px;
-  --radius: 12px;
-  --radius-sm: 8px;
+  /* Oxblood, one saturated moment per view. It measures 3.98:1 on the field,
+     which clears the 3:1 threshold for UI indicators but NOT the 4.5:1
+     threshold for text, so it is only ever a fill or a marker, never body
+     copy. Type sitting on top of it uses --accent-ink at 10.4:1. */
+  --accent:     #6E0F2E;
+  --accent-ink: #F2EFF3;
 
-  --shadow: 0 14px 34px -18px rgba(0,0,0,0.85);
-  --shadow-lg: 0 20px 48px -20px rgba(0,0,0,0.9);
+  /* Transitional aliases. Direction C has one accent, so the old games/tools
+     colour coding collapses into it. These disappear as each section is
+     reworked; nothing new should reference them. */
+  --accent-deep: #520A22;
+  --accent-soft: rgba(110,15,46,0.10);
+  --pink: var(--accent);      --pink-soft: rgba(110,15,46,0.10);
+  --warm: var(--accent);      --warm-soft: rgba(110,15,46,0.10);
+  --cool: var(--accent);      --cool-soft: rgba(110,15,46,0.10);
+
+  --maxw: 1080px;
+  --radius: 2px;
+  --radius-sm: 2px;
+
+  /* Soft dark shadows go muddy on a mid field, so elevation is carried by a
+     hairline instead. */
+  --shadow: 0 1px 0 var(--line);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* The page background lives on <html> so the particle canvas, which sits at
-   z-index -1, paints above it instead of being hidden behind the body. */
-html { scroll-behavior: smooth; background: var(--bg); }
-
-body {
-  background: transparent;
-  color: var(--ink);
-  font-family: "Inter", system-ui, sans-serif;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  min-height: 100vh;
+/* The field colour and its paper grain live on <html> so the grid layer below
+   can sit on a fixed pseudo-element without being painted over. */
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23g)' opacity='0.12'/%3E%3C/svg%3E");
 }
 
-/* ---------- Background particle field (particles.js) ----------
-   Never interactive: pointer-events none keeps every click target intact. */
-#fx-canvas {
+/* Graph paper with sketch marks. Two layers on one element: pencil marks on
+   top, printed grid beneath. 40px minor rule, 200px major, drawn as SVG
+   hairlines rather than gradients so they stay crisp at any zoom.
+
+   The marks are the vocabulary of level whiteboxing: a direction arrow, a
+   circled point of interest, a dashed route, a hazard cross, an annotation
+   bracket, a rough boxed-out room. Sparse on purpose, roughly seven per
+   1200px tile.
+
+   Tile sizes matter for the loop. The grid repeats every 200px and the marks
+   every 1200px, so the drift has to travel a common multiple of both or the
+   marks jump when it resets. 1200 is 6 grid tiles, so both layers loop clean.
+
+   This animates background-position rather than transform. Transform was the
+   cheaper option but it moved the element itself, so after 1200px the layer
+   had slid out from under the viewport and left bare field behind it. Sizing
+   the element to survive that would have meant a compositor layer around
+   4500px square. Scrolling the tiles inside a viewport-sized element loops
+   forever at no size cost.
+
+   steps(1200) advances one pixel at a time instead of repainting every frame:
+   1200 repaints across 720s, about 1.7 per second, which matches the drift
+   speed exactly and is imperceptible on a background this faint.
+
+   The drift is the one deliberate exception to the motion rules: it is
+   decorative, and the brief bans decorative background animation. It is
+   isolated here so deleting the animation line below switches it off with
+   nothing else depending on it. */
+body::before {
+  content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  /* Slight lift so motes read as light rather than as flat dots. */
-  mix-blend-mode: screen;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='1200'%3E%3Cg fill='none' stroke='%233F3A46' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round' opacity='0.34'%3E%3Cpath d='M110 170c30-8 58-3 84 11'/%3E%3Cpath d='M182 168l16 13-18 11'/%3E%3Cpath d='M516 84c24-12 48 4 45 24-3 19-31 27-47 14-14-11-11-30 4-36'/%3E%3Cpath stroke-dasharray='9 12' d='M870 300c44 42 96 18 138 62'/%3E%3Cpath d='M296 606l30 28M328 604l-32 30'/%3E%3Cpath d='M694 770c-9 0-9 32 0 32M694 786h36'/%3E%3Cpath d='M170 972c28-11 42 11 70 0s42 11 66 0'/%3E%3Cpath d='M239 443c13-2 27-3 41-2M281 440c2 13 2 27 1 40M282 481c-14 1-28 2-42 1M240 482c-2-14-2-28 0-42'/%3E%3Cpath d='M759 522c40-3 81-4 121-2M881 519c3 26 3 53 2 80M882 600c-41 2-82 3-122 2M760 603c-3-27-3-54-1-82'/%3E%3Cpath d='M602 884c12 5 26-5 36 3-11 6-25-3-35 5 12 5 24-4 34 4-11 6-23-1-33 5 11 4 23-3 33 3'/%3E%3Cpath d='M322 242l36 36M336 242l36 36M350 242l36 36M364 242l34 34M322 256l22 22M322 270l8 8M378 242l20 20'/%3E%3Cpath d='M247 424l4-3v15M258 425c2-4 9-3 9 1 0 5-8 8-10 12h11'/%3E%3Cpath d='M898 548c-7 1-10 7-9 12 1 4 4 6 7 5 3-1 5-4 4-7-1-3-4-4-7-3-2 1-3 3-3 5'/%3E%3Cpath d='M640 862c2-4 9-3 9 1 0 5-8 8-10 12h11M661 859l-7 11h11M661 864v13'/%3E%3C/g%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cg fill='none' stroke='%23514B58'%3E%3Cpath stroke-width='1' opacity='0.24' d='M40 0v200M80 0v200M120 0v200M160 0v200M0 40h200M0 80h200M0 120h200M0 160h200'/%3E%3Cpath stroke-width='1' opacity='0.46' d='M0 0v200M0 0h200'/%3E%3C/g%3E%3C/svg%3E");
+  animation: drift 720s steps(1200) infinite;
+}
+@keyframes drift {
+  from { background-position: 0 0, 0 0; }
+  to   { background-position: 1200px 1200px, 1200px 1200px; }
 }
 
-.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
-a { color: var(--accent); text-decoration: none; }
-a:hover { text-decoration: underline; }
-.mono { font-family: "JetBrains Mono", monospace; }
+body {
+  background: transparent;
+  color: var(--ink);
+  font-family: "Public Sans", system-ui, sans-serif;
+  font-weight: 400;
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+
+/* Numeric columns get tabular figures so they align down the page. This is
+   the job the monospace face used to do, without a third family. */
+.mono { font-variant-numeric: tabular-nums; }
 
 /* Keyboard users land here first */
 .skip {
-  position: absolute; left: 12px; top: -60px; z-index: 100;
-  background: var(--accent); color: #14101f; font-weight: 600;
+  position: absolute; left: 16px; top: -60px; z-index: 100;
+  background: var(--accent); color: var(--accent-ink); font-weight: 600;
   padding: 10px 18px; border-radius: var(--radius-sm);
-  transition: top 0.15s ease;
+  text-decoration: none;
 }
-.skip:focus { top: 12px; text-decoration: none; }
+.skip:focus { top: 14px; }
 
 /* ---------- Top bar ---------- */
 header {
   position: sticky; top: 0; z-index: 20;
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter: blur(12px);
+  background: var(--bg);
   border-bottom: 1px solid var(--line);
 }
-.nav { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+.nav { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; padding: 18px 0 16px; }
+/* The wordmark shares the nav's type style rather than getting its own. The
+   H1 already carries the name in display type, so a second smaller version of
+   it in the header was a redundant style, not an identity. */
 .brand {
-  font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
-  font-weight: 700; font-size: 1.05rem; letter-spacing: -0.02em; color: var(--ink);
-  padding: 8px 0;
+  font-size: 0.9rem; font-weight: 600; color: var(--ink); text-decoration: none;
 }
-.brand:hover { text-decoration: none; color: var(--accent); }
-.brand span { color: var(--accent); }
-.brand:hover span { color: var(--ink); }
-.nav-links { display: flex; gap: 4px; }
+.brand:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+/* Nav and buttons deliberately share one type style, which keeps the opening
+   viewport to three: display, lede, and this. */
+.nav-links { display: flex; gap: 22px; }
 .nav-links a {
-  color: var(--muted); font-size: 0.85rem; font-weight: 500;
-  font-family: "JetBrains Mono", monospace;
-  padding: 10px 12px; border-radius: var(--radius-sm);
-  min-height: 44px; display: inline-flex; align-items: center;
+  color: var(--muted); font-size: 0.9rem; font-weight: 600;
+  text-decoration: none; padding: 6px 0;
+  border-bottom: 2px solid transparent;
 }
-.nav-links a:hover { color: var(--ink); background: var(--surface); text-decoration: none; }
+.nav-links a:hover { color: var(--ink); border-bottom-color: var(--accent); }
 
-/* ---------- Hero ---------- */
-.hero { padding: 88px 0 52px; position: relative; }
-.eyebrow {
-  display: inline-flex; align-items: center; gap: 9px;
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--accent); margin-bottom: 22px;
-  padding: 5px 12px 5px 10px; border-radius: 999px;
-  border: 1px solid var(--line-2); background: var(--accent-soft);
-}
-.eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
-
+/* ---------- Hero ----------
+   Left-weighted with the right side left open. The emptiness is the layout;
+   nothing decorative goes in it. */
+.hero { padding: 104px 0 76px; max-width: 46ch; }
 .hero h1 {
-  font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
-  font-weight: 800; font-size: clamp(2.6rem, 8vw, 4.4rem);
-  line-height: 1.0; letter-spacing: -0.04em;
+  font-family: "Familjen Grotesk", system-ui, sans-serif;
+  font-weight: 700; font-size: clamp(3rem, 9vw, 5.75rem);
+  line-height: 0.94; letter-spacing: -0.035em;
 }
-/* Gradient text, with a solid colour underneath as the fallback. */
-.hero h1 .glow {
-  color: var(--pink);
-  background: var(--grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+.hero .role {
+  font-weight: 600; font-size: 0.9rem; color: var(--muted);
+  margin-top: 20px; padding-top: 14px; border-top: 1px solid var(--line);
 }
 .hero .lede {
-  margin-top: 22px; font-size: clamp(1.02rem, 2.2vw, 1.18rem);
-  color: var(--muted); max-width: 62ch;
+  margin-top: 20px; font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+  font-weight: 300; line-height: 1.45; color: var(--ink);
 }
-.cta-row { margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap; }
+.cta-row { margin-top: 34px; display: flex; gap: 10px; flex-wrap: wrap; }
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  padding: 13px 24px; border-radius: var(--radius-sm);
-  font-weight: 600; font-size: 0.93rem; min-height: 46px;
-  border: 1px solid transparent; cursor: pointer;
-  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  padding: 12px 20px; border-radius: var(--radius-sm);
+  font-weight: 600; font-size: 0.9rem; min-height: 44px;
+  border: 1px solid var(--ink); cursor: pointer; text-decoration: none;
+  transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
 }
-.btn-primary { background: var(--accent); color: #14101f; }
-.btn-primary:hover { background: var(--accent-deep); color: #fff; text-decoration: none; }
-.btn-ghost { border-color: var(--line-2); color: var(--ink); background: var(--surface); }
-.btn-ghost:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
-
-/* ---------- Credentials strip ---------- */
-.creds {
-  display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 40px;
-  padding-top: 24px; border-top: 1px solid var(--line);
-}
-.cred { font-family: "JetBrains Mono", monospace; font-size: 0.8rem; color: var(--muted); }
-.cred b { color: var(--ink); font-weight: 500; }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn-primary:hover { background: var(--accent-deep); border-color: var(--accent-deep); text-decoration: none; }
+.btn-ghost { background: transparent; color: var(--ink); }
+.btn-ghost:hover { background: var(--ink); color: var(--bg); text-decoration: none; }
 
 /* ---------- Section headers ---------- */
 section { padding: 54px 0; }
 .section-head { display: flex; align-items: center; gap: 14px; margin-bottom: 26px; }
 .section-head h2 {
-  font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif; font-weight: 700;
+  font-family: "Familjen Grotesk", system-ui, sans-serif; font-weight: 700;
   font-size: 1.6rem; letter-spacing: -0.025em; white-space: nowrap;
 }
 .section-head .idx {
-  font-family: "JetBrains Mono", monospace; font-size: 0.78rem; color: var(--accent);
+  font-family: "Public Sans", system-ui, sans-serif; font-size: 0.78rem; color: var(--accent);
   border: 1px solid var(--line-2); border-radius: var(--radius-sm);
   padding: 3px 9px; background: var(--accent-soft);
 }
@@ -216,19 +257,19 @@ section { padding: 54px 0; }
   /* EDIT: add a screenshot -> background: url('images/slug.png') center/cover; */
 }
 .thumb .label {
-  font-family: "JetBrains Mono", monospace; font-weight: 500; font-size: 0.72rem;
+  font-family: "Public Sans", system-ui, sans-serif; font-weight: 500; font-size: 0.72rem;
   letter-spacing: 0.14em; text-transform: uppercase; color: var(--faint);
 }
 .fcard-body { padding: 20px 22px 22px; flex: 1; display: flex; flex-direction: column; }
 .fcard-body h3 {
-  font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
+  font-family: "Familjen Grotesk", system-ui, sans-serif;
   font-size: 1.2rem; letter-spacing: -0.02em; margin-bottom: 6px;
 }
 .fcard-body h3 a { color: var(--ink); }
 .fcard:hover .fcard-body h3 a { color: var(--warm); text-decoration: none; }
 .fcard.tool:hover .fcard-body h3 a { color: var(--cool); }
 .fsub {
-  font-family: "JetBrains Mono", monospace; font-size: 0.73rem; color: var(--faint);
+  font-family: "Public Sans", system-ui, sans-serif; font-size: 0.73rem; color: var(--faint);
   margin-bottom: 12px; letter-spacing: 0.02em;
 }
 .fcard-body p { color: var(--muted); font-size: 0.93rem; }
@@ -236,7 +277,7 @@ section { padding: 54px 0; }
 
 /* Badges are labels, never controls: no hover, no pointer. */
 .badge {
-  font-family: "JetBrains Mono", monospace; font-size: 0.7rem; font-weight: 500;
+  font-family: "Public Sans", system-ui, sans-serif; font-size: 0.7rem; font-weight: 500;
   padding: 4px 10px; border-radius: var(--radius-sm);
   border: 1px solid var(--line); color: var(--muted); background: var(--bg-2);
   cursor: default;
@@ -248,7 +289,7 @@ section { padding: 54px 0; }
 /* Decorative affordance cue, not a link, the card is */
 .fcard-link { margin-top: auto; padding-top: 16px; }
 .fcard-link span {
-  font-family: "JetBrains Mono", monospace; font-size: 0.82rem; font-weight: 500;
+  font-family: "Public Sans", system-ui, sans-serif; font-size: 0.82rem; font-weight: 500;
   color: var(--warm); display: inline-flex; align-items: center; gap: 6px;
 }
 .fcard.tool .fcard-link span { color: var(--cool); }
@@ -283,7 +324,7 @@ section { padding: 54px 0; }
 .row.tool::before { background: var(--cool); }
 .row:hover { background: var(--surface); }
 .row:hover::before { opacity: 1; }
-.row-title { font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif; font-weight: 600; font-size: 1.02rem; letter-spacing: -0.015em; }
+.row-title { font-family: "Familjen Grotesk", system-ui, sans-serif; font-weight: 600; font-size: 1.02rem; letter-spacing: -0.015em; }
 .row-title a { color: var(--ink); }
 .row-title a::after { content: ""; position: absolute; inset: 0; z-index: 5; }
 .row:hover .row-title a { color: var(--warm); text-decoration: none; }
@@ -292,12 +333,12 @@ section { padding: 54px 0; }
 /* Engine / discipline tags under the title, so the list is scannable
    for anyone hunting for a specific tool or type of work. */
 .row-tech {
-  font-family: "JetBrains Mono", monospace; font-size: 0.72rem; color: var(--faint);
+  font-family: "Public Sans", system-ui, sans-serif; font-size: 0.72rem; color: var(--faint);
   letter-spacing: 0.02em;
 }
 .row-tech b { color: var(--muted); font-weight: 500; }
 .row-role { color: var(--muted); font-size: 0.88rem; }
-.row-date { font-family: "JetBrains Mono", monospace; font-size: 0.78rem; color: var(--faint); text-align: right; white-space: nowrap; }
+.row-date { font-family: "Public Sans", system-ui, sans-serif; font-size: 0.78rem; color: var(--faint); text-align: right; white-space: nowrap; }
 .row-arrow { color: var(--faint); transition: transform 0.15s ease, color 0.15s ease; }
 .row:hover .row-arrow { color: var(--warm); transform: translateX(3px); }
 .row.tool:hover .row-arrow { color: var(--cool); }
@@ -323,11 +364,11 @@ section { padding: 54px 0; }
 .focus:hover::before { opacity: 1; }
 .focus:focus-within { border-color: var(--pink); }
 .focus .k {
-  font-family: "JetBrains Mono", monospace; font-size: 0.68rem; letter-spacing: 0.12em;
+  font-family: "Public Sans", system-ui, sans-serif; font-size: 0.68rem; letter-spacing: 0.12em;
   text-transform: uppercase; color: var(--pink); margin-bottom: 9px;
 }
 .focus h3 {
-  font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
+  font-family: "Familjen Grotesk", system-ui, sans-serif;
   font-size: 1.12rem; letter-spacing: -0.02em; margin-bottom: 8px;
 }
 .focus h3 a { color: var(--ink); }
@@ -335,7 +376,7 @@ section { padding: 54px 0; }
 .focus:hover h3 a { color: var(--pink); text-decoration: none; }
 .focus p { color: var(--muted); font-size: 0.92rem; flex: 1; }
 .focus .go {
-  font-family: "JetBrains Mono", monospace; font-size: 0.8rem; color: var(--pink);
+  font-family: "Public Sans", system-ui, sans-serif; font-size: 0.8rem; color: var(--pink);
   margin-top: 16px; display: inline-flex; align-items: center; gap: 6px;
 }
 .focus .go::after { content: "\2192"; transition: transform 0.18s ease; }
@@ -379,7 +420,7 @@ section { padding: 54px 0; }
   grid-column: 1; grid-row: 1 / span 99;
   align-self: stretch; margin: -22px 0; min-height: 172px;
   border: 0; border-right: 1px solid var(--line); border-radius: 0;
-  font-family: "JetBrains Mono", monospace; font-size: 0.62rem;
+  font-family: "Public Sans", system-ui, sans-serif; font-size: 0.62rem;
   letter-spacing: 0.11em; text-transform: uppercase; color: var(--faint);
   text-align: center; padding: 14px; line-height: 1.5;
 }
@@ -401,13 +442,13 @@ section { padding: 54px 0; }
    far right where it wrapped unpredictably against a narrower column. */
 .dproj-head { margin-bottom: 10px; }
 .dproj h3 {
-  font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
+  font-family: "Familjen Grotesk", system-ui, sans-serif;
   font-size: 1.15rem; letter-spacing: -0.02em; margin-bottom: 5px;
 }
 .dproj h3 a { color: var(--ink); }
 .dproj h3 a::after { content: ""; position: absolute; inset: 0; z-index: 5; }
 .dproj:hover h3 a { color: var(--pink); text-decoration: none; }
-.dproj-meta { font-family: "JetBrains Mono", monospace; font-size: 0.72rem; color: var(--faint); display: block; }
+.dproj-meta { font-family: "Public Sans", system-ui, sans-serif; font-size: 0.72rem; color: var(--faint); display: block; }
 .dproj-list { list-style: none; margin-top: 0; }
 .dproj-list li {
   color: var(--muted); font-size: 0.95rem; padding: 5px 0 5px 18px; position: relative;
@@ -415,7 +456,7 @@ section { padding: 54px 0; }
 .dproj-list li::before { content: "\2022"; position: absolute; left: 2px; color: var(--pink); }
 /* Always-visible arrow cue: the card is a link, so it should look like one. */
 .dproj .more {
-  font-family: "JetBrains Mono", monospace; font-size: 0.76rem; color: var(--pink);
+  font-family: "Public Sans", system-ui, sans-serif; font-size: 0.76rem; color: var(--pink);
   margin-top: 14px; display: inline-flex; align-items: center; gap: 6px;
 }
 .dproj .more::after { content: "\2192"; transition: transform 0.18s ease; }
@@ -427,12 +468,12 @@ section { padding: 54px 0; }
   background: var(--bg-2); padding: 20px 22px; margin: 8px 0 6px;
 }
 .summary .k {
-  font-family: "JetBrains Mono", monospace; font-size: 0.68rem; letter-spacing: 0.12em;
+  font-family: "Public Sans", system-ui, sans-serif; font-size: 0.68rem; letter-spacing: 0.12em;
   text-transform: uppercase; color: var(--pink); margin-bottom: 10px;
 }
 .summary ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
 .summary li {
-  font-family: "JetBrains Mono", monospace; font-size: 0.75rem;
+  font-family: "Public Sans", system-ui, sans-serif; font-size: 0.75rem;
   padding: 5px 11px; border-radius: var(--radius-sm);
   border: 1px solid var(--line-2); color: var(--muted); background: var(--bg-2);
 }
@@ -446,33 +487,27 @@ section { padding: 54px 0; }
   padding: 16px 20px; background: var(--surface); flex: 1 1 260px;
 }
 .edu-item .deg { font-weight: 600; color: var(--ink); }
-.edu-item .school { font-family: "JetBrains Mono", monospace; font-size: 0.78rem; color: var(--faint); margin-top: 3px; }
+.edu-item .school { font-family: "Public Sans", system-ui, sans-serif; font-size: 0.78rem; color: var(--faint); margin-top: 3px; }
 
 /* ---------- Footer ---------- */
 footer { border-top: 1px solid var(--line); padding: 44px 0 60px; margin-top: 20px; background: var(--bg-2); }
 .foot-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; align-items: end; }
-.foot-name { font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif; font-weight: 700; font-size: 1.35rem; letter-spacing: -0.03em; }
-.foot-name span {
-  color: var(--pink);
-  background: var(--grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
+.foot-name { font-family: "Familjen Grotesk", system-ui, sans-serif; font-weight: 700; font-size: 1.35rem; letter-spacing: -0.03em; }
+.foot-name span { color: var(--ink); }
 .foot-cols { display: flex; gap: 40px; flex-wrap: wrap; }
 .foot-col .kh {
-  font-family: "JetBrains Mono", monospace; font-size: 0.66rem; letter-spacing: 0.12em;
+  font-family: "Public Sans", system-ui, sans-serif; font-size: 0.66rem; letter-spacing: 0.12em;
   text-transform: uppercase; color: var(--faint); margin-bottom: 6px; padding-left: 12px;
 }
 .foot-links { display: flex; gap: 6px; flex-wrap: wrap; }
 .foot-col .foot-links { flex-direction: column; gap: 0; }
 .foot-links a {
-  color: var(--ink); font-weight: 500; font-family: "JetBrains Mono", monospace; font-size: 0.85rem;
+  color: var(--ink); font-weight: 500; font-family: "Public Sans", system-ui, sans-serif; font-size: 0.85rem;
   padding: 10px 12px; border-radius: var(--radius-sm); min-height: 44px;
   display: inline-flex; align-items: center;
 }
 .foot-links a:hover { background: var(--surface); color: var(--accent); text-decoration: none; }
-footer small { color: var(--faint); display: block; margin-top: 24px; font-family: "JetBrains Mono", monospace; font-size: 0.78rem; }
+footer small { color: var(--faint); display: block; margin-top: 24px; font-family: "Public Sans", system-ui, sans-serif; font-size: 0.78rem; }
 
 /* ============================================================
    DETAIL PAGE
@@ -480,16 +515,16 @@ footer small { color: var(--faint); display: block; margin-top: 24px; font-famil
 .detail-hero { padding: 48px 0 30px; }
 .back {
   display: inline-flex; align-items: center; gap: 8px; margin-bottom: 28px;
-  font-family: "JetBrains Mono", monospace; font-size: 0.82rem; color: var(--muted);
+  font-family: "Public Sans", system-ui, sans-serif; font-size: 0.82rem; color: var(--muted);
   padding: 9px 14px 9px 11px; border-radius: var(--radius-sm);
   border: 1px solid var(--line); background: var(--surface); min-height: 40px;
 }
 .back:hover { color: var(--accent); border-color: var(--accent); text-decoration: none; }
 .detail-hero h1 {
-  font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif; font-weight: 800;
+  font-family: "Familjen Grotesk", system-ui, sans-serif; font-weight: 800;
   font-size: clamp(2.1rem, 6vw, 3.2rem); letter-spacing: -0.035em; line-height: 1.03;
 }
-.detail-sub { font-family: "JetBrains Mono", monospace; color: var(--accent); font-size: 0.86rem; margin-top: 14px; }
+.detail-sub { font-family: "Public Sans", system-ui, sans-serif; color: var(--accent); font-size: 0.86rem; margin-top: 14px; }
 .detail-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
 
 .detail-banner {
@@ -501,13 +536,13 @@ footer small { color: var(--faint); display: block; margin-top: 24px; font-famil
   /* EDIT: add a screenshot -> background: url('../images/slug.png') center/cover; */
 }
 .detail-banner .label {
-  font-family: "JetBrains Mono", monospace; font-weight: 500; font-size: 0.78rem;
+  font-family: "Public Sans", system-ui, sans-serif; font-weight: 500; font-size: 0.78rem;
   letter-spacing: 0.16em; text-transform: uppercase; color: var(--faint);
 }
 
 .detail-body { display: grid; grid-template-columns: 1fr; gap: 6px; padding-bottom: 20px; }
 .detail-body h2 {
-  font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif; font-weight: 700; font-size: 1.28rem;
+  font-family: "Familjen Grotesk", system-ui, sans-serif; font-weight: 700; font-size: 1.28rem;
   letter-spacing: -0.025em; margin: 34px 0 14px; display: flex; align-items: center; gap: 11px;
 }
 .detail-body h2::before {
@@ -531,7 +566,7 @@ footer small { color: var(--faint); display: block; margin-top: 24px; font-famil
 }
 .spec { background: var(--bg-2); padding: 15px 18px; }
 .spec .k {
-  font-family: "JetBrains Mono", monospace; font-size: 0.68rem; letter-spacing: 0.1em;
+  font-family: "Public Sans", system-ui, sans-serif; font-size: 0.68rem; letter-spacing: 0.1em;
   text-transform: uppercase; color: var(--faint); margin-bottom: 5px;
 }
 .spec .v { color: var(--ink); font-size: 0.93rem; font-weight: 500; }
@@ -548,7 +583,7 @@ footer small { color: var(--faint); display: block; margin-top: 24px; font-famil
   border-radius: var(--radius); padding: 20px 22px;
 }
 .col h3 {
-  font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif; font-size: 1.02rem;
+  font-family: "Familjen Grotesk", system-ui, sans-serif; font-size: 1.02rem;
   letter-spacing: -0.02em; margin-bottom: 12px; display: flex; align-items: center; gap: 9px;
 }
 .col h3::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--warm); }
@@ -567,7 +602,7 @@ footer small { color: var(--faint); display: block; margin-top: 24px; font-famil
   content: counter(step, decimal-leading-zero); position: absolute; left: 0; top: 10px;
   width: 30px; height: 26px; border-radius: var(--radius-sm);
   border: 1px solid var(--line-2); background: var(--accent-soft); color: var(--accent);
-  font-family: "JetBrains Mono", monospace; font-size: 0.72rem;
+  font-family: "Public Sans", system-ui, sans-serif; font-size: 0.72rem;
   display: flex; align-items: center; justify-content: center;
 }
 
@@ -583,12 +618,12 @@ footer small { color: var(--faint); display: block; margin-top: 24px; font-famil
 .detail-body .sys { border-top-color: color-mix(in srgb, var(--accent) 50%, transparent); }
 .detail-body.tool .sys { border-top-color: color-mix(in srgb, var(--cool) 50%, transparent); }
 .sys h3 {
-  font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif; font-size: 1rem;
+  font-family: "Familjen Grotesk", system-ui, sans-serif; font-size: 1rem;
   letter-spacing: -0.02em; margin-bottom: 8px;
 }
 .sys p { color: var(--muted); font-size: 0.93rem; }
 .sys .tag {
-  font-family: "JetBrains Mono", monospace; font-size: 0.67rem; color: var(--faint);
+  font-family: "Public Sans", system-ui, sans-serif; font-size: 0.67rem; color: var(--faint);
   text-transform: uppercase; letter-spacing: 0.11em; display: block; margin-bottom: 7px;
 }
 
@@ -605,14 +640,14 @@ footer small { color: var(--faint); display: block; margin-top: 24px; font-famil
 .shot .ph {
   height: 290px; border-radius: var(--radius); border: 1px dashed var(--line-2);
   display: flex; align-items: center; justify-content: center; text-align: center;
-  font-family: "JetBrains Mono", monospace; font-size: 0.76rem; color: var(--faint);
+  font-family: "Public Sans", system-ui, sans-serif; font-size: 0.76rem; color: var(--faint);
   letter-spacing: 0.06em; padding: 20px;
   background:
     radial-gradient(circle at 1px 1px, rgba(255,255,255,0.045) 1px, transparent 0) 0 0 / 16px 16px,
     var(--bg-2);
 }
 .shot figcaption {
-  font-family: "JetBrains Mono", monospace; font-size: 0.75rem; color: var(--faint);
+  font-family: "Public Sans", system-ui, sans-serif; font-size: 0.75rem; color: var(--faint);
   margin-top: 10px; text-align: center;
 }
 .shot-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 22px 0; }
@@ -635,7 +670,7 @@ footer small { color: var(--faint); display: block; margin-top: 24px; font-famil
 /* ---------- prev / next ---------- */
 .pager { display: flex; justify-content: space-between; gap: 14px; margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--line); }
 .pager a {
-  font-family: "JetBrains Mono", monospace; font-size: 0.82rem; color: var(--muted);
+  font-family: "Public Sans", system-ui, sans-serif; font-size: 0.82rem; color: var(--muted);
   max-width: 48%; flex: 1; padding: 14px 18px; border-radius: var(--radius);
   border: 1px solid var(--line); background: var(--surface);
   transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
@@ -644,22 +679,19 @@ footer small { color: var(--faint); display: block; margin-top: 24px; font-famil
 .pager .nxt { text-align: right; margin-left: auto; }
 .pager .lbl { display: block; font-size: 0.68rem; color: var(--faint); margin-bottom: 5px; letter-spacing: 0.06em; }
 
-/* ---------- Load animation ---------- */
-.rise { opacity: 0; transform: translateY(14px); animation: rise 0.55s ease forwards; }
-.rise:nth-child(2){animation-delay:.05s;} .rise:nth-child(3){animation-delay:.1s;}
-.rise:nth-child(4){animation-delay:.15s;} .rise:nth-child(5){animation-delay:.2s;}
-@keyframes rise { to { opacity: 1; transform: none; } }
-
 /* ---------- Focus: always visible, never clipped ---------- */
 a:focus-visible, .btn:focus-visible, button:focus-visible {
-  outline: 2px solid var(--accent); outline-offset: 3px; border-radius: var(--radius-sm);
+  outline: 2px solid var(--ink); outline-offset: 3px; border-radius: var(--radius-sm);
 }
 .fcard-body h3 a:focus-visible::after { outline: 2px solid var(--accent); outline-offset: -2px; border-radius: var(--radius); }
 .row-title a:focus-visible::after { outline: 2px solid var(--accent); outline-offset: -2px; border-radius: var(--radius-sm); }
 .fcard-body h3 a:focus-visible, .row-title a:focus-visible { outline: none; }
 
+/* The universal selector does not match pseudo-elements, so the drifting grid
+   has to be named explicitly or it keeps running for people who asked it not
+   to. */
 @media (prefers-reduced-motion: reduce) {
-  *, .rise { animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important; }
+  *, *::before, *::after { animation: none !important; transition: none !important; transform: none !important; }
   html { scroll-behavior: auto; }
 }
 

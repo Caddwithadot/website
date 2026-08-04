@@ -5,9 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Line 9 | Taylor Cadwallader</title>
   <meta name="description" content="Line 9: 72-hour GMTK Game Jam inspection game, built around a randomized anomaly system and layer-mask inspection stations sharing one framework." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="preload" href="../fonts/public-sans-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="../fonts/familjen-grotesk-700.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="../style.css" />
 </head>
 <body>
@@ -20,7 +19,6 @@
         <a href="../index.html#work">Games</a>
         <a href="../index.html#tools">Tools</a>
         <a href="../index.html#about">About</a>
-        
       </nav>
     </div>
   </header>
@@ -100,13 +98,13 @@
       <p>With a smaller asset count than BLOOPS, more of my time went directly into gameplay systems rather than art integration, though I still supported that where it was needed.</p>
 
       <h2>Recognition</h2>
-      <p>Published to itch.io.</p>
+      <p>Published on itch.io.</p>
 
       <h2>What I took from it</h2>
       <p>The station framework is a small version of how I like to work in general. One system, three different uses of it, built so that a fourth would have been easy.</p>
       <p class="takeaway">With only 72 hours, building the flexible version was also the fast version.</p>
 
-      <!-- LINK SLOT: add the itch.io button here once you have the URL -->
+      <div class="detail-links"><a class="btn btn-primary" href="https://notcadd.itch.io/line-9" target="_blank" rel="noopener">Play it on itch.io &#8599;</a></div>
       <div class="pager"><a href="3d-sprite-layerer.html"><span class="lbl">&larr; Previous</span>3D Sprite Layerer</a><a class="nxt" href="strip-miner.html"><span class="lbl">Next &rarr;</span>Strip Miner</a></div>
     </div>
   </div>
@@ -135,7 +133,6 @@
         </div>
       <small>&copy; 2026 Taylor Cadwallader &middot; Built &amp; hosted on GitHub Pages</small>
     </div>
-  </footer>
-  <script src="../particles.js" defer></script>
+  </footer>
 </body>
 </html>

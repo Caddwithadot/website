@@ -5,9 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Project Nasu | Taylor Cadwallader</title>
   <meta name="description" content="Project Nasu: first team project at DigiPen, a 2D action-puzzle platformer where I ran production and built the player controller, hazards, and enemies." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="preload" href="../fonts/public-sans-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="../fonts/familjen-grotesk-700.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="../style.css" />
 </head>
 <body>
@@ -20,7 +19,6 @@
         <a href="../index.html#work">Games</a>
         <a href="../index.html#tools">Tools</a>
         <a href="../index.html#about">About</a>
-        
       </nav>
     </div>
   </header>
@@ -103,7 +101,7 @@
       <p>This was my first real experience fully owning both design and implementation on a team, and it pushed me toward the kind of technical design work I still gravitate toward now. Most of what I have built since is a more developed version of what I stumbled into here.</p>
       <p class="takeaway">Design one hazard well and the level designer can build twenty rooms out of it.</p>
 
-      <!-- LINK SLOT: add the Steam and DigiPen Game Gallery buttons here once you have the URLs -->
+      <div class="detail-links"><a class="btn btn-primary" href="https://store.steampowered.com/app/2638790/Project_Nasu/" target="_blank" rel="noopener">Play it on Steam &#8599;</a></div>
       <div class="pager"><a href="sgp.html"><span class="lbl">&larr; Previous</span>SGP: Streamer Game Project</a></div>
     </div>
   </div>
@@ -132,7 +130,6 @@
         </div>
       <small>&copy; 2026 Taylor Cadwallader &middot; Built &amp; hosted on GitHub Pages</small>
     </div>
-  </footer>
-  <script src="../particles.js" defer></script>
+  </footer>
 </body>
 </html>
