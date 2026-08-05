@@ -474,6 +474,69 @@ section { padding: 54px 0; }
 .edu-item .deg { font-weight: 600; color: var(--ink); }
 .edu-item .school { font-family: "Public Sans", system-ui, sans-serif; font-size: 0.78rem; color: var(--faint); margin-top: 3px; }
 
+/* ---------- Contact ----------
+   Labels are real and always visible rather than placeholders standing in for
+   them. Placeholder-as-label vanishes the moment someone types, which loses
+   the field name exactly when a person checking their work needs it, and it
+   reads poorly to a screen reader. */
+.contact-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 28px; align-items: start; }
+
+.cform { display: grid; gap: 16px; }
+.field { display: grid; gap: 6px; }
+.field label { font-size: 0.85rem; font-weight: 600; color: var(--ink); }
+.field .req { color: var(--accent); margin-left: 2px; }
+.field .hint { font-size: 0.78rem; color: var(--faint); }
+
+.cform input, .cform textarea {
+  font: inherit; font-size: 0.95rem; color: var(--ink);
+  background: var(--bg-2); border: 1px solid var(--line);
+  border-radius: var(--radius-sm); padding: 11px 13px; width: 100%;
+  transition: border-color 0.12s ease;
+}
+.cform textarea { min-height: 150px; resize: vertical; }
+.cform input:hover, .cform textarea:hover { border-color: var(--line-2); }
+.cform input:focus-visible, .cform textarea:focus-visible {
+  outline: 2px solid var(--ink); outline-offset: 2px; border-color: var(--ink);
+}
+.cform input[aria-invalid="true"], .cform textarea[aria-invalid="true"] { border-color: var(--accent); }
+
+.err { font-size: 0.8rem; color: var(--accent); font-weight: 600; min-height: 0; }
+.err:empty { display: none; }
+
+.cform-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.cform button[type="submit"] { min-width: 150px; }
+.cform button[disabled] { opacity: 0.55; cursor: progress; }
+
+/* Submission outcome, announced to screen readers via aria-live in the markup */
+.form-status { font-size: 0.9rem; font-weight: 600; }
+.form-status.ok { color: var(--ink); }
+.form-status.bad { color: var(--accent); }
+.form-sent {
+  border: 1px solid var(--line); border-left: 3px solid var(--accent);
+  background: var(--surface); padding: 20px 22px; border-radius: var(--radius-sm);
+}
+.form-sent h3 {
+  font-family: "Familjen Grotesk", system-ui, sans-serif;
+  font-size: 1.1rem; letter-spacing: -0.02em; margin-bottom: 6px;
+}
+.form-sent p { color: var(--muted); font-size: 0.95rem; }
+
+/* Bot trap. Off-screen rather than display:none, which some bots skip. */
+.gotcha { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+.cdetails {
+  background: var(--bg-2); border: 1px solid var(--line);
+  border-radius: var(--radius-sm); padding: 22px 24px;
+}
+.cdetails .kh {
+  font-size: 0.78rem; font-weight: 600; color: var(--faint);
+  margin-bottom: 14px;
+}
+.cdetails ul { list-style: none; display: grid; gap: 13px; }
+.cdetails li { font-size: 0.93rem; }
+.cdetails .lab { display: block; font-size: 0.76rem; color: var(--faint); margin-bottom: 1px; }
+.cdetails a { color: var(--ink); }
+
 /* ---------- Footer ---------- */
 footer { border-top: 1px solid var(--line); padding: 44px 0 60px; margin-top: 20px; background: var(--bg-2); }
 .foot-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; align-items: end; }
@@ -699,8 +762,9 @@ a:focus-visible, .btn:focus-visible, button:focus-visible {
   /* keep the role visible on mobile, it's the most useful column */
   .row-role  { grid-column: 2 / -1; grid-row: 3; font-size: 0.82rem; }
   .row-arrow { display: none; }
-  .cols, .systems, .shot-row, .focus-grid { grid-template-columns: 1fr; }
+  .cols, .systems, .shot-row, .focus-grid, .contact-grid { grid-template-columns: 1fr; }
   .foot-cols { gap: 22px; }
+  .cform button[type="submit"] { width: 100%; }
   /* Cover art becomes a full-width banner above the text. */
   .dproj { grid-template-columns: 1fr; padding: 0 20px 20px; }
   .dproj-art {

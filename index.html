@@ -35,7 +35,7 @@
       <div class="cta-row">
         <a class="btn btn-primary" href="#focus">See the work</a>
         <a class="btn btn-ghost" href="resume.pdf" target="_blank" rel="noopener">R&eacute;sum&eacute;</a>
-        <a class="btn btn-ghost" href="mailto:tcadwallader.design@gmail.com">Get in touch</a>
+        <a class="btn btn-ghost" href="#contact">Get in touch</a>
       </div>
     </div>
   </div>
@@ -296,7 +296,71 @@
     </section>
   </div>
 
-  <footer id="contact">
+  <div class="wrap">
+    <section id="contact">
+      <div class="section-head"><span class="idx mono">05</span><h2>Send me a message</h2></div>
+      <div class="contact-grid">
+
+        <!-- Posts to Formspree, since GitHub Pages has no server of its own.
+             Without JavaScript this still submits natively to the same action
+             and lands on Formspree's own confirmation page. -->
+        <form class="cform" id="contact-form" method="POST"
+              action="https://formspree.io/f/xgawelop" novalidate>
+
+          <div class="field">
+            <label for="cf-name">Name <span class="req" aria-hidden="true">*</span></label>
+            <input id="cf-name" name="name" type="text" autocomplete="name"
+                   required aria-required="true" aria-describedby="cf-name-err" />
+            <p class="err" id="cf-name-err" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label for="cf-email">Email <span class="req" aria-hidden="true">*</span></label>
+            <input id="cf-email" name="email" type="email" autocomplete="email"
+                   required aria-required="true" aria-describedby="cf-email-hint cf-email-err" />
+            <p class="hint" id="cf-email-hint">So I can write back.</p>
+            <p class="err" id="cf-email-err" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label for="cf-subject">Subject</label>
+            <input id="cf-subject" name="subject" type="text" autocomplete="off" />
+          </div>
+
+          <div class="field">
+            <label for="cf-message">Message <span class="req" aria-hidden="true">*</span></label>
+            <textarea id="cf-message" name="message" rows="7"
+                      required aria-required="true" aria-describedby="cf-message-err"></textarea>
+            <p class="err" id="cf-message-err" role="alert"></p>
+          </div>
+
+          <div class="gotcha" aria-hidden="true">
+            <label for="cf-company">Leave this field empty</label>
+            <input id="cf-company" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <div class="cform-actions">
+            <button class="btn btn-primary" type="submit">Send message</button>
+            <p class="form-status" id="cf-status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+
+        <aside class="cdetails">
+          <div class="kh">Or reach me directly</div>
+          <ul>
+            <li><span class="lab">Email</span><a href="mailto:tcadwallader.design@gmail.com">tcadwallader.design@gmail.com</a></li>
+            <li><span class="lab">Phone</span><a href="tel:+14259715935">425-971-5935</a></li>
+            <li><span class="lab">LinkedIn</span><a href="https://www.linkedin.com/in/taylor-cadwallader" target="_blank" rel="noopener">Taylor Cadwallader &#8599;</a></li>
+            <li><span class="lab">Discord</span><a href="https://discord.com/users/641844475068547072" target="_blank" rel="noopener">cadd. &#8599;</a></li>
+            <li><span class="lab">Based in</span>Redmond, WA &middot; open to remote</li>
+          </ul>
+        </aside>
+
+      </div>
+    </section>
+  </div>
+
+  <footer>
     <div class="wrap">
       <div class="foot-grid">
         <div class="foot-name">Taylor <span>Cadwallader</span></div>
@@ -312,6 +376,7 @@
           <div class="foot-col">
             <div class="kh">Elsewhere</div>
             <div class="foot-links">
+              <a href="index.html#contact">Send a message</a>
               <a href="mailto:tcadwallader.design@gmail.com">Email</a>
               <a href="https://www.linkedin.com/in/taylor-cadwallader" target="_blank" rel="noopener">LinkedIn &#8599;</a>
               <a href="https://discord.com/users/641844475068547072" target="_blank" rel="noopener">Discord &#8599;</a>
@@ -323,5 +388,6 @@
     </div>
   </footer>
   <script src="sketch.js" defer></script>
+  <script src="contact.js" defer></script>
 </body>
 </html>
