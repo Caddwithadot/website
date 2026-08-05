@@ -40,9 +40,14 @@
      raising the spawn rate alone just piles up marks. To roughly double the
      visible drawing without doubling the density, the lifetime comes down by
      about the same factor the rate goes up. */
-  var HOLD     = 11;     // seconds a finished mark stays at full strength
-  var FADE     = 52;     // seconds it then takes to disappear
-  var MAX_LIVE = 520;    // ceiling on marks alive anywhere on the sheet
+  /* Size, frequency and lifetime all multiply into the same pool of ink, and
+     all three are now turned up. Tripling mark size alone took coverage from
+     5.7% to 18.4%, which is near the density that read as unusable, so the
+     population is cut to pay for it. Frequency was kept as high as the budget
+     allows and the lifetime absorbed most of the reduction. */
+  var HOLD     = 9;      // seconds a finished mark stays at full strength
+  var FADE     = 36;     // seconds it then takes to disappear
+  var MAX_LIVE = 280;    // ceiling on marks alive anywhere on the sheet
   var CONCURRENT = 12;   // marks that can be mid-draw at the same time
   /* Marks spawn across a region this much larger than the window on each side,
      so the paper is already worked on before you pan or scroll onto it. It
@@ -51,8 +56,19 @@
      ceiling and the spawn rate are both sized against that, otherwise
      widening the area would just make the visible page quieter. */
   var SPAWN_MARGIN = 0.6;
-  var CELL     = 40;
+  var CELL     = 40;     // printed grid pitch; must match the CSS grid tile
   var PENCIL   = "82,75,88";
+
+  /* Marks are generated at their natural size then scaled about their origin,
+     so every generator grows without any of them knowing about it.
+
+     This has to stay a whole number. Cell-based marks are built from multiples
+     of CELL, and only an integer scale keeps those multiples landing on the
+     printed ruling: 40 x 3 is still a grid line, 40 x 2.5 is not.
+     Set per viewport in resize(), since 3x on a phone is most of the screen. */
+  var SCALE = 3;
+  var WIDTH_SCALE = 1.35;  // lines thicken far less than the marks grow, so
+                           // they still read as the same pencil
 
   /* Camera. Marks live in world coordinates on a sheet much larger than the
      window; the camera decides which part of it you are looking at.
@@ -402,6 +418,16 @@
     var strokes = pick(MARKS)(x, y).filter(function (s) { return s && s.length > 1; });
     if (!strokes.length) return null;
 
+    if (SCALE !== 1) {
+      for (var si = 0; si < strokes.length; si++) {
+        var st = strokes[si];
+        for (var pi = 0; pi < st.length; pi++) {
+          st[pi][0] = x + (st[pi][0] - x) * SCALE;
+          st[pi][1] = y + (st[pi][1] - y) * SCALE;
+        }
+      }
+    }
+
     var total = 0, x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
     for (var i = 0; i < strokes.length; i++) {
       for (var p = 0; p < strokes[i].length; p++) {
@@ -416,8 +442,8 @@
     return {
       strokes: strokes, total: total, drawn: 0,
       bx: x0, by: y0, bw: x1 - x0, bh: y1 - y0,
-      speed: r(280, 620),
-      width: r(0.9, 1.9),
+      speed: r(280, 620) * SCALE,   // longer paths, same time to draw
+      width: r(0.9, 1.9) * WIDTH_SCALE,
       alpha: r(0.2, 0.42),
       age: 0, done: false
     };
@@ -482,7 +508,7 @@
 
     // moved onto fresh paper? fill it in before it is looked at
     if (Math.abs(camY - seedY) > H * 0.55 || Math.abs(camX - seedX) > W * 0.55) {
-      seedRegion(130);
+      seedRegion(70);
       seedX = camX; seedY = camY;
     }
 
@@ -517,7 +543,7 @@
     if (spawnWait <= 0 && drawing < CONCURRENT && live.length < MAX_LIVE) {
       var n = spawn();
       if (n) live.push(n);
-      spawnWait = r(0.03, 0.11);
+      spawnWait = r(0.07, 0.22);
     }
   }
 
@@ -552,6 +578,7 @@
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     W = document.documentElement.clientWidth;
     H = document.documentElement.clientHeight;
+    SCALE = W < 640 ? 2 : 3;   // whole numbers only, see the note above
     canvas.width = Math.round(W * dpr);
     canvas.height = Math.round(H * dpr);
     canvas.style.width = W + "px";
@@ -560,7 +587,7 @@
     live.length = 0;
     camY = (window.pageYOffset || root.scrollTop || 0) * SCROLL_P;
     seedX = camX; seedY = camY;
-    if (!reduce.matches) seedRegion(130);   // never show blank paper on load
+    if (!reduce.matches) seedRegion(70);   // never show blank paper on load
     if (reduce.matches) {
       // no camera movement at all under reduced motion
       camX = 0; camY = 0; mouseX = 0; mouseY = 0;
