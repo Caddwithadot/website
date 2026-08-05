@@ -40,10 +40,10 @@
      raising the spawn rate alone just piles up marks. To roughly double the
      visible drawing without doubling the density, the lifetime comes down by
      about the same factor the rate goes up. */
-  var HOLD     = 8;      // seconds a finished mark stays at full strength
-  var FADE     = 42;     // seconds it then takes to disappear
-  var MAX_LIVE = 340;    // ceiling on marks alive anywhere on the sheet
-  var CONCURRENT = 8;    // marks that can be mid-draw at the same time
+  var HOLD     = 11;     // seconds a finished mark stays at full strength
+  var FADE     = 52;     // seconds it then takes to disappear
+  var MAX_LIVE = 520;    // ceiling on marks alive anywhere on the sheet
+  var CONCURRENT = 12;   // marks that can be mid-draw at the same time
   /* Marks spawn across a region this much larger than the window on each side,
      so the paper is already worked on before you pan or scroll onto it. It
      also means most marks are off-screen at any moment: at 0.6 the spawn area
@@ -117,45 +117,32 @@
     return pts;
   }
 
-  /* ---------- hand-drawn digits ---------- */
-  var GLYPH = {
-    0: [[[.5,0],[.16,.24],[.14,.74],[.5,1],[.86,.74],[.85,.24],[.5,0]]],
-    1: [[[.22,.18],[.5,0],[.5,1]]],
-    2: [[[.08,.22],[.5,0],[.86,.26],[.14,1],[.92,.98]]],
-    3: [[[.1,.05],[.7,.04],[.36,.46]],[[.36,.46],[.82,.6],[.55,1],[.1,.88]]],
-    4: [[[.72,0],[.08,.7],[.92,.7]],[[.66,.34],[.64,1]]],
-    5: [[[.86,.03],[.2,.06],[.14,.46]],[[.14,.46],[.62,.4],[.82,.7],[.4,1],[.08,.9]]],
-    6: [[[.82,.04],[.3,.3],[.14,.8],[.5,1],[.82,.74],[.5,.48],[.2,.64]]],
-    7: [[[.08,.06],[.9,.04],[.4,1]]],
-    8: [[[.5,.5],[.14,.28],[.5,.02],[.86,.28],[.5,.5],[.14,.76],[.5,1],[.86,.76],[.5,.5]]],
-    9: [[[.76,.5],[.4,.56],[.18,.3],[.5,.04],[.8,.26],[.68,.76],[.38,1]]]
-  };
-
-  function digits(x, y, size, text) {
-    var strokes = [], cx = x;
-    var slant = r(-0.11, 0.11);
-    for (var i = 0; i < text.length; i++) {
-      var g = GLYPH[text[i]];
-      if (!g) { cx += size * 0.5; continue; }
-      var h = size * r(0.93, 1.08);
-      var w = size * r(0.54, 0.63);
-      for (var s = 0; s < g.length; s++) {
-        var pts = [];
-        for (var p = 0; p < g[s].length; p++) {
-          pts.push([
-            cx + g[s][p][0] * w + (1 - g[s][p][1]) * slant * h + r(-0.8, 0.8) * WOBBLE,
-            y + g[s][p][1] * h + r(-0.8, 0.8) * WOBBLE
-          ]);
-        }
-        strokes.push(pts);
-      }
-      cx += w + size * r(0.16, 0.26);
+  /* Trace a vertex list as hand-drawn edges. Each edge gets its own bow and
+     jitter, and the outline is occasionally broken between edges so shapes
+     look drawn in a few passes rather than one perfect loop. */
+  function outline(pts, closed, breakUp) {
+    var s = [], seq = closed ? pts.concat([pts[0]]) : pts, cur = [];
+    for (var i = 0; i < seq.length - 1; i++) {
+      var seg = handLine(seq[i][0], seq[i][1], seq[i + 1][0], seq[i + 1][1], 0.9);
+      cur = cur.length ? cur.concat(seg.slice(1)) : seg;
+      if (breakUp && i < seq.length - 2 && chance(0.22)) { s.push(cur); cur = []; }
     }
-    return strokes;
+    if (cur.length > 1) s.push(cur);
+    return s;
+  }
+
+  function ngonPts(x, y, n, rad, squash) {
+    var pts = [], off = r(0, 6.28);
+    for (var i = 0; i < n; i++) {
+      var a = off + (i / n) * Math.PI * 2;
+      pts.push([x + Math.cos(a) * rad, y + Math.sin(a) * rad * squash]);
+    }
+    return pts;
   }
 
   /* ---------- mark generators ---------- */
   var MARKS = [
+    /* --- area fills: the scribbles that cover cells --- */
     function tracedCell(x, y) {
       var w = CELL * ri(1, 4), h = CELL * ri(1, 3), s = [];
       var gap = function () { return chance(0.35) ? r(2, 8) : 0; };
@@ -165,27 +152,72 @@
       s.push(handLine(x, y + h + r(-4, 2), x, y - r(0, 3)));
       return s;
     },
-    function scribbleOut(x, y) {
-      var w = CELL * ri(1, 3), h = CELL * ri(1, 2), pts = [];
-      var rows = Math.max(3, Math.round(h / r(8, 13)));
+    function scribbleAcross(x, y) {
+      var w = CELL * ri(1, 4), h = CELL * ri(1, 3), pts = [];
+      var rows = Math.max(3, Math.round(h / r(7, 13)));
       for (var i = 0; i <= rows; i++) {
-        var yy = y + (h * i) / rows + r(-2, 2);
-        var l = i % 2 ? x + w + r(-5, 3) : x + r(-3, 5);
-        var rg = i % 2 ? x + r(-3, 5) : x + w + r(-5, 3);
-        pts.push([l, yy], [rg, yy + r(-1.5, 1.5)]);
+        var yy = y + (h * i) / rows + r(-2.5, 2.5);
+        var a = i % 2 ? x + w + r(-6, 4) : x + r(-4, 6);
+        var b = i % 2 ? x + r(-4, 6) : x + w + r(-6, 4);
+        pts.push([a, yy], [b, yy + r(-2, 2)]);
+      }
+      return [pts];
+    },
+    function scribbleDown(x, y) {
+      var w = CELL * ri(1, 3), h = CELL * ri(1, 3), pts = [];
+      var cols = Math.max(3, Math.round(w / r(7, 13)));
+      for (var i = 0; i <= cols; i++) {
+        var xx = x + (w * i) / cols + r(-2.5, 2.5);
+        var a = i % 2 ? y + h + r(-6, 4) : y + r(-4, 6);
+        var b = i % 2 ? y + r(-4, 6) : y + h + r(-6, 4);
+        pts.push([xx, a], [xx + r(-2, 2), b]);
+      }
+      return [pts];
+    },
+    function loopScribble(x, y) {
+      var n = ri(4, 10), step = r(11, 22), rad = r(8, 18), pts = [];
+      var tilt = r(-0.5, 0.5);
+      for (var i = 0; i < n; i++) {
+        for (var k = 0; k <= 11; k++) {
+          var a = (k / 11) * Math.PI * 2 - Math.PI / 2;
+          pts.push([
+            x + i * step + Math.cos(a) * rad + r(-1.2, 1.2),
+            y + Math.sin(a) * rad + i * step * tilt + r(-1.2, 1.2)
+          ]);
+        }
+      }
+      return [pts];
+    },
+    function spiralFill(x, y) {
+      var turns = r(2.5, 5.5), steps = Math.round(turns * 15), rad = r(16, 42), pts = [];
+      var squash = r(0.7, 1.1);
+      for (var i = 0; i <= steps; i++) {
+        var t = i / steps, a = t * turns * Math.PI * 2;
+        pts.push([x + Math.cos(a) * rad * t + r(-1.2, 1.2), y + Math.sin(a) * rad * t * squash + r(-1.2, 1.2)]);
+      }
+      return [pts];
+    },
+    function walkFill(x, y) {
+      var w = CELL * ri(1, 3), h = CELL * ri(1, 2), pts = [[x, y]], n = ri(16, 34);
+      for (var i = 0; i < n; i++) {
+        var p = pts[pts.length - 1];
+        pts.push([
+          Math.max(x, Math.min(x + w, p[0] + r(-28, 28))),
+          Math.max(y, Math.min(y + h, p[1] + r(-22, 22)))
+        ]);
       }
       return [pts];
     },
     function hatch(x, y) {
       var w = CELL * ri(1, 3), h = CELL * ri(1, 2), s = [];
-      var step = r(8, 14), ang = pick([0.75, 0.95, -0.75, 2.35]);
+      var step = r(7, 14), ang = pick([0.75, 0.95, -0.75, 2.35]);
       for (var o = -h; o < w + h; o += step) {
         var x1 = Math.max(x, Math.min(x + w, x + o));
         var x2 = Math.max(x, Math.min(x + w, x + o + h / Math.tan(ang)));
         if (Math.abs(x2 - x1) < 2) continue;
         s.push(handLine(x1, y + r(0, 4), x2, y + h - r(0, 4), 0.8));
       }
-      if (chance(0.3)) {
+      if (chance(0.35)) {
         for (var o2 = -h; o2 < w + h; o2 += step * r(1.3, 2.1)) {
           s.push(handLine(Math.max(x, Math.min(x + w, x + o2)), y + h,
                           Math.max(x, Math.min(x + w, x + o2 + h)), y, 0.8));
@@ -193,6 +225,104 @@
       }
       return s;
     },
+
+    /* --- wireframe shapes --- */
+    function triangle(x, y) {
+      var w = CELL * ri(1, 3), h = CELL * ri(1, 3);
+      return outline([[x, y + h], [x + w * r(0.35, 0.65), y], [x + w, y + h]], true, true);
+    },
+    function diamond(x, y) {
+      var w = CELL * ri(1, 2), h = CELL * ri(1, 3);
+      return outline([[x + w / 2, y], [x + w, y + h / 2], [x + w / 2, y + h], [x, y + h / 2]], true, true);
+    },
+    function polygon(x, y) {
+      return outline(ngonPts(x, y, ri(5, 8), r(18, 40), r(0.7, 1.1)), true, true);
+    },
+    function isoBox(x, y) {
+      var w = CELL * ri(1, 2), d = w * r(0.35, 0.6), s = outline([[x, y], [x + w, y], [x + w, y + w], [x, y + w]], true, true);
+      s.push(handLine(x, y, x + d, y - d * 0.75, 0.8));
+      s.push(handLine(x + w, y, x + w + d, y - d * 0.75, 0.8));
+      s.push(handLine(x + w, y + w, x + w + d, y + w - d * 0.75, 0.8));
+      s.push(handLine(x + d, y - d * 0.75, x + w + d, y - d * 0.75, 0.8));
+      s.push(handLine(x + w + d, y - d * 0.75, x + w + d, y + w - d * 0.75, 0.8));
+      return s;
+    },
+    function stairs(x, y) {
+      var n = ri(3, 6), st = CELL * r(0.5, 1), pts = [[x, y]];
+      for (var i = 0; i < n; i++) {
+        var p = pts[pts.length - 1];
+        pts.push([p[0] + st, p[1]]);
+        pts.push([p[0] + st, p[1] + st]);
+      }
+      return outline(pts, false, true);
+    },
+    function concentric(x, y) {
+      var n = ri(2, 4), s = [], w = CELL * ri(1, 3), h = CELL * ri(1, 2);
+      for (var i = 0; i < n; i++) {
+        var p = i * r(5, 10);
+        if (w - p * 2 < 12 || h - p * 2 < 12) break;
+        s = s.concat(outline([[x + p, y + p], [x + w - p, y + p], [x + w - p, y + h - p], [x + p, y + h - p]], true, true));
+      }
+      return s;
+    },
+    function blockShape(x, y) {
+      var u = CELL * r(0.6, 1.2);
+      var forms = [
+        [[0,0],[1,0],[1,2],[2,2],[2,3],[0,3]],                 // L
+        [[0,0],[3,0],[3,1],[2,1],[2,3],[1,3],[1,1],[0,1]],     // T
+        [[1,0],[2,0],[2,1],[3,1],[3,2],[2,2],[2,3],[1,3],[1,2],[0,2],[0,1],[1,1]], // plus
+        [[0,0],[2,0],[2,1],[1,1],[1,2],[3,2],[3,3],[0,3],[0,2],[0,1]]              // Z
+      ];
+      return outline(pick(forms).map(function (p) { return [x + p[0] * u, y + p[1] * u]; }), true, true);
+    },
+    function zigzagBand(x, y) {
+      var n = ri(4, 10), st = r(13, 26), amp = r(10, 28), pts = [];
+      for (var i = 0; i <= n; i++) pts.push([x + i * st, y + (i % 2 ? amp : 0)]);
+      return outline(pts, false, false);
+    },
+
+    /* --- doodles --- */
+    function star(x, y) {
+      var rad = r(15, 34), pts = [];
+      for (var i = 0; i < 6; i++) {
+        var a = -Math.PI / 2 + i * (4 * Math.PI / 5);
+        pts.push([x + Math.cos(a) * rad, y + Math.sin(a) * rad]);
+      }
+      return outline(pts, false, chance(0.4));
+    },
+    function smiley(x, y) {
+      var rad = r(15, 32), s = [];
+      var start = r(0, 6.2);
+      s.push(arcPts(x, y, rad, rad * r(0.9, 1.12), start, start + r(6.0, 7.1), 1.1));
+      var ex = rad * 0.36, ey = rad * 0.28;
+      if (chance(0.5)) {                       // tick eyes
+        s.push(handLine(x - ex, y - ey - 2, x - ex + r(-2, 2), y - ey + r(5, 9), 0.7));
+        s.push(handLine(x + ex, y - ey - 2, x + ex + r(-2, 2), y - ey + r(5, 9), 0.7));
+      } else {                                 // blobby dot eyes
+        s.push(arcPts(x - ex, y - ey, 2.6, 2.6, 0, 6.4, 1.4));
+        s.push(arcPts(x + ex, y - ey, 2.6, 2.6, 0, 6.4, 1.4));
+      }
+      if (chance(0.82)) s.push(arcPts(x, y + rad * 0.1, rad * 0.55, rad * 0.42, 0.4, Math.PI - 0.4, 1.0));
+      else s.push(handLine(x - rad * 0.4, y + rad * 0.36, x + rad * 0.4, y + rad * 0.36, 1.2));
+      return s;
+    },
+    /* The S everyone drew in the margins of a school book. Six short verticals
+       in two offset rows, joined by diagonals, capped with a point at each
+       end. Shows up in roughly one mark in twenty. */
+    function coolS(x, y) {
+      var w = r(24, 42), h = w * 1.7, s = [];
+      var X = function (k) { return x + k * w; }, Y = function (k) { return y + k * h; };
+      [0, 0.32, 0.64].forEach(function (d) { s.push(handLine(X(d), Y(0.18), X(d), Y(0.62), 0.65)); });
+      [0.16, 0.48, 0.80].forEach(function (d) { s.push(handLine(X(d), Y(0.72), X(d), Y(1.16), 0.65)); });
+      s.push([].concat(handLine(X(0), Y(0.18), X(0.32), Y(0), 0.7), handLine(X(0.32), Y(0), X(0.64), Y(0.18), 0.7).slice(1)));
+      s.push([].concat(handLine(X(0.16), Y(1.16), X(0.48), Y(1.34), 0.7), handLine(X(0.48), Y(1.34), X(0.80), Y(1.16), 0.7).slice(1)));
+      s.push(handLine(X(0), Y(0.62), X(0.16), Y(0.72), 0.6));
+      s.push(handLine(X(0.32), Y(0.62), X(0.48), Y(0.72), 0.6));
+      s.push(handLine(X(0.64), Y(0.62), X(0.80), Y(0.72), 0.6));
+      return s;
+    },
+
+    /* --- annotation marks --- */
     function arrow(x, y) {
       var len = r(45, 130), a = r(-0.85, 0.85) + (chance(0.5) ? 0 : Math.PI);
       var ex = x + Math.cos(a) * len, ey = y + Math.sin(a) * len;
@@ -229,13 +359,12 @@
     function tick(x, y) {
       return [[].concat(handLine(x, y, x + r(8, 13), y + r(9, 14)), handLine(x + 10, y + 12, x + r(20, 32), y - r(14, 24)))];
     },
-    function number(x, y) { return digits(x, y, r(13, 25), String(ri(1, 96))); },
     function dimension(x, y) {
       var len = CELL * ri(2, 5), s = [];
       s.push(handLine(x, y, x + len, y, 0.85));
       s.push(handLine(x, y - 6, x, y + 6, 0.7));
       s.push(handLine(x + len, y - 6, x + len, y + 6, 0.7));
-      return s.concat(digits(x + len / 2 - 8, y - r(24, 31), r(12, 18), String(Math.round(len / CELL))));
+      return s;
     },
     function underline(x, y) {
       var len = r(50, 145), s = [handLine(x, y, x + len, y + r(-3, 3), 1.5)];
@@ -251,14 +380,6 @@
     function corner(x, y) {
       var d = r(14, 30);
       return [[].concat(handLine(x, y + d, x, y), handLine(x, y, x + d, y))];
-    },
-    function star(x, y) {
-      var s = [], n = ri(3, 4), rad = r(9, 17);
-      for (var i = 0; i < n; i++) {
-        var a = r(0, 3.14);
-        s.push(handLine(x - Math.cos(a) * rad, y - Math.sin(a) * rad, x + Math.cos(a) * rad, y + Math.sin(a) * rad, 0.8));
-      }
-      return s;
     },
     function dots(x, y) {
       var s = [], n = ri(3, 6), cx = x, cy = y;
@@ -361,7 +482,7 @@
 
     // moved onto fresh paper? fill it in before it is looked at
     if (Math.abs(camY - seedY) > H * 0.55 || Math.abs(camX - seedX) > W * 0.55) {
-      seedRegion(90);
+      seedRegion(130);
       seedX = camX; seedY = camY;
     }
 
@@ -396,7 +517,7 @@
     if (spawnWait <= 0 && drawing < CONCURRENT && live.length < MAX_LIVE) {
       var n = spawn();
       if (n) live.push(n);
-      spawnWait = r(0.06, 0.20);
+      spawnWait = r(0.03, 0.11);
     }
   }
 
@@ -439,7 +560,7 @@
     live.length = 0;
     camY = (window.pageYOffset || root.scrollTop || 0) * SCROLL_P;
     seedX = camX; seedY = camY;
-    if (!reduce.matches) seedRegion(90);   // never show blank paper on load
+    if (!reduce.matches) seedRegion(130);   // never show blank paper on load
     if (reduce.matches) {
       // no camera movement at all under reduced motion
       camX = 0; camY = 0; mouseX = 0; mouseY = 0;
