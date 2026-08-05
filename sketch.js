@@ -35,10 +35,15 @@
 
   /* ---------- tuning ---------- */
   var WOBBLE   = 0.68;   // global hand-shake multiplier; lower is tidier
-  var HOLD     = 10;     // seconds a finished mark stays at full strength
-  var FADE     = 60;     // seconds it then takes to disappear
-  var MAX_LIVE = 280;    // ceiling on marks alive anywhere on the sheet
-  var CONCURRENT = 6;    // marks that can be mid-draw at the same time
+  /* How many marks are mid-draw at once is spawn rate times how long a mark
+     takes to draw, and the population is spawn rate times total lifetime. So
+     raising the spawn rate alone just piles up marks. To roughly double the
+     visible drawing without doubling the density, the lifetime comes down by
+     about the same factor the rate goes up. */
+  var HOLD     = 8;      // seconds a finished mark stays at full strength
+  var FADE     = 42;     // seconds it then takes to disappear
+  var MAX_LIVE = 340;    // ceiling on marks alive anywhere on the sheet
+  var CONCURRENT = 8;    // marks that can be mid-draw at the same time
   /* Marks spawn across a region this much larger than the window on each side,
      so the paper is already worked on before you pan or scroll onto it. It
      also means most marks are off-screen at any moment: at 0.6 the spawn area
@@ -356,7 +361,7 @@
 
     // moved onto fresh paper? fill it in before it is looked at
     if (Math.abs(camY - seedY) > H * 0.55 || Math.abs(camX - seedX) > W * 0.55) {
-      seedRegion(70);
+      seedRegion(90);
       seedX = camX; seedY = camY;
     }
 
@@ -391,7 +396,7 @@
     if (spawnWait <= 0 && drawing < CONCURRENT && live.length < MAX_LIVE) {
       var n = spawn();
       if (n) live.push(n);
-      spawnWait = r(0.15, 0.42);
+      spawnWait = r(0.06, 0.20);
     }
   }
 
@@ -434,7 +439,7 @@
     live.length = 0;
     camY = (window.pageYOffset || root.scrollTop || 0) * SCROLL_P;
     seedX = camX; seedY = camY;
-    if (!reduce.matches) seedRegion(70);   // never show blank paper on load
+    if (!reduce.matches) seedRegion(90);   // never show blank paper on load
     if (reduce.matches) {
       // no camera movement at all under reduced motion
       camX = 0; camY = 0; mouseX = 0; mouseY = 0;
