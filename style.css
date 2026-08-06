@@ -76,12 +76,26 @@
   /* Soft dark shadows go muddy on a mid field, so elevation is carried by a
      hairline instead. */
   --shadow: 0 1px 0 var(--line);
+
+  /* Height of the sticky header, and how much paper to leave above a section
+     when you jump to it. Anchor targets subtract both, so a section lands
+     clear of the header with room to breathe instead of jammed under it. */
+  --header-h: 68px;
+  --anchor-air: 34px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 /* The field colour and its paper grain live on <html> so the grid layer below
    can sit on a fixed pseudo-element without being painted over. */
+/* Every jump target stops short by the header plus a margin of paper. Set on
+   the elements rather than as scroll-padding on the scroller so the sketch
+   canvas and the fixed background layers are unaffected. */
+section[id],
+#main {
+  scroll-margin-top: calc(var(--header-h) + var(--anchor-air));
+}
+
 html {
   scroll-behavior: smooth;
   background-color: var(--bg);
@@ -803,6 +817,7 @@ a:focus-visible, .btn:focus-visible, button:focus-visible {
 }
 
 @media (max-width: 720px) {
+  :root { --header-h: 45px; --anchor-air: 22px; }
   .nav { padding-block: 9px; }
   .nav-links { gap: 14px; }
   .nav-links a { font-size: 0.66rem; letter-spacing: 0.1em; }
