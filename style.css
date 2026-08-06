@@ -144,30 +144,51 @@ a:hover { text-decoration-thickness: 2px; }
 }
 .skip:focus { top: 14px; }
 
-/* ---------- Top bar ---------- */
+/* ---------- Top bar ----------
+   Nav items are index tabs sitting on the header rule, the way dividers sit in
+   a notebook. The current page's tab is filled, so the chrome states where you
+   are instead of only where you can go. */
 header {
   position: sticky; top: 0; z-index: 20;
   background: var(--bg);
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--line-2);
 }
-.nav { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; padding: 18px 0 16px; }
+.nav { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; padding: 16px 0 0; }
 /* The wordmark shares the nav's type style rather than getting its own. The
    H1 already carries the name in display type, so a second smaller version of
    it in the header was a redundant style, not an identity. */
 .brand {
   font-size: 0.9rem; font-weight: 600; color: var(--ink); text-decoration: none;
+  padding-bottom: 12px;
 }
 .brand:hover { text-decoration: underline; text-underline-offset: 4px; }
 
-/* Nav and buttons deliberately share one type style, which keeps the opening
-   viewport to three: display, lede, and this. */
-.nav-links { display: flex; gap: 22px; }
+.nav-links { display: flex; gap: 3px; }
 .nav-links a {
-  color: var(--muted); font-size: 0.9rem; font-weight: 600;
-  text-decoration: none; padding: 6px 0;
-  border-bottom: 2px solid transparent;
+  color: var(--muted); font-size: 0.87rem; font-weight: 600;
+  text-decoration: none; padding: 9px 15px;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-bottom: 1px solid var(--line-2);
+  border-radius: 3px 3px 0 0;
+  margin-bottom: -1px;            /* the tab sits on the rule, not above it */
+  min-height: 38px; display: inline-flex; align-items: center;
 }
-.nav-links a:hover { color: var(--ink); border-bottom-color: var(--accent); }
+.nav-links a:hover { background: var(--surface); color: var(--ink); }
+.nav-links a[aria-current="page"] {
+  background: var(--accent); border-color: var(--accent); color: var(--accent-ink);
+}
+
+/* ---------- Ruled margin ----------
+   The red line down the left of a notebook page. Sits just outside the content
+   column and runs the full height of the window. */
+body::after {
+  content: "";
+  position: fixed; top: 0; bottom: 0;
+  left: max(16px, calc(50% - (var(--maxw) / 2) - 24px));
+  width: 1px; background: var(--accent); opacity: 0.45;
+  z-index: -1; pointer-events: none;
+}
 
 /* ---------- Hero ----------
    Left-weighted with the right side left open. The emptiness is the layout;
@@ -211,7 +232,13 @@ section { padding: 54px 0; }
   border: 1px solid var(--line-2); border-radius: var(--radius-sm);
   padding: 3px 9px; background: var(--accent-soft);
 }
-.section-head::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+/* The trailing rule is drawn rather than ruled. It wobbles the same way the
+   background marks do, so the chrome and the sketch layer read as one hand. */
+.section-head::after {
+  content: ""; flex: 1; height: 6px; align-self: center;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='6' viewBox='0 0 120 6'%3E%3Cpath d='M0 3.2C12 1.8 22 4.4 34 3.0S56 1.6 68 3.4S92 4.6 104 2.8S118 3.6 120 3.1' fill='none' stroke='%23827b88' stroke-width='1.1' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: repeat-x; background-position: left center;
+}
 
 /* ---------- Featured cards ----------
    Whole card is one click target (stretched link on the title). ---------- */
@@ -474,6 +501,33 @@ section { padding: 54px 0; }
 .edu-item .deg { font-weight: 600; color: var(--ink); }
 .edu-item .school { font-family: "Public Sans", system-ui, sans-serif; font-size: 0.78rem; color: var(--faint); margin-top: 3px; }
 
+.about-grid { display: grid; grid-template-columns: 250px 1fr; gap: 38px; align-items: start; }
+.about-grid .about-copy p { max-width: 62ch; }
+
+/* A printed photo taped to the page: off-square by a degree, with a strip of
+   tape across the top. Static, so it carries no hover or pointer. */
+.portrait { margin: 0 0 6px; position: relative; transform: rotate(-1.1deg); }
+.portrait img,
+.portrait .ph {
+  display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover;
+  border: 1px solid var(--line-2); background: var(--surface-2);
+}
+.portrait .ph {
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 0 16px;
+}
+.portrait::before {
+  content: ""; position: absolute; z-index: 1; top: -10px; left: 50%;
+  width: 84px; height: 22px; transform: translateX(-50%) rotate(1.8deg);
+  background: rgba(255, 255, 255, 0.28);
+  border-left: 1px dashed rgba(0, 0, 0, 0.12);
+  border-right: 1px dashed rgba(0, 0, 0, 0.12);
+}
+.portrait figcaption {
+  font-family: "Public Sans", system-ui, sans-serif; font-size: 0.76rem;
+  color: var(--faint); margin-top: 9px; text-align: center;
+}
+
 /* ---------- Contact ----------
    Labels are real and always visible rather than placeholders standing in for
    them. Placeholder-as-label vanishes the moment someone types, which loses
@@ -537,25 +591,25 @@ section { padding: 54px 0; }
 .cdetails .lab { display: block; font-size: 0.76rem; color: var(--faint); margin-bottom: 1px; }
 .cdetails a { color: var(--ink); }
 
-/* ---------- Footer ---------- */
-footer { border-top: 1px solid var(--line); padding: 44px 0 60px; margin-top: 20px; background: var(--bg-2); }
-.foot-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; align-items: end; }
-.foot-name { font-family: "Familjen Grotesk", system-ui, sans-serif; font-weight: 700; font-size: 1.35rem; letter-spacing: -0.03em; }
-.foot-name span { color: var(--ink); }
-.foot-cols { display: flex; gap: 40px; flex-wrap: wrap; }
-.foot-col .kh {
-  font-family: "Public Sans", system-ui, sans-serif; font-size: 0.66rem; letter-spacing: 0.12em;
-  text-transform: uppercase; color: var(--faint); margin-bottom: 6px; padding-left: 12px;
+/* ---------- Footer ----------
+   One strip, not a second navigation. Everything the old footer listed is
+   already reachable from the tabs above or the contact page, so this keeps
+   only the sign-off and the two links that are genuinely elsewhere. Links stay
+   44px tall for touch, and the strip's own padding is what got cut. */
+footer { border-top: 1px solid var(--line-2); padding: 4px 0 8px; margin-top: 56px; background: transparent; }
+.foot {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 8px 20px; flex-wrap: wrap;
 }
-.foot-links { display: flex; gap: 6px; flex-wrap: wrap; }
-.foot-col .foot-links { flex-direction: column; gap: 0; }
+.foot-name { font-family: "Familjen Grotesk", system-ui, sans-serif; font-weight: 700; font-size: 0.95rem; letter-spacing: -0.02em; }
+.foot-links { display: flex; gap: 2px; flex-wrap: wrap; }
 .foot-links a {
-  color: var(--ink); font-weight: 500; font-family: "Public Sans", system-ui, sans-serif; font-size: 0.85rem;
-  padding: 10px 12px; border-radius: var(--radius-sm); min-height: 44px;
-  display: inline-flex; align-items: center;
+  color: var(--muted); font-weight: 500; font-family: "Public Sans", system-ui, sans-serif; font-size: 0.85rem;
+  padding: 10px 10px; border-radius: var(--radius-sm); min-height: 44px;
+  display: inline-flex; align-items: center; text-decoration: none;
 }
-.foot-links a:hover { background: var(--surface); color: var(--accent); text-decoration: none; }
-footer small { color: var(--faint); display: block; margin-top: 24px; font-family: "Public Sans", system-ui, sans-serif; font-size: 0.78rem; }
+.foot-links a:hover { background: var(--surface); color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+footer small { color: var(--faint); font-family: "Public Sans", system-ui, sans-serif; font-size: 0.76rem; }
 
 /* ============================================================
    DETAIL PAGE
@@ -745,9 +799,11 @@ a:focus-visible, .btn:focus-visible, button:focus-visible {
 }
 
 @media (max-width: 720px) {
-  .nav { height: 58px; }
-  .nav-links { gap: 0; }
-  .nav-links a { padding: 10px 9px; font-size: 0.8rem; }
+  .nav { padding-top: 12px; }
+  .nav-links { gap: 2px; }
+  .nav-links a { padding: 8px 10px; font-size: 0.8rem; min-height: 44px; }
+  .about-grid { grid-template-columns: 1fr; gap: 26px; }
+  .portrait { max-width: 220px; }
   .featured-grid { grid-template-columns: 1fr; }
   .hero { padding: 56px 0 36px; }
   .row {
@@ -763,7 +819,6 @@ a:focus-visible, .btn:focus-visible, button:focus-visible {
   .row-role  { grid-column: 2 / -1; grid-row: 3; font-size: 0.82rem; }
   .row-arrow { display: none; }
   .cols, .systems, .shot-row, .focus-grid, .contact-grid { grid-template-columns: 1fr; }
-  .foot-cols { gap: 22px; }
   .cform button[type="submit"] { width: 100%; }
   /* Cover art becomes a full-width banner above the text. */
   .dproj { grid-template-columns: 1fr; padding: 0 20px 20px; }
@@ -782,7 +837,6 @@ a:focus-visible, .btn:focus-visible, button:focus-visible {
 /* Narrow phones: keep the header on one line without overflowing */
 @media (max-width: 440px) {
   .wrap { padding: 0 18px; }
-  .brand { font-size: 0.95rem; }
-  .nav-links a { padding: 10px 6px; font-size: 0.74rem; }
-  .creds { gap: 8px 18px; }
+  .brand { font-size: 0.82rem; white-space: nowrap; }
+  .nav-links a { padding: 8px 7px; font-size: 0.74rem; }
 }

@@ -111,11 +111,6 @@
       return;
     }
 
-    if (form.action.indexOf("FORM_ENDPOINT") !== -1) {
-      say("This form is not connected yet. Add your form backend endpoint to the form action.", "bad");
-      return;
-    }
-
     submitBtn.disabled = true;
     say("Sending...", "");
 
