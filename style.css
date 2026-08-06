@@ -81,7 +81,7 @@
      when you jump to it. Anchor targets subtract both, so a section lands
      clear of the header with room to breathe instead of jammed under it. */
   --header-h: 68px;
-  --anchor-air: 17px;
+  --anchor-air: 5px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
