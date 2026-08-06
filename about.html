@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About &amp; Contact | Taylor Cadwallader</title>
+  <meta name="description" content="About Taylor Cadwallader, Technical Game Designer, and how to get in touch. Based in Redmond, WA and open to remote work." />
+  <link rel="preload" href="fonts/public-sans-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="fonts/familjen-grotesk-700.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="index.html">Taylor <span>Cadwallader</span></a>
+      <nav class="nav-links">
+        <a href="index.html#focus">Focus</a>
+        <a href="index.html#work">Games</a>
+        <a href="index.html#tools">Tools</a>
+        <a href="about.html" aria-current="page">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="wrap" id="main">
+    <div class="detail-hero">
+      <a class="back" href="index.html">&larr; Home</a>
+      <h1>About</h1>
+      <div class="detail-sub">Technical Game Designer &middot; Redmond, WA &middot; Open to remote</div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section id="about" class="about">
+      <div class="about-grid">
+
+        <figure class="portrait">
+          <!-- MEDIA SLOT: replace this div with <img src="media/taylor.jpg"
+               alt="Taylor Cadwallader" /> once you drop the photo in. -->
+          <div class="ph">MEDIA SLOT: portrait photo</div>
+        </figure>
+
+        <div class="about-copy">
+          <p>
+            I'm Taylor, a Technical Game Designer finishing my BA at DigiPen Institute of Technology,
+            with about six years of hands-on game design and development experience. Before DigiPen I
+            went to a technical school called Sno-Isle TECH during my last two years of high school,
+            which is what started all of this. My skill set sits somewhere between design and
+            implementation. I've worked in UX, systems, and technical design, but what I enjoy most is
+            designing mechanics, building tools, and putting features into the engine myself, taking an
+            idea from a rough concept all the way through iteration.
+          </p>
+          <p>
+            I'm a logical, systems-oriented problem solver, and I care a lot about polish and about
+            whether things are clear to the player. I'm comfortable making tradeoffs around scope and
+            technical limits, and I'm fine simplifying or cutting a feature when it makes the game
+            better. I've been Design Lead on a few team projects, run SCRUM meetings to keep production
+            on track, and worked closely with programmers, artists, and audio designers. I'm strongest
+            in Unity, and I've also worked in Unreal and in two custom C++ engines. I program mostly in
+            C#. I'm not a full computer science programmer, but I'm comfortable enough to build my own
+            designs and keep iterating quickly.
+          </p>
+
+          <div class="edu">
+            <div class="edu-item">
+              <div class="deg">BA, Game Design</div>
+              <div class="school">DigiPen Institute of Technology &middot; 2026 &middot; Dean's Honor List</div>
+            </div>
+            <div class="edu-item">
+              <div class="deg">Video Game Designer</div>
+              <div class="school">Sno-Isle TECH Skills Center &middot; 1,200 hours</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <div class="wrap">
+    <section id="contact">
+      <div class="section-head"><h2>Send me a message</h2></div>
+      <div class="contact-grid">
+
+        <!-- Posts to Formspree, since GitHub Pages has no server of its own.
+             Without JavaScript this still submits natively to the same action
+             and lands on Formspree's own confirmation page. -->
+        <form class="cform" id="contact-form" method="POST"
+              action="https://formspree.io/f/xgawelop" novalidate>
+
+          <div class="field">
+            <label for="cf-name">Name <span class="req" aria-hidden="true">*</span></label>
+            <input id="cf-name" name="name" type="text" autocomplete="name"
+                   required aria-required="true" aria-describedby="cf-name-err" />
+            <p class="err" id="cf-name-err" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label for="cf-email">Email <span class="req" aria-hidden="true">*</span></label>
+            <input id="cf-email" name="email" type="email" autocomplete="email"
+                   required aria-required="true" aria-describedby="cf-email-hint cf-email-err" />
+            <p class="hint" id="cf-email-hint">So I can write back.</p>
+            <p class="err" id="cf-email-err" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label for="cf-subject">Subject</label>
+            <input id="cf-subject" name="subject" type="text" autocomplete="off" />
+          </div>
+
+          <div class="field">
+            <label for="cf-message">Message <span class="req" aria-hidden="true">*</span></label>
+            <textarea id="cf-message" name="message" rows="7"
+                      required aria-required="true" aria-describedby="cf-message-err"></textarea>
+            <p class="err" id="cf-message-err" role="alert"></p>
+          </div>
+
+          <div class="gotcha" aria-hidden="true">
+            <label for="cf-company">Leave this field empty</label>
+            <input id="cf-company" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <div class="cform-actions">
+            <button class="btn btn-primary" type="submit">Send message</button>
+            <p class="form-status" id="cf-status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+
+        <aside class="cdetails">
+          <div class="kh">Or reach me directly</div>
+          <ul>
+            <li><span class="lab">Email</span><a href="mailto:tcadwallader.design@gmail.com">tcadwallader.design@gmail.com</a></li>
+            <li><span class="lab">Phone</span><a href="tel:+14259715935">425-971-5935</a></li>
+            <li><span class="lab">LinkedIn</span><a href="https://www.linkedin.com/in/taylor-cadwallader" target="_blank" rel="noopener">Taylor Cadwallader &#8599;</a></li>
+            <li><span class="lab">Discord</span><a href="https://discord.com/users/641844475068547072" target="_blank" rel="noopener">cadd. &#8599;</a></li>
+            <li><span class="lab">Based in</span>Redmond, WA &middot; open to remote</li>
+          </ul>
+        </aside>
+
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="wrap foot">
+      <span class="foot-name">Taylor Cadwallader</span>
+      <nav class="foot-links">
+        <a href="about.html#contact">Contact</a>
+        <a href="https://www.linkedin.com/in/taylor-cadwallader" target="_blank" rel="noopener">LinkedIn &#8599;</a>
+        <a href="resume.pdf" target="_blank" rel="noopener">R&eacute;sum&eacute; &#8599;</a>
+      </nav>
+      <small>&copy; <span id="year">2026</span> Taylor Cadwallader</small>
+    </div>
+  </footer>
+  <script src="sketch.js" defer></script>
+  <script src="contact.js" defer></script>
+</body>
+</html>

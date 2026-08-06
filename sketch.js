@@ -619,3 +619,12 @@
   resize();
   start();
 })();
+
+/* Footer year. This lives here only because sketch.js is the one script on
+   every page. The markup ships a hardcoded year as the fallback, so if this
+   file is ever removed the footer still reads correctly for a while. */
+(function () {
+  "use strict";
+  var slot = document.getElementById("year");
+  if (slot) slot.textContent = String(new Date().getFullYear());
+})();
