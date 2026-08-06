@@ -145,39 +145,43 @@ a:hover { text-decoration-thickness: 2px; }
 .skip:focus { top: 14px; }
 
 /* ---------- Top bar ----------
-   Nav items are index tabs sitting on the header rule, the way dividers sit in
-   a notebook. The current page's tab is filled, so the chrome states where you
-   are instead of only where you can go. */
+   The name is stamped on the page in the same red ink as the margin rule, so
+   the two read as one pass of a second pen rather than two unrelated accents.
+   The nameplate is the only boxed thing in the header; the nav sits plain
+   beside it so there is one loud element, not five competing ones. */
 header {
   position: sticky; top: 0; z-index: 20;
   background: var(--bg);
   border-bottom: 1px solid var(--line-2);
 }
-.nav { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; padding: 16px 0 0; }
-/* The wordmark shares the nav's type style rather than getting its own. The
-   H1 already carries the name in display type, so a second smaller version of
-   it in the header was a redundant style, not an identity. */
-.brand {
-  font-size: 0.9rem; font-weight: 600; color: var(--ink); text-decoration: none;
-  padding-bottom: 12px;
-}
-.brand:hover { text-decoration: underline; text-underline-offset: 4px; }
+/* padding-block only. A `padding` shorthand here would zero out the 28px
+   horizontal padding .wrap supplies, pushing the nameplate to the window edge
+   and out of line with the content column. */
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 11px; }
 
-.nav-links { display: flex; gap: 3px; }
+.brand {
+  font-family: "Familjen Grotesk", system-ui, sans-serif;
+  font-weight: 700; font-size: 0.76rem; line-height: 1.15;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--accent); text-decoration: none;
+  border: 2px solid var(--accent);
+  padding: 7px 11px 6px;
+  display: inline-block;
+}
+.brand span { display: block; }     /* the surname drops to its own line */
+/* Filling on hover is the affordance: the stamp is the way home. */
+.brand:hover { background: var(--accent); color: var(--accent-ink); text-decoration: none; }
+
+.nav-links { display: flex; align-items: center; gap: 24px; }
 .nav-links a {
-  color: var(--muted); font-size: 0.87rem; font-weight: 600;
-  text-decoration: none; padding: 9px 15px;
-  background: var(--bg-2);
-  border: 1px solid var(--line);
-  border-bottom: 1px solid var(--line-2);
-  border-radius: 3px 3px 0 0;
-  margin-bottom: -1px;            /* the tab sits on the rule, not above it */
-  min-height: 38px; display: inline-flex; align-items: center;
+  font-family: "Public Sans", system-ui, sans-serif;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--muted); text-decoration: none;
+  min-height: 44px; display: inline-flex; align-items: center;
+  border-bottom: 2px solid transparent;
 }
-.nav-links a:hover { background: var(--surface); color: var(--ink); }
-.nav-links a[aria-current="page"] {
-  background: var(--accent); border-color: var(--accent); color: var(--accent-ink);
-}
+.nav-links a:hover { color: var(--ink); border-bottom-color: var(--accent); }
+.nav-links a[aria-current="page"] { color: var(--accent); border-bottom-color: var(--accent); }
 
 /* ---------- Ruled margin ----------
    The red line down the left of a notebook page. Sits just outside the content
@@ -799,9 +803,10 @@ a:focus-visible, .btn:focus-visible, button:focus-visible {
 }
 
 @media (max-width: 720px) {
-  .nav { padding-top: 12px; }
-  .nav-links { gap: 2px; }
-  .nav-links a { padding: 8px 10px; font-size: 0.8rem; min-height: 44px; }
+  .nav { padding-block: 9px; }
+  .nav-links { gap: 14px; }
+  .nav-links a { font-size: 0.66rem; letter-spacing: 0.1em; }
+  .brand { font-size: 0.68rem; padding: 6px 9px 5px; }
   .about-grid { grid-template-columns: 1fr; gap: 26px; }
   .portrait { max-width: 220px; }
   .featured-grid { grid-template-columns: 1fr; }
@@ -837,6 +842,7 @@ a:focus-visible, .btn:focus-visible, button:focus-visible {
 /* Narrow phones: keep the header on one line without overflowing */
 @media (max-width: 440px) {
   .wrap { padding: 0 18px; }
-  .brand { font-size: 0.82rem; white-space: nowrap; }
-  .nav-links a { padding: 8px 7px; font-size: 0.74rem; }
+  .brand { font-size: 0.6rem; letter-spacing: 0.07em; padding: 5px 7px 4px; }
+  .nav-links { gap: 9px; }
+  .nav-links a { font-size: 0.58rem; letter-spacing: 0.07em; }
 }
