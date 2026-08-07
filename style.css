@@ -39,19 +39,32 @@
   /* Mid-value mauve grey. Almost every site is light or dark; sitting between
      the two is the whole point, and it is what will make cover art read like
      prints on a wall instead of tiles on a screen. */
-  --bg:        #ADA6B2;   /* the field */
-  --bg-2:      #9E97A3;   /* recessed */
-  --surface:   #B8B2BD;   /* raised */
-  --surface-2: #C2BCC7;   /* raised, hover */
+  /* The value ladder. The old field and surface sat 11 levels apart, which is
+     why raised things did not read as raised. These steps are 17 to 24 levels
+     apart, so a card separates from the paper without changing hue. */
+  --bg:        #C6C1CB;   /* the field */
+  --bg-2:      #B5B0BB;   /* recessed */
+  --surface:   #DCD8E2;   /* raised */
+  --surface-2: #E8E5EC;   /* raised, hover */
 
-  /* Contrast against --bg is measured, not guessed:
-     ink 7.70:1, muted 6.82:1, faint 5.66:1. All clear AA for body text. */
+  /* Contrast here is measured against the COMPOSITED field, not the flat
+     token. Grain, graph rules and pencil marks all stack between the paper and
+     the type, and an earlier version of this comment quoted flat-field numbers
+     that the screen never actually shows: ink really measured 3.98:1 under a
+     mark, not the 7.70:1 claimed.
+
+     Sampled behind the hero paragraph, worst case (major rule and the darkest
+     observed mark on the same pixel):  ink 5.52  muted 4.89  faint 4.53
+     Typical case (minor rule and a mark):  ink 5.63  muted 4.98  faint 4.61
+     Flat paper, no layers:                 ink 10.32 muted 9.14 faint 8.46
+     All clear AA. Changing --sketch-ink or the graph rule opacities below
+     moves these, so re-measure rather than assume. */
   --ink:    #17141B;
   --muted:  #241F28;
-  --faint:  #322D38;
+  --faint:  #2A2530;
 
-  --line:   #827B88;
-  --line-2: #68626E;
+  --line:   #8C8592;
+  --line-2: #6F6875;
 
   /* Oxblood, one saturated moment per view. On the lighter field it measures
      5.01:1, which clears the 4.5:1 text threshold, so unlike the earlier
@@ -65,7 +78,7 @@
      reworked; nothing new should reference them. */
   --accent-deep: #520A22;
   --accent-soft: rgba(110,15,46,0.10);
-  --pink: var(--accent);      --pink-soft: rgba(110,15,46,0.10);
+  --pink: var(--accent);
   --warm: var(--accent);      --warm-soft: rgba(110,15,46,0.10);
   --cool: var(--accent);      --cool-soft: rgba(110,15,46,0.10);
 
@@ -82,6 +95,12 @@
      clear of the header with room to breathe instead of jammed under it. */
   --header-h: 34px;
   --anchor-air: 5px;
+
+  /* How hard the pencil presses. This is the one dial for the drawings: it
+     caps how dark a mark can push the paper, which is what sets the worst-case
+     contrast for any text sitting over one. Raise it for bolder drawings and
+     less readable text; lower it for the reverse. */
+  --sketch-ink: 0.52;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -119,16 +138,19 @@ body::before {
   pointer-events: none;
   transform: translate3d(var(--cam-x, 0px), var(--cam-y, 0px), 0);
   background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cg fill='none' stroke='%23645E6B'%3E%3Cpath stroke-width='1' opacity='0.24' d='M40 0v200M80 0v200M120 0v200M160 0v200M0 40h200M0 80h200M0 120h200M0 160h200'/%3E%3Cpath stroke-width='1' opacity='0.46' d='M0 0v200M0 0h200'/%3E%3C/g%3E%3C/svg%3E");
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cg fill='none' stroke='%23645E6B'%3E%3Cpath stroke-width='1' opacity='0.17' d='M40 0v200M80 0v200M120 0v200M160 0v200M0 40h200M0 80h200M0 120h200M0 160h200'/%3E%3Cpath stroke-width='1' opacity='0.19' d='M0 0v200M0 0h200'/%3E%3C/g%3E%3C/svg%3E");
 }
 
-/* The pencil marks are drawn onto a canvas by sketch.js. Nothing here styles
-   them beyond placing the layer; the drawing itself is procedural. */
+/* The pencil marks are drawn onto a canvas by sketch.js. The drawing itself is
+   procedural; the only thing styled here is how hard the pencil presses.
+   Capping it at the layer, rather than per stroke, means the darkest possible
+   pixel behind any text is a known quantity. */
 #sketch {
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
+  opacity: var(--sketch-ink, 0.62);
 }
 
 body {
