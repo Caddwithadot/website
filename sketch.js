@@ -44,9 +44,14 @@
      all three are now turned up. Tripling mark size alone took coverage from
      5.7% to 18.4%, which is near the density that read as unusable, so the
      population is cut to pay for it. Frequency was kept as high as the budget
-     allows and the lifetime absorbed most of the reduction. */
-  var HOLD     = 9;      // seconds a finished mark stays at full strength
-  var FADE     = 36;     // seconds it then takes to disappear
+     allows and the lifetime absorbed most of the reduction.
+
+     Total lifetime is HOLD + FADE, now 32s (was 45s). Because population is
+     spawn rate times lifetime, shortening it thins the standing crowd of marks
+     by the same proportion; the spawn rate below is deliberately unchanged, so
+     marks turn over faster rather than appearing more often. */
+  var HOLD     = 6;      // seconds a finished mark stays at full strength
+  var FADE     = 26;     // seconds it then takes to disappear
   var MAX_LIVE = 280;    // ceiling on marks alive anywhere on the sheet
   var CONCURRENT = 12;   // marks that can be mid-draw at the same time
   /* Marks spawn across a region this much larger than the window on each side,
@@ -305,37 +310,6 @@
         pts.push([x + Math.cos(a) * rad, y + Math.sin(a) * rad]);
       }
       return outline(pts, false, chance(0.4));
-    },
-    function smiley(x, y) {
-      var rad = r(15, 32), s = [];
-      var start = r(0, 6.2);
-      s.push(arcPts(x, y, rad, rad * r(0.9, 1.12), start, start + r(6.0, 7.1), 1.1));
-      var ex = rad * 0.36, ey = rad * 0.28;
-      if (chance(0.5)) {                       // tick eyes
-        s.push(handLine(x - ex, y - ey - 2, x - ex + r(-2, 2), y - ey + r(5, 9), 0.7));
-        s.push(handLine(x + ex, y - ey - 2, x + ex + r(-2, 2), y - ey + r(5, 9), 0.7));
-      } else {                                 // blobby dot eyes
-        s.push(arcPts(x - ex, y - ey, 2.6, 2.6, 0, 6.4, 1.4));
-        s.push(arcPts(x + ex, y - ey, 2.6, 2.6, 0, 6.4, 1.4));
-      }
-      if (chance(0.82)) s.push(arcPts(x, y + rad * 0.1, rad * 0.55, rad * 0.42, 0.4, Math.PI - 0.4, 1.0));
-      else s.push(handLine(x - rad * 0.4, y + rad * 0.36, x + rad * 0.4, y + rad * 0.36, 1.2));
-      return s;
-    },
-    /* The S everyone drew in the margins of a school book. Six short verticals
-       in two offset rows, joined by diagonals, capped with a point at each
-       end. Shows up in roughly one mark in twenty. */
-    function coolS(x, y) {
-      var w = r(24, 42), h = w * 1.7, s = [];
-      var X = function (k) { return x + k * w; }, Y = function (k) { return y + k * h; };
-      [0, 0.32, 0.64].forEach(function (d) { s.push(handLine(X(d), Y(0.18), X(d), Y(0.62), 0.65)); });
-      [0.16, 0.48, 0.80].forEach(function (d) { s.push(handLine(X(d), Y(0.72), X(d), Y(1.16), 0.65)); });
-      s.push([].concat(handLine(X(0), Y(0.18), X(0.32), Y(0), 0.7), handLine(X(0.32), Y(0), X(0.64), Y(0.18), 0.7).slice(1)));
-      s.push([].concat(handLine(X(0.16), Y(1.16), X(0.48), Y(1.34), 0.7), handLine(X(0.48), Y(1.34), X(0.80), Y(1.16), 0.7).slice(1)));
-      s.push(handLine(X(0), Y(0.62), X(0.16), Y(0.72), 0.6));
-      s.push(handLine(X(0.32), Y(0.62), X(0.48), Y(0.72), 0.6));
-      s.push(handLine(X(0.64), Y(0.62), X(0.80), Y(0.72), 0.6));
-      return s;
     },
 
     /* --- annotation marks --- */
