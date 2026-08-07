@@ -219,6 +219,23 @@ header {
 .nav-links a:hover { color: var(--ink); border-bottom-color: var(--accent); }
 .nav-links a[aria-current="page"] { color: var(--accent); border-bottom-color: var(--accent); }
 
+/* Contact is the only thing a visitor might need to DO, so it is the one
+   filled element in the bar. The nameplate stays an outline on purpose:
+   filling both would put two equal-weight accents in the same row and neither
+   would win. Action, then identity, then navigation. */
+.nav-links a.nav-cta {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 0 14px;
+  margin-left: 10px;
+}
+.nav-links a.nav-cta:hover {
+  background: var(--accent-deep); border-color: var(--accent-deep);
+  color: var(--accent-ink);
+}
+
 /* ---------- Ruled margin ----------
    The red line down the left of a notebook page. Sits just outside the content
    column and runs the full height of the window. */
@@ -839,21 +856,27 @@ a:focus-visible, .btn:focus-visible, button:focus-visible {
 }
 
 @media (max-width: 720px) {
-  :root { --header-h: 45px; --anchor-air: 22px; }
+  /* Measured, not guessed: the bar is 63px from 521 to 720. */
+  :root { --header-h: 63px; --anchor-air: 22px; }
   .nav { padding-block: 9px; }
-  .nav-links { gap: 14px; }
+  .nav-links { gap: 11px; }
   .nav-links a { font-size: 0.66rem; letter-spacing: 0.1em; }
+  .nav-links a.nav-cta { padding: 0 11px; margin-left: 5px; }
   .brand { font-size: 0.68rem; padding: 6px 9px 5px; }
   .about-grid { grid-template-columns: 1fr; gap: 26px; }
   .portrait { max-width: 220px; }
   .featured-grid { grid-template-columns: 1fr; }
   .hero { padding: 56px 0 36px; }
+  /* The art track must match .row-art's own width. It used to be 44px against
+     a 54px thumbnail, so the art overflowed its column by 10px and ate all but
+     2px of the 12px gutter, which is what made the text look jammed against
+     it. Track and thumbnail are now the same number. */
   .row {
-    grid-template-columns: 44px minmax(0, 1fr) auto;
+    grid-template-columns: 52px minmax(0, 1fr) auto;
     grid-template-rows: auto auto auto;
-    column-gap: 12px; row-gap: 3px; padding: 13px 12px;
+    column-gap: 15px; row-gap: 7px; padding: 16px 12px;
   }
-  .row-art   { grid-column: 1; grid-row: 1 / -1; align-self: start; }
+  .row-art   { grid-column: 1; grid-row: 1 / -1; align-self: start; width: 52px; height: 52px; }
   .row-title { grid-column: 2; grid-row: 1; align-self: center; }
   .row-date  { grid-column: 3; grid-row: 1; align-self: center; }
   .row-tech  { grid-column: 2 / -1; grid-row: 2; }
@@ -876,10 +899,31 @@ a:focus-visible, .btn:focus-visible, button:focus-visible {
   .pager .nxt { text-align: left; }
 }
 
-/* Narrow phones: keep the header on one line without overflowing */
+/* Below 375 the nameplate, four links and the Contact button cannot share one
+   row without shrinking the labels past legibility, so the bar wraps: name on
+   top, navigation spread across the row beneath. Covers 320 and 360, which are
+   still common Android widths. */
+/* Phones: the bar stops fighting to stay on one row.
+   Squeezing a nameplate, four labels and a button onto a single line meant
+   0.58rem type and the name broken across two cramped lines inside a small
+   box, which reads as squashed rather than compact. Below 520 the name gets
+   its own row at a legible size on ONE line, and the navigation spreads across
+   the row beneath. Costs header height, buys back the crowding. */
+@media (max-width: 520px) {
+  /* Two rows measure 79 to 90px across this range. Rounded up to the tallest,
+     since overshooting drops a section slightly low but undershooting hides
+     its heading behind the bar. */
+  :root { --header-h: 90px; --anchor-air: 18px; }
+  .nav { flex-wrap: wrap; row-gap: 7px; padding-block: 10px 0; }
+  .brand { font-size: 0.72rem; letter-spacing: 0.09em; padding: 7px 11px 6px; }
+  .brand span { display: inline; }   /* one line, not two stacked */
+  .nav-links { width: 100%; justify-content: space-between; gap: 4px; }
+  .nav-links a { font-size: 0.68rem; letter-spacing: 0.06em; min-height: 42px; }
+  .nav-links a.nav-cta { margin-left: 0; padding: 0 13px; }
+}
+
 @media (max-width: 440px) {
   .wrap { padding: 0 18px; }
-  .brand { font-size: 0.6rem; letter-spacing: 0.07em; padding: 5px 7px 4px; }
-  .nav-links { gap: 9px; }
-  .nav-links a { font-size: 0.58rem; letter-spacing: 0.07em; }
+  .nav-links a { font-size: 0.63rem; letter-spacing: 0.04em; }
+  .nav-links a.nav-cta { padding: 0 10px; }
 }
