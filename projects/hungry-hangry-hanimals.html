@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hungry Hangry Hanimals | Taylor Cadwallader</title>
+  <meta name="description" content="Hungry Hangry Hanimals: GMTK 2026 game jam entry in Unity. Gameplay programming, UX design, and systems balancing on a data-driven feeding game with eight tunable animals." />
+  <link rel="preload" href="../fonts/public-sans-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="../fonts/familjen-grotesk-700.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="../index.html">Taylor <span>Cadwallader</span></a>
+      <nav class="nav-links">
+        <a href="../index.html#focus">Focus</a>
+        <a href="../index.html#work">Games</a>
+        <a href="../index.html#tools">Tools</a>
+        <a href="../about.html">About</a>
+        <a class="nav-cta" href="../about.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+  <div class="wrap" id="main">
+    <div class="detail-hero">
+      <a class="back" href="../index.html#work">&larr; All work</a>
+      <h1>Hungry Hangry Hanimals</h1>
+      <div class="detail-sub">Chaotic Feeding Game &middot; Unity &middot; GMTK 2026 Game Jam</div>
+      <div class="detail-meta"><span class="badge hot">Jul 2026</span><span class="badge">Gameplay Programmer &amp; UX Designer</span><span class="badge">Team of 2</span><span class="badge">72 of 96 hours</span></div>
+    </div>
+
+    <div class="detail-banner"><span class="label">Hungry Hangry Hanimals</span></div>
+
+    <div class="detail-body">
+      <h2>Overview</h2>
+      <p>Hungry Hangry Hanimals is a silly little game about feeding increasingly hangry animals before they lose their cool. It was built for the GMTK 2026 game jam, where the theme was Count Down, with Jared Callupe Lopez, who I have worked with on a lot of previous projects. I focused on gameplay programming, UX design, and balancing the systems. The jam ran 96 hours and I was in for 72 of them.</p>
+      <p>The core loop is a bit like the pancake and milkshake minigame from Wreck-It Ralph. Every animal at the table wants one specific food, and you feed them by dragging it off a shared pile in the center. The interesting problem was keeping each new round engaging while making sure the growing chaos still felt fair to play instead of just loud.</p>
+
+      <div class="specs">
+        <div class="spec"><div class="k">Role</div><div class="v">Gameplay Programmer &amp; UX Designer</div></div>
+        <div class="spec"><div class="k">Engine</div><div class="v">Unity</div></div>
+        <div class="spec"><div class="k">Team size</div><div class="v">2</div></div>
+        <div class="spec"><div class="k">Context</div><div class="v">GMTK 2026 Game Jam</div></div>
+        <div class="spec"><div class="k">Duration</div><div class="v">96-hour jam, 72 hours for me</div></div>
+        <div class="spec"><div class="k">Theme</div><div class="v">Count Down</div></div>
+        <div class="spec"><div class="k">Year</div><div class="v">2026</div></div>
+        <div class="spec wide"><div class="k">Goal</div><div class="v">Make the table get louder and busier every round without letting it get unfair, using data I could retune in seconds rather than code I would have to rewrite.</div></div>
+      </div>
+
+      <figure class="shot">
+        <div class="ph">MEDIA SLOT: Hungry Hangry Hanimals hero shot / gameplay reel</div>
+        <figcaption>Replace with a gameplay still or a short clip of a full round.</figcaption>
+      </figure>
+
+      <h2>The round loop</h2>
+      <ol class="steps">
+        <li>Each animal at the table wants one specific food, and only that food.</li>
+        <li>Drag food off the shared pile in the middle of the table and hand it over.</li>
+        <li>A correct feeding restores that animal's patience. A wrong one drains it and throws the food back onto the pile.</li>
+        <li>When patience hits zero the animal slams the table in a rage, shuffling every piece of food.</li>
+        <li>Three slams resets the round, which is a soft reset rather than a punishing game over.</li>
+      </ol>
+      <p>Every animal has a hidden patience meter draining the whole time, so the pressure is constant and the player is always choosing who to deal with next rather than reacting to one alarm at a time.</p>
+
+      <h2>Systems I designed and built</h2>
+      <div class="systems">
+        <div class="sys">
+          <span class="tag">Architecture</span>
+          <h3>Animals as data</h3>
+          <p>Each animal is a ScriptableObject, so its whole identity lives in editable data instead of code: preferred food, maximum patience, drain rate, how much a correct feeding restores, and how much a wrong one costs. There are 8 animals, and every one of their personalities came purely from tuning those numbers. None of them needed unique code.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Progression</span>
+          <h3>Rounds built from a list</h3>
+          <p>Rather than hand-building each round, round N is simply the first N animals from an ordered list, with two difficulty curves that scale patience drain and food quantity automatically as the game goes on. Adding an animal or reordering the list is a one-line change with no per-round rework.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Layout</span>
+          <h3>Modular table</h3>
+          <p>The animal hands seat themselves evenly around an ellipse and auto-adjust their spacing and rotation for any number of animals. I gave it a live in-editor preview so I could tune seating without entering play mode, which mattered a lot on a jam schedule.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Balance</span>
+          <h3>Impatience against headcount</h3>
+          <p>Because the player can only serve one animal at a time, each animal's impatience actually has to ease off as more of them join the table just to keep the difficulty curve feeling flat. Once I had that baseline I could ramp it slightly beyond, which is what makes later rounds genuinely harder instead of accidentally impossible.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Readability</span>
+          <h3>Learning who eats what</h3>
+          <p>Animals are introduced one at a time, so the player learns each new food by elimination rather than memorizing a chart. A grayscale hover effect lets them re-check who eats what in later rounds when the table is crowded.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Safety</span>
+          <h3>No unwinnable rounds</h3>
+          <p>The food pile is derived directly from what the animals present actually want, so the numbers cannot drift out of sync with the table. A round can never spawn without the food needed to clear it.</p>
+        </div>
+      </div>
+
+      <div class="shot-row">
+        <figure class="shot">
+          <div class="ph">MEDIA SLOT: animal ScriptableObject inspector</div>
+          <figcaption>Every personality is a set of numbers, not a script.</figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="ph">MEDIA SLOT: in-editor ellipse seating preview</div>
+          <figcaption>Seating solves itself for any number of animals.</figcaption>
+        </figure>
+      </div>
+
+      <h2>Animation and feel</h2>
+      <p>I wrote all of the hand animation programmatically instead of using Unity's Animator, because the motion depends on live gameplay rather than fixed clips. The hands reach toward wherever the food currently is, lean in when you bring their food close, and wave at you when you are holding what they want.</p>
+      <p>I layered that through separate additive channels, one each for reach, grab, reject, swipe, and idle sway, so they blend together cleanly instead of fighting over the same transform. That separation is what let me keep adding responses without breaking the ones already there.</p>
+      <p>Mounting anger is telegraphed on the hand sprite as a red flash that pulses faster and faster the closer that animal gets to slamming, so the player can read the whole table at a glance. The slam itself lands with a windup, a particle poof, a vignette flash, and screen shake. Smaller touches round it out, like subtle idle motion on the food and squash-and-stretch on pickups.</p>
+
+      <figure class="shot">
+        <div class="ph">MEDIA SLOT: anger telegraph escalating into a table slam</div>
+        <figcaption>The red pulse speeds up as patience runs out.</figcaption>
+      </figure>
+
+      <h2>What I took from it</h2>
+      <p>The balancing problem was the part that stuck with me. I went in assuming difficulty was just a set of numbers I could raise each round, and it turned out that adding an animal changes the situation for every animal already seated, because the player's attention is the real resource and it gets divided. Once I understood that, tuning stopped being guesswork.</p>
+      <p>The data-driven setup is also what made a jam schedule survivable. Almost every change I wanted to make late in the jam was a number, not a rewrite.</p>
+      <p class="takeaway">Adding an animal does not just add pressure, it changes the math for every animal already at the table.</p>
+
+      <!-- LINK SLOT: add the itch.io page or GMTK jam entry link here when available -->
+      <div class="pager"><a class="nxt" href="antimasking.html"><span class="lbl">Next &rarr;</span>AntiMasking</a></div>
+    </div>
+  </div>
+  <footer>
+    <div class="wrap foot">
+      <span class="foot-name">Taylor Cadwallader</span>
+      <nav class="foot-links">
+        <a href="../about.html#contact">Contact</a>
+        <a href="https://www.linkedin.com/in/taylor-cadwallader" target="_blank" rel="noopener">LinkedIn &#8599;</a>
+        <a href="../resume.pdf" target="_blank" rel="noopener">R&eacute;sum&eacute; &#8599;</a>
+      </nav>
+      <small>&copy; <span id="year">2026</span> Taylor Cadwallader</small>
+    </div>
+  </footer>
+  <script src="../sketch.js" defer></script>
+</body>
+</html>

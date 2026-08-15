@@ -28,7 +28,7 @@
     <div class="detail-hero">
       <a class="back" href="index.html#focus">&larr; All focus areas</a>
       <h1>Systems Design</h1>
-      <div class="detail-sub">Selected systems work &middot; 7 projects</div>
+      <div class="detail-sub">Selected systems work &middot; 8 projects</div>
       <div class="detail-meta"><span class="badge hot">Focus area</span><span class="badge">Unity</span><span class="badge">Unreal</span><span class="badge">Custom C++ engines</span></div>
     </div>
 
@@ -55,6 +55,20 @@
 
       <h2>Selected work</h2>
 
+      <article class="dproj">
+        <div class="dproj-art"><span>Hungry Hangry Hanimals</span></div>
+        <div class="dproj-head">
+          <h3><a href="projects/hungry-hangry-hanimals.html">Hungry Hangry Hanimals</a></h3>
+          <span class="dproj-meta">Unity &middot; Team of 2 &middot; 96-hour GMTK 2026 jam &middot; Jul 2026</span>
+        </div>
+        <ul class="dproj-list">
+          <li>Built all 8 animals on a ScriptableObject framework, so preferred food, patience ceiling, drain rate, and correct and incorrect feeding values are data rather than code. Every personality came from tuning numbers alone.</li>
+          <li>Made progression data-driven: round N is the first N animals from an ordered list, with two curves scaling patience drain and food quantity, so adding or reordering an animal needs no per-round rework.</li>
+          <li>Worked out that impatience has to ease off as animals join the table just to hold the difficulty curve flat, since the player can only serve one at a time, then ramped past that point deliberately.</li>
+          <li>Derived the food pile directly from what the seated animals want, so a round can never spawn in an unwinnable state.</li>
+        </ul>
+        <div class="more">Read the full case study</div>
+      </article>
       <article class="dproj">
         <div class="dproj-art"><span>Trash</span></div>
         <div class="dproj-head">
@@ -176,6 +190,6 @@
       <small>&copy; <span id="year">2026</span> Taylor Cadwallader</small>
     </div>
   </footer>
-  <script src="sketch.js" defer></script>
+  <script src="sketch.js" defer></script>
 </body>
 </html>

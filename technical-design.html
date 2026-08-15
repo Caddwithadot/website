@@ -28,7 +28,7 @@
     <div class="detail-hero">
       <a class="back" href="index.html#focus">&larr; All focus areas</a>
       <h1>Technical Design</h1>
-      <div class="detail-sub">Selected technical work &middot; 7 projects</div>
+      <div class="detail-sub">Selected technical work &middot; 8 projects</div>
       <div class="detail-meta"><span class="badge hot">Focus area</span><span class="badge">C#</span><span class="badge">Unity</span><span class="badge">Custom C++ engines</span><span class="badge">WinForms</span></div>
     </div>
 
@@ -57,6 +57,20 @@
 
       <h2>Selected work</h2>
 
+      <article class="dproj">
+        <div class="dproj-art"><span>Hungry Hangry Hanimals</span></div>
+        <div class="dproj-head">
+          <h3><a href="projects/hungry-hangry-hanimals.html">Hungry Hangry Hanimals</a></h3>
+          <span class="dproj-meta">Unity &middot; Team of 2 &middot; 96-hour GMTK 2026 jam &middot; Jul 2026</span>
+        </div>
+        <ul class="dproj-list">
+          <li>Wrote all hand animation programmatically instead of using Unity's Animator, because the motion tracks live gameplay: hands reach toward the food's current position, lean in when their food is near, and wave when the player holds what they want.</li>
+          <li>Layered that motion through separate additive channels for reach, grab, reject, swipe, and idle sway, so responses blend instead of fighting over the same transform.</li>
+          <li>Built a modular table where hands seat themselves around an ellipse and auto-adjust spacing and rotation for any number of animals, with a live in-editor preview for tuning without entering play mode.</li>
+          <li>Implemented the animal framework as ScriptableObjects so gameplay tuning stayed in data throughout a jam schedule.</li>
+        </ul>
+        <div class="more">Read the full case study</div>
+      </article>
       <article class="dproj">
         <div class="dproj-art"><span>Trash</span></div>
         <div class="dproj-head">
@@ -181,6 +195,6 @@
       <small>&copy; <span id="year">2026</span> Taylor Cadwallader</small>
     </div>
   </footer>
-  <script src="sketch.js" defer></script>
+  <script src="sketch.js" defer></script>
 </body>
 </html>
