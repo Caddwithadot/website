@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jimby's Jumbo Jambo | Taylor Cadwallader</title>
+  <meta name="description" content="Jimby's Jumbo Jambo: rhythm game made for Jimothy Jamothy, a Seattle Indies game jam. Character rigging, programmatic animation driven by the song, and a MIDI-timed eating system." />
+  <link rel="preload" href="../fonts/public-sans-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="../fonts/familjen-grotesk-700.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="../index.html">Taylor <span>Cadwallader</span></a>
+      <nav class="nav-links">
+        <a href="../index.html#focus">Focus</a>
+        <a href="../index.html#work">Games</a>
+        <a href="../index.html#tools">Tools</a>
+        <a href="../about.html">About</a>
+        <a class="nav-cta" href="../about.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+  <div class="wrap" id="main">
+    <div class="detail-hero">
+      <a class="back" href="../index.html#work">&larr; All work</a>
+      <h1>Jimby's Jumbo Jambo</h1>
+      <div class="detail-sub">Rhythm Game &middot; Jimothy Jamothy &middot; Hosted by Seattle Indies</div>
+      <div class="detail-meta"><span class="badge hot">Aug &ndash; Sep 2026</span><span class="badge">Game Designer, Assets &amp; UX</span><span class="badge">Team of 5</span><span class="badge">Published on itch.io</span></div>
+    </div>
+
+    <div class="detail-banner"><span class="label">Jimby's Jumbo Jambo</span></div>
+
+    <div class="detail-body">
+      <h2>Overview</h2>
+      <p>Jimby's Jumbo Jambo is a silly little rhythm game set in Seattle, where Jimothy is oh so hungry and you help him grab as much food as his grubby little hands can get on the beat. It was made for Jimothy Jamothy, a game jam hosted by Seattle Indies where the theme was literally just Jimothy, Seattle's favorite little cryptid.</p>
+      <p>I teamed up with Jared Callupe Lopez again, and this time we had a whole crew. Jack Love helped on gameplay programming, Kaitlyn Giles did all of the art, and Derek Knight went above and beyond on sound, making the entire soundtrack including a vocaloid track with lyrics he wrote himself.</p>
+      <p>I was one of the game designers, and I spent most of my time on asset implementation and UX. In practice that meant owning Jimothy himself: building his rig, driving his motion from the song rather than from animation clips, and layering in the small details that make him read as a living thing instead of a sprite that moves.</p>
+
+      <div class="specs">
+        <div class="spec"><div class="k">Role</div><div class="v">Game Designer, Asset Implementation &amp; UX</div></div>
+        <div class="spec"><div class="k">Team size</div><div class="v">5</div></div>
+        <div class="spec"><div class="k">Context</div><div class="v">Jimothy Jamothy, hosted by Seattle Indies</div></div>
+        <div class="spec"><div class="k">Theme</div><div class="v">Jimothy</div></div>
+        <div class="spec"><div class="k">Year</div><div class="v">2026</div></div>
+        <div class="spec"><div class="k">Platform</div><div class="v">Browser, desktop and mobile</div></div>
+        <div class="spec wide"><div class="k">Goal</div><div class="v">Make the character sell the music. If Jimothy is convincing, the player feels the beat through him instead of reading it off the interface.</div></div>
+      </div>
+
+      <figure class="shot">
+        <div class="ph">MEDIA SLOT: Jimby's Jumbo Jambo hero shot / gameplay reel</div>
+        <figcaption>Replace with a gameplay still or a clip of a full song.</figcaption>
+      </figure>
+
+      <h2>What I built</h2>
+      <div class="systems">
+        <div class="sys">
+          <span class="tag">Rigging</span>
+          <h3>Jimothy's rig</h3>
+          <p>I created and hooked up Jimothy's entire rig, which is the piece everything else in his performance hangs off. Getting the hierarchy right early is what made the rest of the motion work cheap to add later in the jam.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Animation</span>
+          <h3>Motion driven by the song</h3>
+          <p>His animation is written programmatically rather than authored frame by frame, so his arms reach out, grab, and pull back based on what is actually happening in the song. Because the motion is generated from live state, it stays correct no matter how the track lines up.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Audio sync</span>
+          <h3>MIDI-timed eating</h3>
+          <p>The dynamic eating system reads its own dedicated lane in the MIDI file, so his chomps land in time with the music by construction rather than by hand-tuned offsets. Timing data lives with the song, which means a new track brings its own eating pattern with it.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Game feel</span>
+          <h3>Small signs of life</h3>
+          <p>On top of the big motions I spent a lot of time on the quiet stuff: idle bobbing, breathing, blinking, and a head that rocks to the beat. None of it is noticeable on its own, which is the point. Together it is the difference between a character and a prop.</p>
+        </div>
+        <div class="sys">
+          <span class="tag">Pipeline</span>
+          <h3>Asset implementation</h3>
+          <p>I handled getting art and audio into the build and wired up correctly, so the rest of the team could keep producing while integration stayed someone's actual job rather than an afterthought at the end of the jam.</p>
+        </div>
+      </div>
+
+      <div class="shot-row">
+        <figure class="shot">
+          <div class="ph">MEDIA SLOT: Jimothy's rig in the editor</div>
+          <figcaption>The hierarchy everything else hangs off.</figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="ph">MEDIA SLOT: the MIDI eating lane alongside gameplay</div>
+          <figcaption>Chomp timing lives in the song data.</figcaption>
+        </figure>
+      </div>
+
+      <h2>Why drive it from the music</h2>
+      <p>A rhythm game lives or dies on whether the thing on screen looks like it is hearing the same song the player is. Hand-authored animation would have been faster to get moving on day one, but it would have drifted the moment anything about the track or the timing changed, and it would have needed redoing for every new song.</p>
+      <p>Pulling the eating timing out of a MIDI lane meant the character and the music were reading from one source instead of two that had to be kept in agreement. On a jam schedule that is worth more than it sounds, because it removes a whole category of bug that only shows up when you are too tired to debug it.</p>
+
+      <figure class="shot">
+        <div class="ph">MEDIA SLOT: idle motion, blinking, and head rocking</div>
+        <figcaption>The layer nobody notices individually.</figcaption>
+      </figure>
+
+      <h2>What I took from it</h2>
+      <p>This was the most character-focused work I have done. Most of my projects are about systems the player operates, and this one was about a thing the player watches, which puts all the weight on whether the motion is convincing rather than whether the rules are clean.</p>
+      <p>It also made the case for tying animation to data the game already has. The MIDI lane approach meant Jimothy's performance was a property of the song rather than a thing I maintained separately, and that is the part I would reach for again.</p>
+      <p class="takeaway">Nobody notices the breathing and the blinking on their own, which is exactly why they work.</p>
+
+      <div class="detail-links"><a class="btn btn-primary" href="https://notcadd.itch.io/jimbys-jumbo-jambo" target="_blank" rel="noopener">Play it on itch.io &#8599;</a></div>
+      <div class="pager"><a class="nxt" href="hungry-hangry-hanimals.html"><span class="lbl">Next &rarr;</span>Hungry Hangry Hanimals</a></div>
+    </div>
+  </div>
+  <footer>
+    <div class="wrap foot">
+      <span class="foot-name">Taylor Cadwallader</span>
+      <nav class="foot-links">
+        <a href="../about.html#contact">Contact</a>
+        <a href="https://www.linkedin.com/in/taylor-cadwallader" target="_blank" rel="noopener">LinkedIn &#8599;</a>
+        <a href="../resume.pdf" target="_blank" rel="noopener">R&eacute;sum&eacute; &#8599;</a>
+      </nav>
+      <small>&copy; <span id="year">2026</span> Taylor Cadwallader</small>
+    </div>
+  </footer>
+  <script src="../sketch.js" defer></script>
+</body>
+</html>
